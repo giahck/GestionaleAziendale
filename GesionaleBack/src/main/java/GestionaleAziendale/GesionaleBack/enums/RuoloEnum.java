@@ -1,0 +1,9 @@
+package GestionaleAziendale.GesionaleBack.enums;
+
+public enum RuoloEnum {
+    ADMIN,//ACCESSO A TUTTO TRANE AI DATI DEL USER
+    DIPENDENTE,//DIPENDE DALLA COMPETENZA
+    MANAGER,//ACCESSO AL USER
+    DIRETTORE,//ACCESSO A TUTTO PRIVILEGGI MASSIMI
+    IT,//informatico o sistemista ACCESSO A TUTTO TRANE AI DATI DEL USER
+}
