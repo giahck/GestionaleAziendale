@@ -1,23 +1,22 @@
-Relazione tra Entità Users, Ruolo e Competenza
+Sistema di Gestione Aziendale
 Descrizione
-Questo progetto gestisce le entità Users, Ruolo e Competenza per gestire gli utenti, i ruoli e le competenze all'interno di un sistema di gestione aziendale.
+Questo progetto implementa un sistema di gestione aziendale per gestire gli utenti, i ruoli e le competenze all'interno di un'organizzazione. Utilizza tecnologie moderne per garantire un'esperienza utente efficiente e intuitiva.
 
 Entità
-Users
-L'entità Users rappresenta gli utenti del sistema. Ogni utente ha un'email, un nome, un cognome, una data di nascita, un codice fiscale e altri attributi personali. Gli utenti possono avere uno o più ruoli.
+Utenti
+Gli utenti sono la colonna portante del sistema. Ogni utente ha un'email, un nome, un cognome, una data di nascita e altre informazioni personali. Possono essere assegnati a uno o più ruoli all'interno dell'organizzazione.
 
-Ruolo
-L'entità Ruolo rappresenta i ruoli disponibili nel sistema. Ogni ruolo ha un nome, una descrizione e un livello di importanza. I ruoli possono avere competenze predefinite associate a loro.
+Ruoli
+I ruoli definiscono le responsabilità e le competenze all'interno dell'organizzazione. Ogni ruolo ha un nome, una descrizione e un livello di importanza. Sono associati a competenze specifiche che definiscono le abilità necessarie per quel ruolo.
 
-Competenza
-L'entità Competenza rappresenta le competenze disponibili nel sistema. Ogni competenza ha un nome, una descrizione e un livello di competenza. Le competenze possono essere associate a uno o più ruoli.
+Competenze
+Le competenze rappresentano le abilità e le conoscenze necessarie per svolgere determinati compiti. Ogni competenza ha un nome, una descrizione e un livello di competenza. Possono essere associate a uno o più ruoli per definire le competenze richieste per quel ruolo.
 
 Relazioni
-Utente <-> Ruolo: Relazione many-to-many tra gli utenti e i ruoli. Ogni utente può avere uno o più ruoli e ogni ruolo può essere associato a uno o più utenti.
+Utente <-> Ruolo: Gli utenti possono essere assegnati a uno o più ruoli all'interno dell'organizzazione. Questa relazione consente di definire le responsabilità di ciascun utente.
 
-Ruolo <-> Competenza: Relazione many-to-many tra i ruoli e le competenze. Ogni ruolo può avere competenze predefinite associate ad esso e ogni competenza può essere associata a uno o più ruoli.
+Ruolo <-> Competenza: I ruoli sono associati a competenze specifiche che definiscono le abilità necessarie per quel ruolo. Questa relazione consente di definire le competenze richieste per svolgere determinate responsabilità.
 
 Note
-Gli utenti possono avere uno o più ruoli all'interno del sistema.
-I ruoli possono avere competenze predefinite associate a loro per definire le responsabilità e le competenze necessarie per quel ruolo.
-Le competenze possono essere condivise tra più ruoli o essere specifiche per un singolo ruolo.
+Il sistema è progettato per essere flessibile e adattabile alle esigenze specifiche dell'organizzazione.
+La gestione degli utenti, dei ruoli e delle competenze avviene in modo efficiente e intuitivo attraverso un'interfaccia utente moderna e user-friendly.
