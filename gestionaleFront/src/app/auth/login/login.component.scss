@@ -1,0 +1,23 @@
+/* .text-danger {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  } */
+  .container-custom {
+    @media (max-width: 13in) {
+      max-width: 50%; // Riduci la larghezza al 80% della larghezza disponibile
+    }
+  
+    form {
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      padding: 1rem;
+  
+      .form-control {
+        margin-bottom: 1rem;
+      }
+  
+      .btn-primary {
+        width: 100%;
+      }
+    }
+  }

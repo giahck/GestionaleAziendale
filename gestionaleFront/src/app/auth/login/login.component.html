@@ -1,0 +1,72 @@
+<div class="container mt-4">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="border border-3 rounded p-4">
+      <!-- Email input -->
+      <div class="row mb-4">
+        <div class="col">
+          <mdb-form-control>
+            <input mdbInput type="email" id="form2Example1" class="form-control" formControlName="email" />
+            <label mdbLabel class="form-label" for="form2Example1">Email address</label>
+            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
+              Please enter a valid email address.
+            </div>
+          </mdb-form-control>
+        </div>
+      </div>
+  
+      <!-- Password input -->
+      <div class="row mb-4">
+        <div class="col">
+          <mdb-form-control>
+            <input mdbInput type="password" id="form2Example2" class="form-control" formControlName="password" />
+            <label mdbLabel class="form-label" for="form2Example2">Password</label>
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+              Password must be at least 6 characters long.
+            </div>
+          </mdb-form-control>
+        </div>
+      </div>
+  
+      <!-- Checkbox and Forgot password link -->
+      <div class="row mb-4">
+        <div class="col d-flex justify-content-center align-items-center">
+          <div class="form-check">
+            <input mdbCheckbox class="form-check-input" type="checkbox" id="form2Example31" formControlName="rememberMe" />
+            <label class="form-check-label" for="form2Example31"> Remember me </label>
+          </div>
+        </div>
+        <div class="col d-flex justify-content-center align-items-center">
+          <a href="#!" class="text-decoration-none">Forgot password?</a>
+        </div>
+      </div>
+  
+      <!-- Submit button -->
+      <div class="row mb-4">
+        <div class="col">
+          <button mdbRipple type="submit" class="btn btn-primary btn-block">Sign in</button>
+        </div>
+      </div>
+  
+      <!-- Register buttons -->
+      <div class="row mb-4">
+        <div class="col text-center">
+          <p>Not a member? <a href="#!" class="text-decoration-none">Register</a></p>
+          <p>or sign up with:</p>
+          <button mdbRipple type="button" class="btn btn-secondary btn-floating mx-1">
+            <i class="fab fa-facebook-f"></i>
+          </button>
+  
+          <button mdbRipple type="button" class="btn btn-secondary btn-floating mx-1">
+            <i class="fab fa-google"></i>
+          </button>
+  
+          <button mdbRipple type="button" class="btn btn-secondary btn-floating mx-1">
+            <i class="fab fa-twitter"></i>
+          </button>
+  
+          <button mdbRipple type="button" class="btn btn-secondary btn-floating mx-1">
+            <i class="fab fa-github"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>

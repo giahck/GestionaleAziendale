@@ -1,0 +1,95 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light p-1">
+  <!-- Container wrapper -->
+  <div class="container">
+    <!-- Navbar brand -->
+    <a class="navbar-brand m-0 p-0">
+      <img
+        class="m-0 p-0"
+        src="./../../../assets/logo.png"
+        height="70"
+        alt=""
+        loading="lazy"
+        style="margin-top: -1px"
+      />
+    </a>
+
+    <!-- Toggle button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="buttonsNav.toggle()"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div
+      class="collapse navbar-collapse"
+      id="navbarButtonsExample"
+      mdbCollapse
+      #buttonsNav="mdbCollapse"
+    >
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 px-5">
+        <li class="nav-item">
+          <a class="nav-link" href="#">HOME</a>
+        </li>
+      </ul>
+      <!-- Left links -->
+
+      <div class="d-flex align-items-center">
+        <ul class="navbar-nav flex-row">
+          <li class="nav-item me-3 me-lg-1">
+            <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+              <strong class="d-none d-sm-block ms-1">John</strong>
+            </a>
+          </li>
+          <li class="nav-item me-3 me-lg-1">
+            <a class="nav-link" href="#">
+              <span><i class="fas fa-video fa-lg"></i></span>
+            </a>
+          </li>
+          <li mdbDropdown class="nav-item dropdown me-3 me-lg-1">
+            <a
+              class="nav-link dropdown-toggle hidden-arrow"
+              href="#"
+              id="navbarDropdownMenuLink"
+              role="button"
+              mdbDropdownToggle
+              aria-expanded="false"
+            >
+              <i class="fas fa-comments fa-lg"></i>
+
+              <span class="badge rounded-pill badge-notification bg-danger"
+                >6</span
+              >
+            </a>
+            <ul
+              mdbDropdownMenu
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="navbarDropdownMenuLink"
+            >
+              <li>
+                <a class="dropdown-item" href="#">Some news</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Another news</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </li>
+            </ul>
+          </li>
+          </ul>
+          <button type="button" [routerLink]="['/login']" routerLinkActive="active" class="btn btn-link px-0 ms-3">Login</button>
+          <button type="button" [routerLink]="['/register']" routerLinkActive="active"  class="btn btn-link px-3 me-2">Register</button>
+      </div>
+    </div>
+    <!-- Collapsible wrapper -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
