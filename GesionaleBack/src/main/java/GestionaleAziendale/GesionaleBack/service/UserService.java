@@ -2,12 +2,14 @@ package GestionaleAziendale.GesionaleBack.service;
 
 
 
+import GestionaleAziendale.GesionaleBack.dto.LoginDto;
 import GestionaleAziendale.GesionaleBack.dto.UserDto;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Ruolo;
 import GestionaleAziendale.GesionaleBack.exeptions.ResourceNotFoundException;
 import GestionaleAziendale.GesionaleBack.repository.RuoloRepository;
 import GestionaleAziendale.GesionaleBack.repository.UserRepository;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Users;
+import GestionaleAziendale.GesionaleBack.security.JwtTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,8 @@ public class UserService {
     private RuoloRepository ruoloRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtTool jwtTool;
     public UserDto saveUser(UserDto userDto) {
         // Convert UserDto to Users entity
         Users user = new Users();
@@ -47,34 +51,16 @@ public class UserService {
         user.setProvincia(userDto.getProvincia());
         user.setPassword(passwordEncoder.encode(userDto.getPassword())); // Encrypt password
 
-
-        // Fetch Ruolo entities by their IDs and convert List to Set
         Set<Ruolo> ruoli = new HashSet<>(ruoloRepository.findAllById(userDto.getRuoloId()));
-        // Set the fetched Ruolo entities to the user
+        if (ruoli.size() != userDto.getRuoloId().size()) {
+            throw new ResourceNotFoundException("Ruolo non trovato nel sistema");
+        }
         user.setRuoli(ruoli);
 
-        // Save user to database
         user = userRepository.save(user);
 
-        // Convert Users entity back to UserDto
-        UserDto savedUserDto = new UserDto();
-        savedUserDto.setEmail(user.getEmail());
-        savedUserDto.setCognome(user.getCognome());
-        savedUserDto.setNome(user.getNome());
-        savedUserDto.setSesso(user.getSesso());
-        savedUserDto.setDataDiNascita(convertToLocalDate(user.getDataDiNascita()));
-        savedUserDto.setComuneDiNascita(user.getComuneDiNascita());
-        savedUserDto.setCodiceFiscale(user.getCodiceFiscale());
-        savedUserDto.setTelefono(user.getTelefono());
-        savedUserDto.setIndirizzo(user.getIndirizzo());
-        savedUserDto.setCap(user.getCap());
-        savedUserDto.setProvincia(user.getProvincia());
-        savedUserDto.setPassword(null); // Do not return the password
-
-        // Convert Set<Ruolo> to Set<Integer>
-        savedUserDto.setRuoloId(user.getRuolo().stream().map(Ruolo::getIdRuolo).collect(Collectors.toSet()));
-
-        return savedUserDto;
+        UserDto userDtoConvert = mapUserToUserDto(user);
+        return userDtoConvert;
     }
     private LocalDate convertToLocalDate(Date dateToConvert) {
         return Instant.ofEpochMilli(dateToConvert.getTime())
@@ -88,5 +74,39 @@ public class UserService {
     }
     public Optional<Users> checkUser(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public UserDto authenticateUserAndCreateToken(LoginDto loginDto) {
+        Optional<Users> userOptional = userRepository.findByEmail(loginDto.getEmail());
+
+        if (userOptional.isPresent()) {
+            Users user = userOptional.get();
+            if (passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
+                UserDto userDto = mapUserToUserDto(user);
+                userDto.setAccessToken(jwtTool.createToken(user));
+                return userDto;
+            } else {
+                throw new ResourceNotFoundException("Errore nel login, riloggarsi");
+            }
+
+        } else {
+            throw new ResourceNotFoundException("Utente con email " + loginDto.getEmail() + "non trovato ");
+        }
+    }
+    private UserDto mapUserToUserDto(Users user) {
+        UserDto userDto = new UserDto();
+        userDto.setEmail(user.getEmail());
+        userDto.setCognome(user.getCognome());
+        userDto.setNome(user.getNome());
+        userDto.setSesso(user.getSesso());
+        userDto.setDataDiNascita(convertToLocalDate(user.getDataDiNascita()));
+        userDto.setComuneDiNascita(user.getComuneDiNascita());
+        userDto.setCodiceFiscale(user.getCodiceFiscale());
+        userDto.setTelefono(user.getTelefono());
+        userDto.setIndirizzo(user.getIndirizzo());
+        userDto.setCap(user.getCap());
+        userDto.setProvincia(user.getProvincia());
+        userDto.setRuoloId(user.getRuolo().stream().map(Ruolo::getIdRuolo).collect(Collectors.toSet()));
+        return userDto;
     }
 }

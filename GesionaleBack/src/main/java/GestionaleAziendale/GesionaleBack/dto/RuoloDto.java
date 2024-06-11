@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class RuoloDto {
 
@@ -22,5 +24,5 @@ public class RuoloDto {
     private int livello;
 
 
-    // private List<CompetenzaDto> competenzePredefinite;
+     private List<CompetenzaDto> competenzePredefinite;
 }

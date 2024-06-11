@@ -1,6 +1,8 @@
 package GestionaleAziendale.GesionaleBack.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -47,8 +49,11 @@ public class UserDto {
     private String provincia;
 
     @NotBlank(message = "La password non può essere vuota")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotNull(message = "Ruolo non può essere null")
     private Set<Integer> ruoloId;
+
+    private String accessToken;
 }
