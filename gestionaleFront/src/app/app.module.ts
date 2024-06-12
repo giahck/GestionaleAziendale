@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,14 +12,15 @@ import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { MDBBootstrapModule } from 'mdb-angular-ui-kit';
+import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
+import { TokenInterceptor } from './auth/token.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent,
     HomeComponent,
-    NavBarComponent
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,10 +31,17 @@ import { MDBBootstrapModule } from 'mdb-angular-ui-kit';
     MdbCollapseModule,
     ReactiveFormsModule,
     MdbFormsModule,
-    MDBBootstrapModule.forRoot()
+    MdbTabsModule,
+    HttpClientModule
+  
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })

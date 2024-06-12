@@ -2,22 +2,19 @@
     font-size: 0.875rem;
     margin-top: 0.25rem;
   } */
-  .container-custom {
-    @media (max-width: 13in) {
-      max-width: 50%; // Riduci la larghezza al 80% della larghezza disponibile
-    }
-  
-    form {
-      border: 1px solid #ced4da;
-      border-radius: 0.25rem;
-      padding: 1rem;
-  
-      .form-control {
-        margin-bottom: 1rem;
+
+
+  .tabs-container {
+      margin: auto; 
+    
+      @media screen and (min-width: 980px) {
+        width: 600px; 
       }
-  
-      .btn-primary {
-        width: 100%;
+      form {
+        border: 1px solid rgba(0, 0, 0, 0.2); // Bordo sottile
+        border-radius: 0.5rem; 
+        padding: 2rem; 
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); // Ombra sottile
       }
-    }
-  }
+     
+    } 

@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -28,7 +29,7 @@ public class Users implements UserDetails {
     private String sesso;
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date dataDiNascita;
+    private LocalDate dataDiNascita;
     private String comuneDiNascita;
     @Pattern(regexp = "[A-Z]{6}\\d\\d[A-Z]\\d\\d[A-Z]\\d\\d\\d[A-Z]", message = "Invalid tax code format")
     @Column(nullable = false, unique = true)

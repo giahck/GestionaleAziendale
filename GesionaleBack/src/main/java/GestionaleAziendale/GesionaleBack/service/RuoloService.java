@@ -2,6 +2,7 @@ package GestionaleAziendale.GesionaleBack.service;
 
 
 import GestionaleAziendale.GesionaleBack.dto.RuoloDto;
+import GestionaleAziendale.GesionaleBack.exeptions.BadRequestException;
 import GestionaleAziendale.GesionaleBack.maperDto.RuoloMapper;
 import GestionaleAziendale.GesionaleBack.repository.RuoloRepository;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Ruolo;
@@ -22,6 +23,9 @@ public class RuoloService {
     }
     public RuoloDto saveRuolo(RuoloDto ruoloDto) {
         Ruolo ruolo = ruoloMapper.toEntity(ruoloDto);
+        if (ruoloRepository.findByNomeRuolo(ruolo.getNomeRuolo())!=null) {
+            throw new BadRequestException("Ruolo già esistente: "+ruolo.getNomeRuolo());
+        }
         Ruolo savedRuolo = ruoloRepository.save(ruolo);
         return ruoloMapper.toDto(savedRuolo);
     }

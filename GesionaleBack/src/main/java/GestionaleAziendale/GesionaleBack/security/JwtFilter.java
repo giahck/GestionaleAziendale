@@ -35,9 +35,8 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new UnauthorizedException("Error in authorization, token missing!");
         }
-
         String accessToken = authHeader.substring(7);
-
+        System.out.println(accessToken);
         jwtTool.verifyToken(accessToken);
 
         String id = jwtTool.getIdFromToken(accessToken);
