@@ -23,11 +23,4 @@ public class Ruolo {
     private RuoloEnum nomeRuolo;
     private String descrizione;
     private int livello;
-
-    @ManyToMany
-    @JoinTable(
-            name = "ruolo_competenza",
-            joinColumns = @JoinColumn(name = "ruolo_id"),
-            inverseJoinColumns = @JoinColumn(name = "competenza_id"))
-    private List<Competenza> competenzePredefinita;
 }

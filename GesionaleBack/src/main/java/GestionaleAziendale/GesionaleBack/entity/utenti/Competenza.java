@@ -7,7 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -23,6 +26,31 @@ public class Competenza {
     private Long idRisorsa; // Foreign Key
     private int livello;
 
-    @ManyToMany(mappedBy = "competenzePredefinita")
-    private List<Ruolo> ruoli;
+    @ManyToMany(mappedBy = "competenze")
+    private Set<Users> usersId= new HashSet<>(); ;
+
+    public void addUser(Users user) {
+        this.usersId.add(user);
+        user.getCompetenze().add(this);
+    }
+    @Override
+    public String toString() {
+        return "Competenza{" +
+                "idCompetenza=" + idCompetenza +
+                // do not include users
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Competenza)) return false;
+        Competenza competenza = (Competenza) o;
+        return idCompetenza == competenza.idCompetenza;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idCompetenza);
+    }
 }

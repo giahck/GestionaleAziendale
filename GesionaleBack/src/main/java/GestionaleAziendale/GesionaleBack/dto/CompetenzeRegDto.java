@@ -1,20 +1,17 @@
 package GestionaleAziendale.GesionaleBack.dto;
 
 import GestionaleAziendale.GesionaleBack.entity.utenti.Ruolo;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import GestionaleAziendale.GesionaleBack.entity.utenti.Users;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
-public class CompetenzaDto {
+public class CompetenzeRegDto {
     @NotBlank(message = "Nome Competenza cannot be blank")
     private String nomeCompetenza;
 
@@ -28,6 +25,7 @@ public class CompetenzaDto {
     @Max(value = 2, message = "Livello should not be greater than 5")
     private int livello;
 
-    @NotNull(message = "Ruoli cannot be null")
-    private List<Integer> ruoliId;
+   // @NotNull(message = "Ruoli cannot be null")
+    private Set<Integer> usersId;
+
 }

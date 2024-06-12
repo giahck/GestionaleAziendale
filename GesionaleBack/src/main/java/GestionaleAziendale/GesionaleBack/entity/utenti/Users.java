@@ -9,10 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
@@ -45,6 +42,12 @@ public class Users implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "ruolo_id"))
     private Set<Ruolo> ruolo = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "utente_competenza",
+            joinColumns = @JoinColumn(name = "utente_id"),
+            inverseJoinColumns = @JoinColumn(name = "competenza_id"))
+    private Set<Competenza> competenze= new HashSet<>();
 
     @Column(nullable = false)
     private String password;
@@ -82,5 +85,31 @@ public class Users implements UserDetails {
     }
     public void setRuoli(Set<Ruolo> ruoli) {
         this.ruolo = ruoli;
+    }
+
+
+    public void addCompetenza(Competenza competenza) {
+        this.competenze.add(competenza);
+        competenza.getUsersId().add(this);
+    }
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                // do not include competenze
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Users)) return false;
+        Users users = (Users) o;
+        return id == users.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
