@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
 public interface RuoloMapper {
     RuoloMapper INSTANCE = Mappers.getMapper(RuoloMapper.class);
 
-    @Mapping(target = "idRuolo", ignore = true)
+   // @Mapping(target = "idRuolo", ignore = true)
     Ruolo toEntity(RuoloDto ruoloDto);
 
     RuoloDto toDto(Ruolo ruolo);

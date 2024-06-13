@@ -13,6 +13,6 @@
         cap: string;
         provincia: string;
         password: string;
-        ruoloId: number[];
+        ruoloId?: number[];
       }
 

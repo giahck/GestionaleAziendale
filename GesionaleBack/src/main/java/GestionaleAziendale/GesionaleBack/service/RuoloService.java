@@ -26,6 +26,8 @@ public class RuoloService {
         if (ruoloRepository.findByNomeRuolo(ruolo.getNomeRuolo())!=null) {
             throw new BadRequestException("Ruolo già esistente: "+ruolo.getNomeRuolo());
         }
+       // ruolo.setIdRuolo(10);
+        System.out.println(ruolo.getNomeRuolo());
         Ruolo savedRuolo = ruoloRepository.save(ruolo);
         return ruoloMapper.toDto(savedRuolo);
     }

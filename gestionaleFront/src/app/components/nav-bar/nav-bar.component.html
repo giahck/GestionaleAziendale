@@ -35,7 +35,8 @@
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 px-5">
         <li class="nav-item">
-          <a class="nav-link" href="#">HOME</a>
+          <a class="nav-link" [routerLink]="['/']" routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">HOME</a>
         </li>
       </ul>
       <!-- Left links -->
@@ -84,7 +85,8 @@
             </ul>
           </li>
           </ul>
-          <button type="button" [routerLink]="['/login']" routerLinkActive="active" class="btn btn-link px-0 ms-3">Login</button>
+          <button *ngIf="!user" type="button" [routerLink]="['/login']" routerLinkActive="active" class="btn btn-link px-0 ms-3">Login</button>
+          <button *ngIf="user" type="button"  (click)="logout()" routerLinkActive="active" class="btn btn-link px-0 ms-3">Logout</button>
       </div>
     </div>
     <!-- Collapsible wrapper -->

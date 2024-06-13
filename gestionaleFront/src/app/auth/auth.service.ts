@@ -3,10 +3,11 @@ import { environment } from '../../environments/environment.development';
 import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 import { AuthData } from '../models/authData.interface';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt'; 
 import { Register } from '../models/register.interface';
+import { Router } from '@angular/router';
 import { log } from 'console';
+
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,21 @@ export class AuthService {
       catchError(this.errors)
     );
   }
+  restore() {
+    if (typeof localStorage !== 'undefined') {
+      const userLocalStorage = localStorage.getItem('user');
+      if (userLocalStorage) {
+        const user = JSON.parse(userLocalStorage);
+        this.authSub.next(user);
+      } else {
+       
+        this.router.navigate(['/login']);
+      }
+    } else {
+      console.error('localStorage is not available');
+    }
+  }
+
   autoLogout(user: AuthData) {
     const dateExpiration = this.jwtHelper.getTokenExpirationDate(user.accessToken) as Date;
     const millisecondsExp = dateExpiration.getTime() - new Date().getTime();

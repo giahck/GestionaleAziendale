@@ -29,16 +29,6 @@ public interface UserMapper {
             @Mapping(target = "password", ignore = true) // Ignore password when mapping from UserDto to Users
     })
     Users userDtoToUser(UserDto userDto);
-
-   /* @Named("dateToLocalDate")
-    default LocalDate dateToLocalDate(Date date) {
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    }*/
-
-   /* @Named("localDateToDate")
-    default Date localDateToDate(LocalDate localDate) {
-        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    }*/
 @Named("ruoloSetToIdSet")
     default Set<Integer> ruoloSetToIdSet(Set<Ruolo> ruoli) {
         return ruoli.stream().map(Ruolo::getIdRuolo).collect(Collectors.toSet());

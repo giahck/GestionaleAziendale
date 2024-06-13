@@ -1,7 +1,7 @@
 <div class="tabs-container">
   <mdb-tabs [pills]="true" [fill]="true">
     <!-- Login Tab -->
-    <mdb-tab title="Login">
+    <mdb-tab title="Login" *ngIf="!competenze">
       <div class="container mt-4">
         <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
           <!-- Social login buttons -->
@@ -128,7 +128,7 @@
     </mdb-tab>
 
     <!-- Register Tab -->
-    <mdb-tab title="Register">
+    <mdb-tab title="Register" *ngIf="!competenze">
       <div class="container mt-4">
         <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
           <!-- Social signup buttons -->
@@ -438,29 +438,6 @@
             </div>
           </mdb-form-control>
 
-          <!-- RuoloId input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="text"
-              id="registerRuoloId"
-              class="form-control"
-              formControlName="ruoloId"
-            />
-            <label mdbLabel class="form-label" for="registerRuoloId"
-              >Ruolo ID</label
-            >
-            <div
-              *ngIf="
-                registerForm.get('ruoloId')?.invalid &&
-                registerForm.get('ruoloId')?.touched
-              "
-              class="text-danger"
-            >
-              Il campo Ruolo ID è richiesto.
-            </div>
-          </mdb-form-control>
-
           <!-- Checkbox -->
           <div class="form-check d-flex justify-content-center mb-4">
             <input
@@ -474,28 +451,28 @@
               I have read and agree to the terms
             </label>
           </div>
-         <!-- Radio buttons for sesso selection -->
-<div class="form-check d-flex justify-content-center mb-4">
-  <input
-    class="form-check-input me-2"
-    type="radio"
-    id="male"
-    name="sesso"
-    formControlName="sesso"
-    value="M"
-  />
-  <label class="form-check-label" for="male">M</label>
+          <!-- Radio buttons for sesso selection -->
+          <div class="form-check d-flex justify-content-center mb-4">
+            <input
+              class="form-check-input me-2"
+              type="radio"
+              id="male"
+              name="sesso"
+              formControlName="sesso"
+              value="M"
+            />
+            <label class="form-check-label" for="male">M</label>
 
-  <input
-    class="form-check-input me-2 ms-4"
-    type="radio"
-    id="female"
-    name="sesso"
-    formControlName="sesso"
-    value="F"
-  />
-  <label class="form-check-label" for="female">F</label>
-</div>
+            <input
+              class="form-check-input me-2 ms-4"
+              type="radio"
+              id="female"
+              name="sesso"
+              formControlName="sesso"
+              value="F"
+            />
+            <label class="form-check-label" for="female">F</label>
+          </div>
           <!-- Submit button -->
           <button
             mdbRipple
@@ -507,5 +484,95 @@
         </form>
       </div>
     </mdb-tab>
+       <!-- Nuovo Tab per le competenze-->
+       <mdb-tab title="Nuova Competenza" *ngIf="competenze">
+        <div class="container mt-4">
+          <form [formGroup]="competenzaForm" (ngSubmit)="onCompetenzaSubmit()">
+            <!-- Nome Competenza input -->
+            <mdb-form-control class="mb-4">
+              <input
+                mdbInput
+                type="text"
+                id="competenzaNome"
+                class="form-control"
+                formControlName="nomeCompetenza"
+              />
+              <label mdbLabel class="form-label" for="competenzaNome">Nome Competenza</label>
+              <div
+                *ngIf="competenzaForm.get('nomeCompetenza')?.invalid && competenzaForm.get('nomeCompetenza')?.touched"
+                class="text-danger"
+              >
+                Il campo Nome Competenza è richiesto.
+              </div>
+            </mdb-form-control>
+  
+            <!-- Descrizione input -->
+            <mdb-form-control class="mb-4">
+              <textarea
+                mdbInput
+                id="competenzaDescrizione"
+                class="form-control"
+                formControlName="descrizione"
+                rows="3"
+              ></textarea>
+              <label mdbLabel class="form-label" for="competenzaDescrizione">Descrizione</label>
+              <div
+                *ngIf="competenzaForm.get('descrizione')?.invalid && competenzaForm.get('descrizione')?.touched"
+                class="text-danger"
+              >
+                Il campo Descrizione è richiesto.
+              </div>
+            </mdb-form-control>
+  
+            <!-- ID Risorsa input -->
+            <mdb-form-control class="mb-4">
+              <input
+                mdbInput
+                type="number"
+                id="competenzaIdRisorsa"
+                class="form-control"
+                formControlName="idRisorsa"
+              />
+              <label mdbLabel class="form-label" for="competenzaIdRisorsa">ID Risorsa</label>
+              <div
+                *ngIf="competenzaForm.get('idRisorsa')?.invalid && competenzaForm.get('idRisorsa')?.touched"
+                class="text-danger"
+              >
+                Il campo ID Risorsa è richiesto.
+              </div>
+            </mdb-form-control>
+  
+            <!-- Livello input -->
+            <mdb-form-control class="mb-4">
+              <input
+                mdbInput
+                type="number"
+                id="competenzaLivello"
+                class="form-control"
+                formControlName="livello"
+              />
+              <label mdbLabel class="form-label" for="competenzaLivello">Livello</label>
+              <div
+                *ngIf="competenzaForm.get('livello')?.invalid && competenzaForm.get('livello')?.touched"
+                class="text-danger"
+              >
+                Il campo Livello è richiesto.
+              </div>
+            </mdb-form-control>  
+            <!-- Submit button -->
+            <button mdbRipple type="submit" class="btn btn-primary btn-block mb-4">
+              Aggiungi Competenza
+            </button>
+          </form>
+        </div>
+      </mdb-tab>
   </mdb-tabs>
+</div>
+
+<!-- Popup quando competenze è false -->
+<div *ngIf="popupVisible" class="popup-container">
+  <div class="popup">
+    <h2>Popup Content</h2>
+    <p>Questo è il contenuto del popup.</p>
+  </div>
 </div>
