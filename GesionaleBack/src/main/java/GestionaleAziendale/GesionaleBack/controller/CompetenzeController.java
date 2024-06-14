@@ -13,13 +13,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/competenze")
 public class CompetenzeController {
-    @Autowired
-    private CompetenzeService competenzeService;
-    @PostMapping("/register")
-    public CompetenzeRegDto saveCompetenze(@RequestBody @Validated CompetenzeRegDto competenzeDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new RuntimeException("Richiesta non valida: " + bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).reduce("", (s1, s2) -> s1 + "\n" + s2));
-        }
-        return competenzeService.saveCompetenza(competenzeDto);
-    }
+
 }

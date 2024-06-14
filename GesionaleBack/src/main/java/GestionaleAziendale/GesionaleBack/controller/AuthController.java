@@ -1,10 +1,12 @@
 package GestionaleAziendale.GesionaleBack.controller;
 
+import GestionaleAziendale.GesionaleBack.dto.CompetenzeRegDto;
 import GestionaleAziendale.GesionaleBack.dto.LoginDto;
 import GestionaleAziendale.GesionaleBack.dto.UserDto;
 import GestionaleAziendale.GesionaleBack.dto.UserRegDto;
 import GestionaleAziendale.GesionaleBack.exeptions.BadRequestException;
 import GestionaleAziendale.GesionaleBack.service.AuthService;
+import GestionaleAziendale.GesionaleBack.service.CompetenzeService;
 import GestionaleAziendale.GesionaleBack.service.UserService;
 import GestionaleAziendale.GesionaleBack.service.ValidazioneMailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +53,15 @@ public class AuthController {
     public boolean isEmailConfirmed(@RequestParam("id") Integer id) {
 
         return userService.isEmailConfirmed(id);
+    }
+    @Autowired
+    private CompetenzeService competenzeService;
+    @PostMapping("/competenze")
+    public CompetenzeRegDto saveCompetenze(@RequestBody @Validated CompetenzeRegDto competenzeDto, BindingResult bindingResult) {
+        System.out.println(competenzeDto);
+        if (bindingResult.hasErrors()) {
+            throw new RuntimeException("Richiesta non valida: " + bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).reduce("", (s1, s2) -> s1 + "\n" + s2));
+        }
+        return competenzeService.saveCompetenza(competenzeDto);
     }
 }

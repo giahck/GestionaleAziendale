@@ -2,8 +2,14 @@ package GestionaleAziendale.GesionaleBack.exeptions;
 
 public class BadRequestException extends RuntimeException {
 
-    public BadRequestException(String message) {
+    private final String[] details;
+
+    public BadRequestException(String message, String... details) {
         super(message);
+        this.details = details;
     }
 
+    public String[] getDetails() {
+        return details;
+    }
 }

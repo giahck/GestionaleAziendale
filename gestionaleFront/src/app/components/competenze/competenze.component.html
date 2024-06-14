@@ -1,0 +1,96 @@
+<div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="showSuccessAlert">
+  Competenza aggiunta con successo!
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="showErrorAlert">
+  Si è verificato un errore durante l'aggiunta della competenza.
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
+</div>
+<form [formGroup]="competenzaForm" (ngSubmit)="onCompetenzaSubmit()">
+    <!-- Nome Competenza input -->
+    <mdb-form-control class="mb-4">
+      <input
+        mdbInput
+        type="text"
+        id="competenzaNome"
+        class="form-control"
+        formControlName="nomeCompetenza"
+      />
+      <label mdbLabel class="form-label" for="competenzaNome">Nome Competenza</label>
+      <div
+        *ngIf="competenzaForm.get('nomeCompetenza')?.invalid && competenzaForm.get('nomeCompetenza')?.touched"
+        class="text-danger"
+      >
+        Il campo Nome Competenza è richiesto.
+      </div>
+    </mdb-form-control>
+
+    <!-- Descrizione input -->
+    <mdb-form-control class="mb-4">
+      <textarea
+        mdbInput
+        id="competenzaDescrizione"
+        class="form-control"
+        formControlName="descrizione"
+        rows="3"
+      ></textarea>
+      <label mdbLabel class="form-label" for="competenzaDescrizione">Descrizione</label>
+      <div
+        *ngIf="competenzaForm.get('descrizione')?.invalid && competenzaForm.get('descrizione')?.touched"
+        class="text-danger"
+      >
+        Il campo Descrizione è richiesto.
+      </div>
+    </mdb-form-control>
+
+    <!-- ID Risorsa input -->
+    <mdb-form-control class="mb-4">
+      <input
+        mdbInput
+        type="number"
+        id="competenzaIdRisorsa"
+        class="form-control"
+        formControlName="idRisorsa"
+      />
+      <label mdbLabel class="form-label" for="competenzaIdRisorsa">ID Risorsa</label>
+      <div
+        *ngIf="competenzaForm.get('idRisorsa')?.invalid && competenzaForm.get('idRisorsa')?.touched"
+        class="text-danger"
+      >
+        Il campo ID Risorsa è richiesto.
+      </div>
+    </mdb-form-control>
+
+    <!-- Livello input -->
+    <mdb-form-control class="mb-4">
+      <input
+        mdbInput
+        type="number"
+        id="competenzaLivello"
+        class="form-control"
+        formControlName="livello"
+      />
+      <label mdbLabel class="form-label" for="competenzaLivello">Livello</label>
+      <div
+        *ngIf="competenzaForm.get('livello')?.invalid && competenzaForm.get('livello')?.touched"
+        class="text-danger"
+      >
+        Il campo Livello è richiesto.
+      </div>
+    </mdb-form-control>  
+    <!-- Submit button -->
+    <div class="row">
+      <div class="col-md-6">
+        <button mdbRipple type="submit" class="btn btn-primary btn-block mb-4">
+          Aggiungi Competenza
+        </button>
+      </div>
+      <div class="col-md-6">
+        <button mdbRipple type="submit" class="btn btn-primary btn-block mb-4" (click)="skip()" [routerLink]="['/']" routerLinkActive="active">
+          Skip
+        </button>
+      </div>
+    </div>
+  </form>
+ 

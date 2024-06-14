@@ -1,98 +1,114 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { BehaviorSubject, Observable, catchError, map, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  map,
+  tap,
+  throwError,
+} from 'rxjs';
 import { AuthData } from '../models/authData.interface';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt'; 
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Register } from '../models/register.interface';
 import { Router } from '@angular/router';
-import { log } from 'console';
 import { Competenze } from '../models/competenze.interface';
+import { StatoRegister } from '../models/stato-register.interface';
 
-interface DataState {
-  popupVisible: boolean;
-  competenze: boolean;
-  id: number | null;
-}
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private stateKey = 'authState';
- private state = new BehaviorSubject<DataState>({
+  //private stateKey = 'authState';
+  private state = new BehaviorSubject<StatoRegister>({
     popupVisible: false,
     competenze: false,
-    id: null
-  }); 
-  state$: Observable<DataState> = this.state.asObservable()
-   apiURL = environment.apiURL;
+    id: null,
+  });
+  state$: Observable<StatoRegister> = this.state.asObservable();
+  apiURL = environment.apiURL;
   private authSub = new BehaviorSubject<AuthData | null>(null);
   user$ = this.authSub.asObservable();
   jwtHelper = new JwtHelperService();
   timeOut: any;
-  constructor( private http: HttpClient,private router: Router) { 
-    /* this.state.next(this.getStateFromStorage()); */
-  }
-  /* private getStateFromStorage(): DataState {
-    const storedState = sessionStorage.getItem(this.stateKey);
-    return storedState ? JSON.parse(storedState) : {
-      popupVisible: false,
-      competenze: false,
-      id: null
-    }; 
-  }*/
-  saveStateToStorage(state: DataState): void {
-    sessionStorage.setItem(this.stateKey, JSON.stringify(state));
-  }
-  
-    // Setter method
-    setState(newState: DataState) {
-      this.state.next(newState);
-      this.saveStateToStorage(newState);
-     // console.log('newState: ', newState);
-    }
-  
-    // Getter method (optional)
-    getState(): DataState {
-      return this.state.getValue();
-    }
-    competenze(data:Competenze){///competenze/register
-      return this.http.post(`${this.apiURL}auth/register`, data, { responseType: 'text' })
-    }
+  constructor(private http: HttpClient, private router: Router) {}
 
-  getEmailConfirmedState(): Observable<boolean>{
+  // Setter method
+  setState(newState: StatoRegister) {
+    console.log('New state:', newState);
+    this.state.next(newState);
+  }
+
+  // Getter method
+  getState(): StatoRegister {
+    return this.state.getValue();
+  }
+  competenze(data: Competenze) {
+    ///competenze/register
+    return this.http.post(`${this.apiURL}auth/competenze`, data, {
+      responseType: 'text',
+    });
+  }
+
+  getEmailConfirmedState(registerForm: Register): Observable<boolean> {
     const statoCorrente = this.getState();
-    const params = new HttpParams().set('id', statoCorrente.id?.toString() || '');
-    return this.http.get<boolean>(`${this.apiURL}auth/email-confirmed`, { params })
-    .pipe(
-   //   map(response => response === 'true'),
-      catchError(error => {
-        console.error('Error verifying email:', error);
-        return throwError(error);
-      })
-    ); 
+    const params = new HttpParams().set(
+      'id',
+      statoCorrente.id?.toString() || ''
+    );
+
+    return this.http
+      .get<boolean>(`${this.apiURL}auth/email-confirmed`, { params })
+      .pipe(
+        tap((response: boolean) => {
+          if (response === true) {
+            // Email confirmed, proceed with login
+            this.login({
+              email: registerForm.email,
+              password: registerForm.password,
+              rememberMe: false,
+            }).subscribe();
+          }
+        }),
+        catchError((error) => {
+          console.error('Error verifying email:', error);
+          return throwError(error);
+        })
+      );
   }
   register(data: Register) {
     console.log('data: ', data);
     return this.http
-    .post(`${this.apiURL}auth/register`, data, { responseType: 'text' })
-    .pipe( map((response) => Number(response)),
-      catchError(this.errors)
+      .post(`${this.apiURL}auth/register`, data, { responseType: 'text' })
+      .pipe(
+        map((response) => Number(response)),
+        catchError(this.handleError)
+      );
+  }
+  login(data: { email: string; password: string; rememberMe: boolean }): Observable<AuthData> {
+    return this.http.post<AuthData>(`${this.apiURL}auth/login`, data).pipe(
+      tap(async (dataResponse) => {
+        if (dataResponse && dataResponse.accessToken) {
+          if (data.rememberMe) {
+            localStorage.setItem('token', dataResponse.accessToken);
+          } else {
+            sessionStorage.setItem('token', dataResponse.accessToken);
+          }
+          localStorage.setItem('user', JSON.stringify(dataResponse));
+          this.autoLogout(dataResponse);
+        }
+        this.authSub.next(dataResponse);
+      }),
+      catchError(this.handleError)
     );
   }
-  login(data: { email: string; password: string }) {
-    //console.log('data: ', data);
-    return this.http.post<AuthData>(`${this.apiURL}auth/login`, data ).pipe(
-      tap(async(data) => {
-        console.log('Auth data: ', data);
-      }),
-      tap((data) => {
-        this.authSub.next(data);
-        localStorage.setItem('user', JSON.stringify(data));
-        this.autoLogout(data);
-      }), 
-      catchError(this.errors)
-    );
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token') || !!sessionStorage.getItem('token');
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token') || sessionStorage.getItem('token');
   }
   restore() {
     if (typeof localStorage !== 'undefined') {
@@ -100,12 +116,12 @@ export class AuthService {
       if (userLocalStorage) {
         const user = JSON.parse(userLocalStorage);
         const token = user.accessToken; // Adjust this based on your actual structure
-       
+
         if (token) {
           const isExpired = this.jwtHelper.isTokenExpired(token);
           if (!isExpired) {
             // Token is valid
-          //  console.log('token: ', token);
+            //  console.log('token: ', token);
             this.authSub.next(user);
           } else {
             // Token is expired
@@ -122,53 +138,44 @@ export class AuthService {
         this.router.navigate(['/login']);
       }
     } else {
-     // console.error('localStorage is not available');
+      // console.error('localStorage is not available');
     }
   }
 
   autoLogout(user: AuthData) {
-    const dateExpiration = this.jwtHelper.getTokenExpirationDate(user.accessToken) as Date;
+    const dateExpiration = this.jwtHelper.getTokenExpirationDate(
+      user.accessToken
+    ) as Date;
     const millisecondsExp = dateExpiration.getTime() - new Date().getTime();
     this.timeOut = setTimeout(() => {
-        this.logout();
+      this.logout();
     }, millisecondsExp);
-}
-  private errors(err: any) {
-    console.log(err.error);
-    switch (err.error) {
-      case 'Email already exists':
-        return throwError('The user already exists.');
-        break;
-
-      case 'Incorrect password':
-        return throwError('Incorrect password');
-        break;
-
-      case 'Cannot find user':
-        return throwError('User not found');
-        break;
-
-      default:
-        return throwError('Request error');
-        break;
-    }
   }
+
   logout() {
     this.authSub.next(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     this.router.navigate(['/login']);
     if (this.timeOut) {
       clearTimeout(this.timeOut);
     }
   }
+    // Metodo per gestire gli errori delle richieste HTTP
+    private handleError(error: any): Observable<never> {
+      console.error('Errore durante la richiesta:', error);
+      let errorMessage = 'Si è verificato un errore.';
+      if (error.error instanceof ErrorEvent) {
+        // Errore del client
+        errorMessage = `Errore: ${error.error.message}`;
+      } else {
+        // Errore del server
+        errorMessage = `Errore ${error.status}: ${error.message}`;
+      }
+      return throwError(errorMessage);
+    }
 }
-function jwt_decode(token: any) {
-  throw new Error('Function not implemented.');
-}
-
-
-
-
 
 /* // Funzione per verificare l'email utilizzando un token di verifica
 verifyEmail(token: string): Observable<any> {

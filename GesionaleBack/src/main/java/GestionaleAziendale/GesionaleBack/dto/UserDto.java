@@ -55,5 +55,7 @@ public class UserDto {
     @NotNull(message = "Ruolo non può essere null")
     private Set<Integer> ruoloId;
 
+    private Boolean rememberMe;
+
     private String accessToken;
 }

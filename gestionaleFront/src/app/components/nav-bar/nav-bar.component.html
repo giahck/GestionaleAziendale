@@ -35,25 +35,26 @@
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 px-5">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/']" routerLinkActive="active"
+          <a  *ngIf="user" class="nav-link" [routerLink]="['/']" routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }">HOME</a>
+          <span *ngIf="!user" class="nav-link disabled">HOME</span>
         </li>
       </ul>
       <!-- Left links -->
 
-      <div class="d-flex align-items-center">
+      <div  class="d-flex align-items-center">
         <ul class="navbar-nav flex-row">
           <li class="nav-item me-3 me-lg-1">
             <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-              <strong class="d-none d-sm-block ms-1">John</strong>
+              <strong class="d-none d-sm-block ms-1">{{user?.nome}} {{user?.cognome}}</strong>
             </a>
           </li>
-          <li class="nav-item me-3 me-lg-1">
+          <li *ngIf="user" class="nav-item me-3 me-lg-1">
             <a class="nav-link" href="#">
               <span><i class="fas fa-video fa-lg"></i></span>
             </a>
           </li>
-          <li mdbDropdown class="nav-item dropdown me-3 me-lg-1">
+          <li *ngIf="user"  mdbDropdown class="nav-item dropdown me-3 me-lg-1">
             <a
               class="nav-link dropdown-toggle hidden-arrow"
               href="#"

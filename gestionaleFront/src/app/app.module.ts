@@ -17,6 +17,7 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { EmailVerifiedComponent } from './auth/email-verified/email-verified.component';
+import { CompetenzeComponent } from './components/competenze/competenze.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,7 @@ import { EmailVerifiedComponent } from './auth/email-verified/email-verified.com
     HomeComponent,
     NavBarComponent,
     EmailVerifiedComponent,
+    CompetenzeComponent,
   ],
   imports: [
     BrowserModule,
