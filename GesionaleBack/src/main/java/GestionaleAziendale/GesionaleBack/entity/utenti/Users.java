@@ -35,6 +35,7 @@ public class Users implements UserDetails {
     private String indirizzo;
     private String cap;
     private String provincia;
+    private Boolean enabled=false;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "utente_ruoli",

@@ -3,17 +3,24 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { get } from 'http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
+  
   competenzaForm!: FormGroup;
   loginForm!: FormGroup;
   registerForm!: FormGroup;
-  popupVisible: boolean = false;
-  competenze:boolean = false;
+  state = {
+    popupVisible: false,
+    competenze: false,
+    id: null as number | null
+  };
+  
   constructor(
     private fb: FormBuilder,
     private authSrv: AuthService,
@@ -21,6 +28,19 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+  //  if (typeof sessionStorage !== 'undefined') {
+      const storedState = sessionStorage.getItem('authState');
+      console.log(storedState,'storedState');
+      if (storedState) {
+        this.state = JSON.parse(storedState);
+      }
+   // }
+    console.log(this.authSrv.state$,'state$ ');
+    console.log(this.state)
+    this.authSrv.state$.subscribe((state) => {
+      this.state = state;
+      console.log('state: ', state);
+    });
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -57,11 +77,10 @@ export class LoginComponent implements OnInit {
 
   onLoginSubmit(): void {
     if (this.loginForm.valid) {
-      this.closePopup();
+      
       this.authSrv.login(this.loginForm.value).subscribe(
         
         (response) => {
-          
           if (response) 
           this.router.navigate(['/']);
         },
@@ -76,22 +95,14 @@ export class LoginComponent implements OnInit {
   onRegisterSubmit(): void {
     console.log('Register form value:', this.registerForm.value);
     if (this.registerForm.valid) {
-     /*  const formData = { ...this.registerForm.value };
-      if (Array.isArray(formData.ruoloId)) {
-        formData.ruoloId = formData.ruoloId.map(Number);
-      } else {
-        formData.ruoloId = [Number(formData.ruoloId)]; // Trasforma il valore in un array se non lo è
-      } */
       console.log('Register form value: ', this.registerForm.value);
+     // this.popupVisible = true;
+      this.state.popupVisible = true; 
       this.authSrv.register(this.registerForm.value).subscribe(
-        () => {
-          this.closePopup();
-          setTimeout(() => {
-            this.registerForm.reset();
-            this.closePopup();
-            this.competenze=!this.competenze;
-
-          }, 2000);
+        (response) => {
+          this.state.id = response; 
+          this.authSrv.setState(this.state);
+       //  this.id = response;
         },
         (error) => {
           alert(error);
@@ -99,7 +110,6 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-  // Custom validator function to check if password and repeatPassword match
   passwordMatchValidator(formGroup: FormGroup) {
     const password = formGroup.get('password')?.value;
     const repeatPassword = formGroup.get('repeatPassword')?.value;
@@ -110,27 +120,51 @@ export class LoginComponent implements OnInit {
       formGroup.get('repeatPassword')?.setErrors(null);
     }
   }
-  closePopup(): void {
-    this.popupVisible = !this.popupVisible; // Nascondi il popup
-  }
+
   onCompetenzaSubmit(): void {
     console.log('Dati della competenza da inviare:', this.competenzaForm.value);
     if (this.competenzaForm.valid) {
-      // Invia il form solo se è valido
       const formData = { ...this.competenzaForm.value };
       formData.idRisorsa = Number(formData.idRisorsa);
       formData.livello = Number(formData.livello);
       formData.usersId = Array.isArray(formData.usersId) ? formData.usersId.map(Number): [Number(formData.usersId)];
 
       console.log('Dati della competenza da inviare:', formData);
-      this.closePopup();
-      setTimeout(() => {
-        this.closePopup();
+        //this.popupVisible = true; 
         this.competenzaForm.reset();
-      }, 2000);
+        this.authSrv.competenze(this.competenzaForm.value).subscribe(
+        
+          (response) => {
+            if (response) 
+            this.router.navigate(['/login']);
+          },
+          (error) => {
+            // alert(error);
+            console.error(error);
+          }
+        );
+    
     } else {
       // Segna tutti i campi come toccati per mostrare gli errori di validazione
       this.competenzaForm.markAllAsTouched();
     }
+  }
+  checkEmailConfirmedState(): void {
+    this.authSrv.getEmailConfirmedState().subscribe(
+      (confirmed) => {
+        if(confirmed===true){
+          this.state.competenze = confirmed;
+       this.state.popupVisible = false;
+        this.authSrv.setState(this.state);
+      }else{
+          this.state.competenze = confirmed;
+          this.state.popupVisible = true;
+        } 
+      },
+      (error) => {
+        console.error('Error getting email confirmation state:', error);
+  
+      }
+    );
   }
 }

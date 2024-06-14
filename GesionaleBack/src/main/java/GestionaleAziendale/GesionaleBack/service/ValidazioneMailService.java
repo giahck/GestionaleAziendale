@@ -24,8 +24,6 @@ public class ValidazioneMailService {
     private JavaMailSender mailSender;
 
     public void registerUser(Users user) {
-      //  user.setEnabled(false);
-        userRepository.save(user);
         String token = UUID.randomUUID().toString();
         createVerificationToken(user, token);
         sendVerificationEmail(user.getEmail(), token);
@@ -39,7 +37,8 @@ public class ValidazioneMailService {
     }
     public void sendVerificationEmail(String email, String token) {
         String subject = "Verify your email";
-        String confirmationUrl = "http://localhost:8080/registrationConfirm?token=" + token;
+       // String confirmationUrl = "http://localhost:4200/auth/registrationConfirm/" + token;
+        String confirmationUrl = "http://localhost:8080/auth/registrationConfirm?token=" + token;
         String message = "Please click the link below to verify your email address:\n" + confirmationUrl;
 
         SimpleMailMessage emailMessage = new SimpleMailMessage();
@@ -51,7 +50,7 @@ public class ValidazioneMailService {
     private Date calculateExpiryDate() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Timestamp(cal.getTime().getTime()));
-        cal.add(Calendar.MINUTE, 60); // token valido per 60 minuti
+        cal.add(Calendar.MINUTE, 10000); // token valido per 60 minuti
         return new Date(cal.getTime().getTime());
     }
     public String validateVerificationToken(String token) {
@@ -65,7 +64,7 @@ public class ValidazioneMailService {
             tokenRepository.delete(verificationToken);
             return "expired";
         }
-        //user.setEnabled(true);
+        user.setEnabled(true);
         userRepository.save(user);
         return "valid";
     }

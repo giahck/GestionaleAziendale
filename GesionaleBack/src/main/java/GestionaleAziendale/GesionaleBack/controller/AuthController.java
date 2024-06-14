@@ -6,6 +6,7 @@ import GestionaleAziendale.GesionaleBack.dto.UserRegDto;
 import GestionaleAziendale.GesionaleBack.exeptions.BadRequestException;
 import GestionaleAziendale.GesionaleBack.service.AuthService;
 import GestionaleAziendale.GesionaleBack.service.UserService;
+import GestionaleAziendale.GesionaleBack.service.ValidazioneMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -19,13 +20,15 @@ public class AuthController {
     private UserService userService;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private ValidazioneMailService validazioneMailService;
     @PostMapping("/register")
-    public UserRegDto Register(@RequestBody @Validated UserRegDto userDto, BindingResult bindingResult)  {
+    public Integer Register(@RequestBody @Validated UserRegDto userDto, BindingResult bindingResult)  {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage()).
                     reduce("", (s, s2) -> s + s2));
         }
-          return userService.saveUserRegister(userDto);
+          return userService.saveUserRegister(userDto).getId();
     }
     @PostMapping("/login")
     public UserDto Login(@RequestBody @Validated LoginDto loginDto, BindingResult bindingResult)  {
@@ -33,22 +36,20 @@ public class AuthController {
             throw new BadRequestException(bindingResult.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage()).
                     reduce("", (s, s2) -> s + s2));
         }
-        try {
-            // Pause for 3 seconds
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            // Handle exception
-            e.printStackTrace();
-        }
         return authService.authenticateUserAndCreateToken(loginDto);
     }
-    /*@GetMapping("/registrationConfirm")
-    public ResponseEntity<String> confirmRegistration(@RequestParam("token") String token) {
-        String result = userService.validateVerificationToken(token);
+    @GetMapping("/registrationConfirm")
+    public String confirmRegistration(@RequestParam("token") String token) {
+        String result = validazioneMailService.validateVerificationToken(token);
         if ("valid".equals(result)) {
-            return ResponseEntity.ok("Account verified successfully.");
+            return result;
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or expired token.");
+            return result;
         }
-    }*/
+    }
+    @GetMapping("/email-confirmed")
+    public boolean isEmailConfirmed(@RequestParam("id") Integer id) {
+
+        return userService.isEmailConfirmed(id);
+    }
 }

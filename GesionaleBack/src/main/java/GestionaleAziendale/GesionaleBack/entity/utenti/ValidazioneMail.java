@@ -2,15 +2,15 @@ package GestionaleAziendale.GesionaleBack.entity.utenti;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
 @Data
 @Entity
+@Table(name = "validazione_mail")
 public class ValidazioneMail {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String token;
 

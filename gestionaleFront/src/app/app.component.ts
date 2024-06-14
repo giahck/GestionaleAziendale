@@ -11,7 +11,7 @@ export class AppComponent implements OnInit{
   title = 'gestionaleFront';
   constructor(private authSrv: AuthService,private router: Router) {}
   ngOnInit(): void {
-    console.log('AppComponent initialized');
+ //   console.log('AppComponent initialized');
     this.authSrv.restore();
   }
 }

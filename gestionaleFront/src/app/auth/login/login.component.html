@@ -1,7 +1,7 @@
 <div class="tabs-container">
   <mdb-tabs [pills]="true" [fill]="true">
     <!-- Login Tab -->
-    <mdb-tab title="Login" *ngIf="!competenze">
+    <mdb-tab title="Login" *ngIf="!state.competenze">
       <div class="container mt-4">
         <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
           <!-- Social login buttons -->
@@ -128,7 +128,7 @@
     </mdb-tab>
 
     <!-- Register Tab -->
-    <mdb-tab title="Register" *ngIf="!competenze">
+    <mdb-tab title="Register" *ngIf="!state.competenze">
       <div class="container mt-4">
         <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
           <!-- Social signup buttons -->
@@ -485,7 +485,7 @@
       </div>
     </mdb-tab>
        <!-- Nuovo Tab per le competenze-->
-       <mdb-tab title="Nuova Competenza" *ngIf="competenze">
+       <mdb-tab title="Nuova Competenza" *ngIf="state.competenze">
         <div class="container mt-4">
           <form [formGroup]="competenzaForm" (ngSubmit)="onCompetenzaSubmit()">
             <!-- Nome Competenza input -->
@@ -570,9 +570,10 @@
 </div>
 
 <!-- Popup quando competenze è false -->
-<div *ngIf="popupVisible" class="popup-container">
+<div *ngIf="state.popupVisible" class="popup-container">
   <div class="popup">
     <h2>Popup Content</h2>
     <p>Questo è il contenuto del popup.</p>
+    <button type="button" (click)="checkEmailConfirmedState()" [disabled]="state.competenze">Check Email Confirmation</button>
   </div>
 </div>

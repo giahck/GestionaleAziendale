@@ -12,6 +12,7 @@ import GestionaleAziendale.GesionaleBack.maperDto.UserRegisterMapper;
 import GestionaleAziendale.GesionaleBack.repository.RuoloRepository;
 import GestionaleAziendale.GesionaleBack.repository.UserRepository;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Users;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,13 +33,19 @@ public class UserService {
     private UserMapper userMapper;
     @Autowired
     UserRegisterMapper userRegisterMapper;
-    public UserRegDto saveUserRegister(UserRegDto userDto) {
+    @Autowired
+    ValidazioneMailService validazioneMailService;
+    public Users saveUserRegister(UserRegDto userDto) {
+
         Users user= userRegisterMapper.toEntity(userDto);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         Set<Ruolo> ruoli = new HashSet<>();
         ruoli.add(checkRuolo(RuoloEnum.USER));
         user.setRuoli(ruoli);
-        return userRegisterMapper.toDto(userRepository.save(user));
+        userRepository.save(user);
+       validazioneMailService.registerUser(user);
+      //  userRegisterMapper.toDto(user);
+        return checkEmail(user.getEmail());
     }
 
 
@@ -56,12 +63,16 @@ public class UserService {
 
         return userMapper.userToUserDto(user);
     }
+    public boolean isEmailConfirmed(int id) {
+       return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Utente non trovato con id: "+id)).getEnabled();
 
+
+    }
 
     public Users getUserById(int id) {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Utente non trovato con id: "+id));
     }
-    public Users checkUser(String email) {
+    public Users checkEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("Utente non trovato con email: "+email));
     }
     public Ruolo checkRuolo(RuoloEnum ruoloEnum) {

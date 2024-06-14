@@ -16,12 +16,14 @@ import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { EmailVerifiedComponent } from './auth/email-verified/email-verified.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
     NavBarComponent,
+    EmailVerifiedComponent,
   ],
   imports: [
     BrowserModule,

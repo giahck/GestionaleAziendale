@@ -1,32 +1,87 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, tap, throwError } from 'rxjs';
 import { AuthData } from '../models/authData.interface';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt'; 
 import { Register } from '../models/register.interface';
 import { Router } from '@angular/router';
 import { log } from 'console';
+import { Competenze } from '../models/competenze.interface';
 
-
+interface DataState {
+  popupVisible: boolean;
+  competenze: boolean;
+  id: number | null;
+}
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  apiURL = environment.apiURL;
+  private stateKey = 'authState';
+ private state = new BehaviorSubject<DataState>({
+    popupVisible: false,
+    competenze: false,
+    id: null
+  }); 
+  state$: Observable<DataState> = this.state.asObservable()
+   apiURL = environment.apiURL;
   private authSub = new BehaviorSubject<AuthData | null>(null);
   user$ = this.authSub.asObservable();
   jwtHelper = new JwtHelperService();
   timeOut: any;
-  constructor( private http: HttpClient,private router: Router) { }
+  constructor( private http: HttpClient,private router: Router) { 
+    /* this.state.next(this.getStateFromStorage()); */
+  }
+  /* private getStateFromStorage(): DataState {
+    const storedState = sessionStorage.getItem(this.stateKey);
+    return storedState ? JSON.parse(storedState) : {
+      popupVisible: false,
+      competenze: false,
+      id: null
+    }; 
+  }*/
+  saveStateToStorage(state: DataState): void {
+    sessionStorage.setItem(this.stateKey, JSON.stringify(state));
+  }
+  
+    // Setter method
+    setState(newState: DataState) {
+      this.state.next(newState);
+      this.saveStateToStorage(newState);
+     // console.log('newState: ', newState);
+    }
+  
+    // Getter method (optional)
+    getState(): DataState {
+      return this.state.getValue();
+    }
+    competenze(data:Competenze){///competenze/register
+      return this.http.post(`${this.apiURL}auth/register`, data, { responseType: 'text' })
+    }
+
+  getEmailConfirmedState(): Observable<boolean>{
+    const statoCorrente = this.getState();
+    const params = new HttpParams().set('id', statoCorrente.id?.toString() || '');
+    return this.http.get<boolean>(`${this.apiURL}auth/email-confirmed`, { params })
+    .pipe(
+   //   map(response => response === 'true'),
+      catchError(error => {
+        console.error('Error verifying email:', error);
+        return throwError(error);
+      })
+    ); 
+  }
   register(data: Register) {
     console.log('data: ', data);
     return this.http
-      .post(`${this.apiURL}auth/register`, data,{ responseType: 'text' })
-      .pipe(catchError(this.errors));
+    .post(`${this.apiURL}auth/register`, data, { responseType: 'text' })
+    .pipe( map((response) => Number(response)),
+      catchError(this.errors)
+    );
   }
   login(data: { email: string; password: string }) {
-    console.log('data: ', data);
+    //console.log('data: ', data);
     return this.http.post<AuthData>(`${this.apiURL}auth/login`, data ).pipe(
       tap(async(data) => {
         console.log('Auth data: ', data);
@@ -44,13 +99,30 @@ export class AuthService {
       const userLocalStorage = localStorage.getItem('user');
       if (userLocalStorage) {
         const user = JSON.parse(userLocalStorage);
-        this.authSub.next(user);
-      } else {
+        const token = user.accessToken; // Adjust this based on your actual structure
        
+        if (token) {
+          const isExpired = this.jwtHelper.isTokenExpired(token);
+          if (!isExpired) {
+            // Token is valid
+          //  console.log('token: ', token);
+            this.authSub.next(user);
+          } else {
+            // Token is expired
+            localStorage.removeItem('user');
+            this.router.navigate(['/login']);
+          }
+        } else {
+          // No token found
+          localStorage.removeItem('user');
+          this.router.navigate(['/login']);
+        }
+      } else {
+        // No user found in localStorage
         this.router.navigate(['/login']);
       }
     } else {
-      console.error('localStorage is not available');
+     // console.error('localStorage is not available');
     }
   }
 
@@ -90,3 +162,45 @@ export class AuthService {
     }
   }
 }
+function jwt_decode(token: any) {
+  throw new Error('Function not implemented.');
+}
+
+
+
+
+
+/* // Funzione per verificare l'email utilizzando un token di verifica
+verifyEmail(token: string): Observable<any> {
+  return this.http.get(`${this.apiURL}auth/registrationConfirm?token=${token}`,{ responseType: 'text' })
+  .pipe(
+    tap(response => {
+      // Gestisci qui la risposta, ad esempio controlla se è un messaggio di conferma
+      console.log('Response from server:', response);
+      if (response === 'Account verified successfully.') {
+        // Esegui le operazioni necessarie dopo la conferma dell'email
+        this.emailConfirmedSubject.next(true);
+      } else {
+        console.error('Unexpected response from server:', response);
+      }
+    }),
+    catchError(error => {
+      console.error('Error verifying email:', error);
+      return throwError(error);
+    })
+  );
+}
+
+  // Metodo per confermare l'email e aggiornare lo stato
+  confirmEmail(): void {
+    // Esegui qui la logica di conferma dell'email
+
+    // Dopo la conferma, aggiorna lo stato
+    this.emailConfirmedSubject.next(true);
+  
+  }
+
+  // Metodo per ottenere lo stato di conferma dell'email come Observable
+  getEmailConfirmedState(): Observable<boolean> {
+    return this.emailConfirmedSubject.asObservable();
+  } */
