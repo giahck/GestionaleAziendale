@@ -23,7 +23,7 @@ public class RuoloService {
     }
     public RuoloDto saveRuolo(RuoloDto ruoloDto) {
         Ruolo ruolo = ruoloMapper.toEntity(ruoloDto);
-        if (ruoloRepository.findByNomeRuolo(ruolo.getNomeRuolo())!=null) {
+        if (ruoloRepository.findByNomeRuolo(ruolo.getNomeRuolo()).isPresent()) {
             throw new BadRequestException("Ruolo già esistente: "+ruolo.getNomeRuolo());
         }
        // ruolo.setIdRuolo(10);

@@ -1,8 +1,11 @@
 package GestionaleAziendale.GesionaleBack.controller;
 
 import GestionaleAziendale.GesionaleBack.dto.RuoloDto;
+import GestionaleAziendale.GesionaleBack.dto.UserDto;
+import GestionaleAziendale.GesionaleBack.dto.UserRegDto;
 import GestionaleAziendale.GesionaleBack.exeptions.BadRequestException;
 import GestionaleAziendale.GesionaleBack.service.RuoloService;
+import GestionaleAziendale.GesionaleBack.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +23,8 @@ public class RuoloController {
 
     @Autowired
     private RuoloService ruoloService;
-
+    @Autowired
+    private UserService userService;
     @PostMapping
     @PreAuthorize("hasAuthority('IT')")
     public ResponseEntity<RuoloDto> saveRuolo(@RequestBody @Validated RuoloDto ruoloDto, BindingResult bindingResult) {
@@ -29,5 +33,14 @@ public class RuoloController {
         }
         RuoloDto savedRuoloDto = ruoloService.saveRuolo(ruoloDto);
         return new ResponseEntity<>(savedRuoloDto, HttpStatus.CREATED);
+    }
+    @PostMapping("/registerIt")
+    @PreAuthorize("hasAuthority('IT')")
+    public UserDto saveUserIt(@RequestBody @Validated UserDto userDto, BindingResult bindingResult)  {
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException(bindingResult.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage()).
+                    reduce("", (s, s2) -> s + s2));
+        }
+        return userService.saveUser(userDto);
     }
 }

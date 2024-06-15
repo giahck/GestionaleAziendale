@@ -36,8 +36,12 @@ public class AuthService {
             if (passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
                 System.out.println(passwordEncoder.matches(loginDto.getPassword(), user.getPassword()));
                UserDto userDto = userMapper.userToUserDto(user);
+               userDto.setAccessToken(jwtTool.createToken(user));
+                if (loginDto.getRememberMe() != null) {
+                    user.setRememberMe(loginDto.getRememberMe());
+                    userRepository.save(user);
+                }
 
-                userDto.setAccessToken(jwtTool.createToken(user));
                 return userDto;
             } else {
                 throw new ResourceNotFoundException("Errore nel login, riloggarsi");

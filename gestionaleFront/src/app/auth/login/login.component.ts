@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
 
   onLoginSubmit(): void {
     if (this.loginForm.valid) {
-      const { email, password, rememberMe } = this.loginForm.value;
+     // const { email, password, rememberMe } = this.loginForm.value;
       this.authSrv.login(this.loginForm.value).subscribe(
         
         (response) => {
@@ -87,12 +87,12 @@ export class LoginComponent implements OnInit {
      // this.popupVisible = true;
      this.errorMessage = 'Esegui la verifica dopo la registrazione clicca qui';
       this.state.popupVisible = true; 
-      
       this.authSrv.register(this.registerForm.value).subscribe(
         (response) => {
           this.validazione=true;
           this.colesePP=false;
           this.state.id = response; 
+
           this.authSrv.setState(this.state);
        //  this.id = response;
         },
