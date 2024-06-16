@@ -6,7 +6,7 @@
     top: 0;
     width: 5rem;
     height: 100vh;
-    box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+    box-shadow: 0.063rem 0 1.25rem 0 #031a43;
 
     .logo-container {
         display: flex;
@@ -97,3 +97,91 @@
         color: #000;
     }
 }
+ .active-sublevel {
+    color: #ff0000 !important; 
+    // opacity: 1 !important;
+ } 
+
+ .menu-collapse-icon {
+    font-size: 25px;
+    width: 2rem;
+    min-width: 2rem;
+    margin: auto 0.5rem auto auto;
+    text-align: center;
+    color: #0e0808;
+}
+
+.sublevel-nav {
+    list-style: none;
+    margin-left: 10px;
+
+    .sublevel-nav-item {
+        .sublevel-nav-link {
+            display: flex;
+            align-items: center;
+            height: 3rem;
+            color: #2a1919;
+            text-decoration: none;
+            border-radius: 0.625rem;
+            transition: all .3s ease;
+
+            .sublevel-link-icon {
+                font-size: 4px;
+                width: 2rem;
+                min-width: 2rem;
+             //   margin: 0 0.2rem;
+                text-align: center;
+            }
+
+            .sublevel-link-text {
+                margin-left: 0.5rem;
+            }
+        }
+
+        .sublevel-nav-link:hover {
+            color: #d81111;
+        }
+    }
+} 
+
+//scrollbar and visibility on hover and focus
+
+ .scrollwrap {
+    overflow-y: auto;
+    visibility: hidden;
+    height: calc(100% - 3.65rem);
+}
+
+.sidenav-nav,
+.scrollwrap:hover,
+.scrollwrap:focus {
+    visibility: visible;
+}
+
+.scrollwrap_delayed {
+    transition: visibility 0.5s 0.2s;
+}
+
+.scrollwrap_delayed:hover {
+    transition: visibility 0.2s 0.2s;
+}
+
+// works on chrome, edge and safari
+.scrollwrap::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollwrap::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollwrap::-webkit-scrollbar-thumb {
+    background-color: #144156;
+    border-radius: 20px;
+}
+
+
+.scrollwrap {
+    scrollbar-width: thin;
+    scrollbar-color: #094b69 transparent;
+} 

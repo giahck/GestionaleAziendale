@@ -1,39 +1,49 @@
+import { InavBarData } from "./inav-bar-data.interface";
 
-
-export const navbarData = [
-    {
-        routeLink: 'dashboard',
-        icon: 'fal fa-home',
-        label: 'Dashboard'
-    },
-    {
-        routeLink: 'products',
-        icon: 'fal fa-box-open',
-        label: 'Products'
-    },
-    {
-        routeLink: 'statistics',
-        icon: 'fal fa-chart-bar',
-        label: 'Statistics'
-    },
-    {
-        routeLink: 'coupens',
-        icon: 'fal fa-tags',
-        label: 'Coupens'
-    },
-    {
-        routeLink: 'pages',
-        icon: 'fal fa-file',
-        label: 'Pages'
-    },
-    {
-        routeLink: 'media',
-        icon: 'fal fa-camera',
-        label: 'Media'
-    },
-    {
-        routeLink: 'settings',
-        icon: 'fal fa-cog',
-        label: 'Settings'
-    },
+export const navbarData: InavBarData[]= [
+  {
+    routeLink: '',
+    icon: 'fa fa-home',
+    label: 'Home',
+  },
+  {
+    routeLink: 'chat-tiket',
+    icon: 'fa fa-tools',
+    label: 'Chat-Tiket',
+  },
+  {
+    routeLink: 'tickets',
+    icon: 'fa fa-ticket',
+    label: 'Tickets',
+    items: [
+      {
+        routeLink: 'ticket',
+        label: 'Tickets',
+      },
+      {
+        routeLink: 'create-tickets',
+        label: 'Create Tickets',
+      }
+    ],
+  },
+  {
+    routeLink: 'maschines',
+    icon: 'fa fa-cogs',
+    label: 'Maschine',
+    items: [
+      {
+        routeLink: 'create-maschine',
+        label: 'Create Maschine',
+      },
+      {
+        routeLink: 'status-maschine',
+        label: 'Status Maschine',
+      },
+    ],
+  },
+  {
+    routeLink: 'settings',
+    icon: 'fa fa-cog',
+    label: 'Settings',
+  },
 ];
