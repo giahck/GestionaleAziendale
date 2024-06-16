@@ -2,6 +2,7 @@ package GestionaleAziendale.GesionaleBack.exeptions;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,9 +18,10 @@ public class ExceptionsHandler {
 
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorsPayload handleBadRequest(BadRequestException e, WebRequest request) {
+    public ResponseEntity<ErrorsPayload> handleBadRequest(BadRequestException e, WebRequest request) {
         log.error("Errore di richiesta non valida", e, e.getMessage(), e.getClass().getName(), LocalDateTime.now());
-        return new ErrorsPayload(e.getMessage(), LocalDateTime.now(), request.getDescription(false), e.getClass().getName());
+        ErrorsPayload error = new ErrorsPayload(e.getMessage(), LocalDateTime.now(), e.getDetails(), e.getClass().getName());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(NotFoundException.class)
@@ -31,21 +33,23 @@ public class ExceptionsHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorsPayload handleGeneric(Exception e) {
+    public ResponseEntity<ErrorsPayload> handleGeneric(Exception e) {
         String message = "Si è verificato un errore interno del server.";
         String details = e.getMessage() != null ? e.getMessage() : "Dettagli dell'eccezione non disponibili.";
         log.error("Si è verificato un errore interno del server", e, message, e.getClass().getName(), LocalDateTime.now(), details);
-        return new ErrorsPayload(message, LocalDateTime.now(), details, e.getClass().getName());
+        ErrorsPayload error = new ErrorsPayload(message, LocalDateTime.now(), details, e.getClass().getName());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorsPayload handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ErrorsPayload> handleValidationExceptions(MethodArgumentNotValidException ex) {
         String errors = ex.getBindingResult().getFieldErrors()
                 .stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining(", "));
         log.error("Errore di validazione", ex, errors, ex.getClass().getName(), LocalDateTime.now());
-        return new ErrorsPayload(errors, LocalDateTime.now(), errors, ex.getClass().getName());
+        ErrorsPayload error = new ErrorsPayload(errors, LocalDateTime.now(), errors, ex.getClass().getName());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }

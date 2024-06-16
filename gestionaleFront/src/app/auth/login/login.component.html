@@ -1,41 +1,39 @@
-<div class="tabs-container">
-  <mdb-tabs [pills]="true" [fill]="true">
+<div class="tabs-container ">
+  <ul class="nav nav-pills d-flex justify-content-center align-items-center text-center" id="pills-tab" role="tablist" style="width: 100%;">
     <!-- Login Tab -->
-    <mdb-tab title="Login" *ngIf="!state.competenze">
+    <li class="nav-item flex-fill" *ngIf="!state.competenze">
+      <a class="nav-link active ms-3" id="login-tab" data-bs-toggle="pill" href="#login" role="tab" aria-controls="login" aria-selected="true">Login   </a>
+    </li>
+
+    <!-- Register Tab -->
+    <li class="nav-item flex-fill " *ngIf="!state.competenze">
+      <a class="nav-link" id="register-tab" data-bs-toggle="pill" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+    </li>
+
+    <!-- Nuova Competenza Tab -->
+    <li class="nav-item flex-fill" *ngIf="state.competenze">
+      <a class="nav-link active" id="competenza-tab" data-bs-toggle="pill" href="#competenza" role="tab" aria-controls="competenza" aria-selected="false">Nuova Competenza</a>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="pills-tabContent">
+    <!-- Login Tab Content -->
+    <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab" *ngIf="!state.competenze">
       <div class="container mt-4">
         <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
           <!-- Social login buttons -->
           <div class="text-center mb-3">
             <p>Sign in with:</p>
-            <button
-              mdbRipple
-              type="button"
-              class="btn btn-secondary btn-floating mx-1"
-            >
+            <button type="button" class="btn btn-secondary btn-floating mx-1">
               <i class="fab fa-facebook-f"></i>
             </button>
-
-            <button
-              mdbRipple
-              type="button"
-              class="btn btn-secondary btn-floating mx-1"
-            >
+            <button type="button" class="btn btn-secondary btn-floating mx-1">
               <i class="fab fa-google"></i>
             </button>
-
-            <button
-              mdbRipple
-              type="button"
-              class="btn btn-secondary btn-floating mx-1"
-            >
+            <button type="button" class="btn btn-secondary btn-floating mx-1">
               <i class="fab fa-twitter"></i>
             </button>
-
-            <button
-              mdbRipple
-              type="button"
-              class="btn btn-secondary btn-floating mx-1"
-            >
+            <button type="button" class="btn btn-secondary btn-floating mx-1">
               <i class="fab fa-github"></i>
             </button>
           </div>
@@ -43,63 +41,29 @@
           <p class="text-center">or:</p>
 
           <!-- Email input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="email"
-              id="loginEmail"
-              class="form-control"
-              formControlName="email"
-            />
-            <label mdbLabel class="form-label" for="loginEmail">Email</label>
-            <div
-              *ngIf="
-                loginForm.get('email')?.invalid &&
-                loginForm.get('email')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label">Email</label>
+            <input type="email" id="loginEmail" class="form-control" formControlName="email" />
+            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
               Please enter a valid email address.
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- Password input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="password"
-              id="loginPassword"
-              class="form-control"
-              formControlName="password"
-            />
-            <label mdbLabel class="form-label" for="loginPassword"
-              >Password</label
-            >
-            <div
-              *ngIf="
-                loginForm.get('password')?.invalid &&
-                loginForm.get('password')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label">Password</label>
+            <input type="password" id="loginPassword" class="form-control" formControlName="password" />
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
               Password must be at least 6 characters long.
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- Checkbox and Forgot password link -->
           <div class="row mb-4">
             <div class="col-md-6 d-flex justify-content-center">
               <div class="form-check mb-3 mb-md-0">
-                <input
-                  mdbCheckbox
-                  class="form-check-input"
-                  type="checkbox"
-                  id="loginCheck"
-                  formControlName="rememberMe"
-                />
-                <label class="form-check-label" for="loginCheck">
-                  Remember me
-                </label>
+                <input class="form-check-input" type="checkbox" id="loginCheck" formControlName="rememberMe" />
+                <label class="form-check-label" for="loginCheck">Remember me</label>
               </div>
             </div>
             <div class="col-md-6 d-flex justify-content-center">
@@ -108,61 +72,35 @@
           </div>
 
           <!-- Submit button -->
-          <button
-            mdbRipple
-            type="submit"
-            class="btn btn-primary btn-block mb-4"
-          >
+          <button type="submit" class="btn btn-primary btn-block mb-4">
             Sign in
           </button>
 
           <!-- Register buttons -->
           <div class="text-center">
-            <p>
-              Not a member?
-              <a href="#!" class="text-decoration-none">Register</a>
-            </p>
+            <p>Not a member? <a href="#!" class="text-decoration-none">Register</a></p>
           </div>
         </form>
       </div>
-    </mdb-tab>
+    </div>
 
-    <!-- Register Tab -->
-    <mdb-tab title="Register" *ngIf="!state.competenze">
+    <!-- Register Tab Content -->
+    <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab" *ngIf="!state.competenze">
       <div class="container mt-4">
         <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
           <!-- Social signup buttons -->
           <div class="text-center mb-3">
             <p>Sign up with:</p>
-            <button
-              mdbRipple
-              type="button"
-              class="btn btn-secondary btn-floating mx-1"
-            >
+            <button type="button" class="btn btn-secondary btn-floating mx-1">
               <i class="fab fa-facebook-f"></i>
             </button>
-
-            <button
-              mdbRipple
-              type="button"
-              class="btn btn-secondary btn-floating mx-1"
-            >
+            <button type="button" class="btn btn-secondary btn-floating mx-1">
               <i class="fab fa-google"></i>
             </button>
-
-            <button
-              mdbRipple
-              type="button"
-              class="btn btn-secondary btn-floating mx-1"
-            >
+            <button type="button" class="btn btn-secondary btn-floating mx-1">
               <i class="fab fa-twitter"></i>
             </button>
-
-            <button
-              mdbRipple
-              type="button"
-              class="btn btn-secondary btn-floating mx-1"
-            >
+            <button type="button" class="btn btn-secondary btn-floating mx-1">
               <i class="fab fa-github"></i>
             </button>
           </div>
@@ -170,410 +108,155 @@
           <p class="text-center">or:</p>
 
           <!-- Name input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="text"
-              id="registerName"
-              class="form-control"
-              formControlName="nome"
-            />
-            <label mdbLabel class="form-label" for="registerName">Nome</label>
-            <div
-              *ngIf="
-                registerForm.get('nome')?.invalid &&
-                registerForm.get('nome')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="registerName" class="form-label">Nome</label>
+            <input type="text" id="registerName" class="form-control" formControlName="nome" />
+            <div *ngIf="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched" class="text-danger">
               Please enter your name.
             </div>
-          </mdb-form-control>
+          </div>
 
-          <!-- cognome input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="text"
-              id="registercognome"
-              class="form-control"
-              formControlName="cognome"
-            />
-            <label mdbLabel class="form-label" for="registercognome"
-              >cognome</label
-            >
-            <div
-              *ngIf="
-                registerForm.get('cognome')?.invalid &&
-                registerForm.get('cognome')?.touched
-              "
-              class="text-danger"
-            >
-              Please enter a cognome.
+          <!-- Cognome input -->
+          <div class="mb-3">
+            <label for="registerCognome" class="form-label">Cognome</label>
+            <input type="text" id="registerCognome" class="form-control" formControlName="cognome" />
+            <div *ngIf="registerForm.get('cognome')?.invalid && registerForm.get('cognome')?.touched" class="text-danger">
+              Please enter your cognome.
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- Email input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="email"
-              id="registerEmail"
-              class="form-control"
-              formControlName="email"
-            />
-            <label mdbLabel class="form-label" for="registerEmail">Email</label>
-            <div
-              *ngIf="
-                registerForm.get('email')?.invalid &&
-                registerForm.get('email')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="registerEmail" class="form-label">Email</label>
+            <input type="email" id="registerEmail" class="form-control" formControlName="email" />
+            <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger">
               Please enter a valid email address.
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- Password input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="password"
-              id="registerPassword"
-              class="form-control"
-              formControlName="password"
-            />
-            <label mdbLabel class="form-label" for="registerPassword"
-              >Password</label
-            >
-            <div
-              *ngIf="
-                registerForm.get('password')?.invalid &&
-                registerForm.get('password')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="registerPassword" class="form-label">Password</label>
+            <input type="password" id="registerPassword" class="form-control" formControlName="password" />
+            <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger">
               Password must be at least 6 characters long.
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- Repeat Password input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="password"
-              id="registerRepeatPassword"
-              class="form-control"
-              formControlName="repeatPassword"
-            />
-            <label mdbLabel class="form-label" for="registerRepeatPassword"
-              >Repeat password</label
-            >
-            <div
-              *ngIf="
-                registerForm.get('repeatPassword')?.invalid &&
-                registerForm.get('repeatPassword')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="registerRepeatPassword" class="form-label">Repeat password</label>
+            <input type="password" id="registerRepeatPassword" class="form-control" formControlName="repeatPassword" />
+            <div *ngIf="registerForm.get('repeatPassword')?.invalid && registerForm.get('repeatPassword')?.touched" class="text-danger">
               Passwords must match.
             </div>
-          </mdb-form-control>
+          </div>
+
           <!-- Data di Nascita input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="date"
-              id="registerDataDiNascita"
-              class="form-control"
-              formControlName="dataDiNascita"
-            />
-            <label mdbLabel class="form-label" for="registerDataDiNascita"
-              >Data di Nascita</label
-            >
-            <div
-              *ngIf="
-                registerForm.get('dataDiNascita')?.invalid &&
-                registerForm.get('dataDiNascita')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="registerDataDiNascita" class="form-label">Data di Nascita</label>
+            <input type="date" id="registerDataDiNascita" class="form-control" formControlName="dataDiNascita" />
+            <div *ngIf="registerForm.get('dataDiNascita')?.invalid && registerForm.get('dataDiNascita')?.touched" class="text-danger">
               Il campo Data di Nascita è richiesto.
             </div>
-          </mdb-form-control>
-
+          </div>
           <!-- Comune di Nascita input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="text"
-              id="registerComuneDiNascita"
-              class="form-control"
-              formControlName="comuneDiNascita"
-            />
-            <label mdbLabel class="form-label" for="registerComuneDiNascita"
-              >Comune di Nascita</label
-            >
-            <div
-              *ngIf="
-                registerForm.get('comuneDiNascita')?.invalid &&
-                registerForm.get('comuneDiNascita')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="registerComuneDiNascita" class="form-label">Comune di Nascita</label>
+            <input type="text" id="registerComuneDiNascita" class="form-control" formControlName="comuneDiNascita" />
+            <div *ngIf="registerForm.get('comuneDiNascita')?.invalid && registerForm.get('comuneDiNascita')?.touched" class="text-danger">
               Il campo Comune di Nascita è richiesto.
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- Codice Fiscale input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="text"
-              id="registerCodiceFiscale"
-              class="form-control"
-              formControlName="codiceFiscale"
-            />
-            <label mdbLabel class="form-label" for="registerCodiceFiscale"
-              >Codice Fiscale</label
-            >
-            <div
-              *ngIf="
-                registerForm.get('codiceFiscale')?.invalid &&
-                registerForm.get('codiceFiscale')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="registerCodiceFiscale" class="form-label">Codice Fiscale</label>
+            <input type="text" id="registerCodiceFiscale" class="form-control" formControlName="codiceFiscale" />
+            <div *ngIf="registerForm.get('codiceFiscale')?.invalid && registerForm.get('codiceFiscale')?.touched" class="text-danger">
               Il campo Codice Fiscale è richiesto.
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- Telefono input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="text"
-              id="registerTelefono"
-              class="form-control"
-              formControlName="telefono"
-            />
-            <label mdbLabel class="form-label" for="registerTelefono"
-              >Telefono</label
-            >
-            <div
-              *ngIf="
-                registerForm.get('telefono')?.invalid &&
-                registerForm.get('telefono')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="registerTelefono" class="form-label">Telefono</label>
+            <input type="text" id="registerTelefono" class="form-control" formControlName="telefono" />
+            <div *ngIf="registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched" class="text-danger">
               Il campo Telefono è richiesto.
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- Indirizzo input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="text"
-              id="registerIndirizzo"
-              class="form-control"
-              formControlName="indirizzo"
-            />
-            <label mdbLabel class="form-label" for="registerIndirizzo"
-              >Indirizzo</label
-            >
-            <div
-              *ngIf="
-                registerForm.get('indirizzo')?.invalid &&
-                registerForm.get('indirizzo')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="registerIndirizzo" class="form-label">Indirizzo</label>
+            <input type="text" id="registerIndirizzo" class="form-control" formControlName="indirizzo" />
+            <div *ngIf="registerForm.get('indirizzo')?.invalid && registerForm.get('indirizzo')?.touched" class="text-danger">
               Il campo Indirizzo è richiesto.
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- CAP input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="text"
-              id="registerCAP"
-              class="form-control"
-              formControlName="cap"
-            />
-            <label mdbLabel class="form-label" for="registerCAP">CAP</label>
-            <div
-              *ngIf="
-                registerForm.get('cap')?.invalid &&
-                registerForm.get('cap')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="registerCAP" class="form-label">CAP</label>
+            <input type="text" id="registerCAP" class="form-control" formControlName="cap" />
+            <div *ngIf="registerForm.get('cap')?.invalid && registerForm.get('cap')?.touched" class="text-danger">
               Il campo CAP è richiesto.
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- Provincia input -->
-          <mdb-form-control class="mb-4">
-            <input
-              mdbInput
-              type="text"
-              id="registerProvincia"
-              class="form-control"
-              formControlName="provincia"
-            />
-            <label mdbLabel class="form-label" for="registerProvincia"
-              >Provincia</label
-            >
-            <div
-              *ngIf="
-                registerForm.get('provincia')?.invalid &&
-                registerForm.get('provincia')?.touched
-              "
-              class="text-danger"
-            >
+          <div class="mb-3">
+            <label for="registerProvincia" class="form-label">Provincia</label>
+            <input type="text" id="registerProvincia" class="form-control" formControlName="provincia" />
+            <div *ngIf="registerForm.get('provincia')?.invalid && registerForm.get('provincia')?.touched" class="text-danger">
               Il campo Provincia è richiesto.
             </div>
-          </mdb-form-control>
-
-          <!-- Checkbox -->
-          <div class="form-check d-flex justify-content-center mb-4">
-            <input
-              mdbCheckbox
-              class="form-check-input me-2"
-              type="checkbox"
-              id="registerCheck"
-              formControlName="terms"
-            />
-            <label class="form-check-label" for="registerCheck">
-              I have read and agree to the terms
-            </label>
           </div>
-          <!-- Radio buttons for sesso selection -->
-          <div class="form-check d-flex justify-content-center mb-4">
-            <input
-              class="form-check-input me-2"
-              type="radio"
-              id="male"
-              name="sesso"
-              formControlName="sesso"
-              value="M"
-            />
-            <label class="form-check-label" for="male">M</label>
 
-            <input
-              class="form-check-input me-2 ms-4"
-              type="radio"
-              id="female"
-              name="sesso"
-              formControlName="sesso"
-              value="F"
-            />
+         
+
+          <!-- Radio buttons for sesso selection -->
+          <div class="form-check form-check-inline mb-3">
+            <input class="form-check-input" type="radio" id="male" name="sesso" formControlName="sesso" value="M" />
+            <label class="form-check-label" for="male">M</label>
+          </div>
+          
+          <div class="form-check form-check-inline mb-3">
+            <input class="form-check-input" type="radio" id="female" name="sesso" formControlName="sesso" value="F" />
             <label class="form-check-label" for="female">F</label>
           </div>
+        <!-- Checkbox -->
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="registerCheck" formControlName="terms" />
+          <label class="form-check-label" for="registerCheck">I have read and agree to the terms</label>
+          <div *ngIf="registerForm.get('terms')?.invalid && registerForm.get('terms')?.touched" class="text-danger">
+            Please accept the terms.
+          </div>
+        </div>
           <!-- Submit button -->
-          <button
-            mdbRipple
-            type="submit"
-            class="btn btn-primary btn-block mb-3"
-          >
+          <button type="submit" class="btn btn-primary btn-block mb-3">
             Sign up
           </button>
         </form>
       </div>
-    </mdb-tab>
-       <!-- Nuovo Tab per le competenze-->
-       <mdb-tab title="Nuova Competenza" *ngIf="state.competenze">
-        <div class="container mt-4">
-          <form [formGroup]="competenzaForm" (ngSubmit)="onCompetenzaSubmit()">
-            <!-- Nome Competenza input -->
-            <mdb-form-control class="mb-4">
-              <input
-                mdbInput
-                type="text"
-                id="competenzaNome"
-                class="form-control"
-                formControlName="nomeCompetenza"
-              />
-              <label mdbLabel class="form-label" for="competenzaNome">Nome Competenza</label>
-              <div
-                *ngIf="competenzaForm.get('nomeCompetenza')?.invalid && competenzaForm.get('nomeCompetenza')?.touched"
-                class="text-danger"
-              >
-                Il campo Nome Competenza è richiesto.
-              </div>
-            </mdb-form-control>
-  
-            <!-- Descrizione input -->
-            <mdb-form-control class="mb-4">
-              <textarea
-                mdbInput
-                id="competenzaDescrizione"
-                class="form-control"
-                formControlName="descrizione"
-                rows="3"
-              ></textarea>
-              <label mdbLabel class="form-label" for="competenzaDescrizione">Descrizione</label>
-              <div
-                *ngIf="competenzaForm.get('descrizione')?.invalid && competenzaForm.get('descrizione')?.touched"
-                class="text-danger"
-              >
-                Il campo Descrizione è richiesto.
-              </div>
-            </mdb-form-control>
-  
-            <!-- ID Risorsa input -->
-            <mdb-form-control class="mb-4">
-              <input
-                mdbInput
-                type="number"
-                id="competenzaIdRisorsa"
-                class="form-control"
-                formControlName="idRisorsa"
-              />
-              <label mdbLabel class="form-label" for="competenzaIdRisorsa">ID Risorsa</label>
-              <div
-                *ngIf="competenzaForm.get('idRisorsa')?.invalid && competenzaForm.get('idRisorsa')?.touched"
-                class="text-danger"
-              >
-                Il campo ID Risorsa è richiesto.
-              </div>
-            </mdb-form-control>
-  
-            <!-- Livello input -->
-            <mdb-form-control class="mb-4">
-              <input
-                mdbInput
-                type="number"
-                id="competenzaLivello"
-                class="form-control"
-                formControlName="livello"
-              />
-              <label mdbLabel class="form-label" for="competenzaLivello">Livello</label>
-              <div
-                *ngIf="competenzaForm.get('livello')?.invalid && competenzaForm.get('livello')?.touched"
-                class="text-danger"
-              >
-                Il campo Livello è richiesto.
-              </div>
-            </mdb-form-control>  
-            <!-- Submit button -->
-            <button mdbRipple type="submit" class="btn btn-primary btn-block mb-4">
-              Aggiungi Competenza
-            </button>
-          </form>
-        </div>
-      </mdb-tab>
-  </mdb-tabs>
+    </div>
+
+    <!-- Nuova Competenza Tab Content -->
+    <div class="tab-pane fade show active" id="competenza" role="tabpanel" aria-labelledby="competenza-tab" *ngIf="state.competenze">
+      <div class="container mt-4">
+        <app-competenze></app-competenze>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Popup quando competenze è false -->
 <div *ngIf="state.popupVisible" class="popup-container">
   <div class="popup">
     <h2>Popup Content</h2>
-    <p>Questo è il contenuto del popup.</p>
-    <button type="button" (click)="checkEmailConfirmedState()" [disabled]="state.competenze">Check Email Confirmation</button>
+    <p>{{ errorMessage }}</p>
+    <button type="button" class="btn btn-primary" (click)="closePopup()" *ngIf="colesePP">Close</button>
+    <button type="button" class="btn btn-primary" (click)="checkEmailConfirmedState()" *ngIf="validazione" [disabled]="state.competenze">Check Email Confirmation</button>
   </div>
 </div>

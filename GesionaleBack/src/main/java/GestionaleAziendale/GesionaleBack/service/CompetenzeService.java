@@ -32,14 +32,14 @@ public class CompetenzeService {
 
     public CompetenzeRegDto saveCompetenza(CompetenzeRegDto competenzeDto) {
         Set<Integer> userIds = competenzeDto.getUsersId();
-        System.out.println(userIds);
+        System.out.println(competenzeDto);
         Set<Users> usersSet = new HashSet<>();
         List<Integer> loadedUserIds = new ArrayList<>();
         List<String> errorMessages = new ArrayList<>();
 
         // Primo salvataggio: Salva la competenza senza gli utenti
         Competenza competenza = competenzaMapper.toEntity(competenzeDto);
-        competenza = competenzaRepository.save(competenza);
+       // competenza = competenzaRepository.save(competenza);
 
         // Aggiungi gli utenti alla competenza
         for (Integer userId : userIds) {

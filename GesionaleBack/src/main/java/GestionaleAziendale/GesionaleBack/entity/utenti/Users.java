@@ -36,6 +36,7 @@ public class Users implements UserDetails {
     private String cap;
     private String provincia;
     private Boolean enabled=false;
+    private Boolean rememberMe;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "utente_ruoli",

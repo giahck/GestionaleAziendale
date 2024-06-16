@@ -1,96 +1,51 @@
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light p-1">
-  <!-- Container wrapper -->
-  <div class="container">
-    <!-- Navbar brand -->
-    <a class="navbar-brand m-0 p-0">
-      <img
-        class="m-0 p-0"
-        src="./../../../assets/logo.png"
-        height="70"
-        alt=""
-        loading="lazy"
-        style="margin-top: -1px"
-      />
-    </a>
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+  <div class="logo-container">
+    <button type="button" class="btn btn-dark" (click)="toggleCollapse()" data-mdb-ripple-init>G</button>
 
-    <!-- Toggle button -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      (click)="buttonsNav.toggle()"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Collapsible wrapper -->
-    <div
-      class="collapse navbar-collapse"
-      id="navbarButtonsExample"
-      mdbCollapse
-      #buttonsNav="mdbCollapse"
-    >
-      <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 px-5">
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/']" routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }">HOME</a>
-        </li>
-      </ul>
-      <!-- Left links -->
-
-      <div class="d-flex align-items-center">
-        <ul class="navbar-nav flex-row">
-          <li class="nav-item me-3 me-lg-1">
-            <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-              <strong class="d-none d-sm-block ms-1">John</strong>
-            </a>
-          </li>
-          <li class="nav-item me-3 me-lg-1">
-            <a class="nav-link" href="#">
-              <span><i class="fas fa-video fa-lg"></i></span>
-            </a>
-          </li>
-          <li mdbDropdown class="nav-item dropdown me-3 me-lg-1">
-            <a
-              class="nav-link dropdown-toggle hidden-arrow"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              mdbDropdownToggle
-              aria-expanded="false"
-            >
-              <i class="fas fa-comments fa-lg"></i>
-
-              <span class="badge rounded-pill badge-notification bg-danger"
-                >6</span
-              >
-            </a>
-            <ul
-              mdbDropdownMenu
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <li>
-                <a class="dropdown-item" href="#">Some news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
-            </ul>
-          </li>
-          </ul>
-          <button *ngIf="!user" type="button" [routerLink]="['/login']" routerLinkActive="active" class="btn btn-link px-0 ms-3">Login</button>
-          <button *ngIf="user" type="button"  (click)="logout()" routerLinkActive="active" class="btn btn-link px-0 ms-3">Logout</button>
-      </div>
-    </div>
-    <!-- Collapsible wrapper -->
+      <div class="logo-text" @fadeInOut *ngIf="collapsed">Gestionale</div>
+      <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
+          <i class="fal fa-times close-icon"></i>
+      </button>
   </div>
-  <!-- Container wrapper -->
-</nav>
-<!-- Navbar -->
+  <div class="scrollwrap scrollwrap_delayed">
+    <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of navData">
+            <a class="sidenav-nav-link" (click)="handleClick(data)"
+                *ngIf="data.items && data.items.length > 0"
+                [ngClass]="getActiveClass(data)"
+            >
+                <i class="sidenav-link-icon" [class]="data.icon"></i>
+                <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">
+                    {{data.label}}
+                </span>
+                <i *ngIf="data.items && collapsed" class="menu-collapse-icon"
+                    [ngClass]="!data.expanded ? 'fal fa-angle-right' : 'fal fa-angle-down'"
+                ></i>
+            </a>
+
+            <a class="sidenav-nav-link" 
+                *ngIf="!data.items || (data.items && data.items.length === 0)"
+                [routerLink]="[data.routeLink]" 
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}"
+                (click)="shrinkItems(data)"
+                >
+                <i class="sidenav-link-icon" [class]="data.icon"></i>
+                <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">
+                    {{data.label}}
+                </span>
+            </a>
+            <div *ngIf="collapsed && data.items && data.items.length > 0">
+                <app-sublevel-menu
+                    [data]="data"
+                    [collapsed]="collapsed"
+                    [multiple]="multiple"
+                    [expanded]="data.expanded"
+                ></app-sublevel-menu>
+            </div>
+        </li>
+        <button *ngIf="user"  (click)="logout()" routerLinkActive="active" class="btn btn-dark p-2">Logout</button>
+        <button *ngIf="!user"  [routerLink]="['/login']" routerLinkActive="active" class="btn btn-dark p-2">login</button>
+    </ul>
+</div>
+</div>

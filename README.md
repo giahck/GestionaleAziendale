@@ -26,7 +26,7 @@ Le competenze rappresentano le abilità e le conoscenze necessarie per svolgere 
 
 - **Utente <-> Ruolo**: Gli utenti possono essere assegnati a uno o più ruoli all'interno dell'organizzazione. Questa relazione consente di definire le responsabilità di ciascun utente.
 
-- **Ruolo <-> Competenza**: I ruoli sono associati a competenze specifiche che definiscono le abilità necessarie per quel ruolo. Questa relazione consente di definire le competenze richieste per svolgere determinate responsabilità.
+- **Competenze <-> Utente**: le competenze sono associati a utenti specifiche che definiscono le abilità necessarie per quel ruolo. Questa relazione consente di definire le competenze richieste per svolgere determinate responsabilità.
 
 ## Note
 

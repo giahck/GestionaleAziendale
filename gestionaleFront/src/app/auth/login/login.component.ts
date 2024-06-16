@@ -1,26 +1,23 @@
 import { Competenze } from './../../models/competenze.interface';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { get } from 'http';
+import { StatoRegister } from '../../models/stato-register.interface';
+import { log } from 'console';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
-  
-  competenzaForm!: FormGroup;
+
+  errorMessage = '';
   loginForm!: FormGroup;
   registerForm!: FormGroup;
-  state = {
-    popupVisible: false,
-    competenze: false,
-    id: null as number | null
-  };
-  
+  state!:StatoRegister;
+  validazione=false;
+  colesePP=true;
   constructor(
     private fb: FormBuilder,
     private authSrv: AuthService,
@@ -28,19 +25,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  //  if (typeof sessionStorage !== 'undefined') {
-      const storedState = sessionStorage.getItem('authState');
-      console.log(storedState,'storedState');
-      if (storedState) {
-        this.state = JSON.parse(storedState);
-      }
-   // }
-    console.log(this.authSrv.state$,'state$ ');
-    console.log(this.state)
-    this.authSrv.state$.subscribe((state) => {
-      this.state = state;
-      console.log('state: ', state);
-    });
+  
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -67,17 +52,16 @@ export class LoginComponent implements OnInit {
       { validator: this.passwordMatchValidator }
     );
 
-    this.competenzaForm = this.fb.group({
-      nomeCompetenza: ['', Validators.required],
-      descrizione: ['', Validators.required],
-      idRisorsa: ['', Validators.required],
-      livello: [ , Validators.required],
+    this.authSrv.state$.subscribe((state) => {
+      this.state = state;
+      console.log('State:', this.state);
     });
+    this.checkRememberMe();
   }
 
   onLoginSubmit(): void {
     if (this.loginForm.valid) {
-      
+     // const { email, password, rememberMe } = this.loginForm.value;
       this.authSrv.login(this.loginForm.value).subscribe(
         
         (response) => {
@@ -86,34 +70,45 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           // alert(error);
-          console.error(error);
+          this.handleError(error);
         }
       );
     }
   }
-
+  private checkRememberMe(): void {
+    if (this.authSrv.isLoggedIn()) {
+      this.router.navigate(['/']); // Reindirizza se l'utente è già autenticato
+    }
+  }
   onRegisterSubmit(): void {
     console.log('Register form value:', this.registerForm.value);
     if (this.registerForm.valid) {
       console.log('Register form value: ', this.registerForm.value);
      // this.popupVisible = true;
+     this.errorMessage = 'Esegui la verifica dopo la registrazione clicca qui';
       this.state.popupVisible = true; 
       this.authSrv.register(this.registerForm.value).subscribe(
         (response) => {
+          this.validazione=true;
+          this.colesePP=false;
           this.state.id = response; 
+
           this.authSrv.setState(this.state);
        //  this.id = response;
         },
         (error) => {
-          alert(error);
+          this.handleError(error);
         }
       );
     }
   }
+  closePopup(){
+    this.state.popupVisible = false;
+    this.authSrv.setState(this.state);
+  }
   passwordMatchValidator(formGroup: FormGroup) {
     const password = formGroup.get('password')?.value;
     const repeatPassword = formGroup.get('repeatPassword')?.value;
-
     if (password !== repeatPassword) {
       formGroup.get('repeatPassword')?.setErrors({ passwordMismatch: true });
     } else {
@@ -121,38 +116,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onCompetenzaSubmit(): void {
-    console.log('Dati della competenza da inviare:', this.competenzaForm.value);
-    if (this.competenzaForm.valid) {
-      const formData = { ...this.competenzaForm.value };
-      formData.idRisorsa = Number(formData.idRisorsa);
-      formData.livello = Number(formData.livello);
-      formData.usersId = Array.isArray(formData.usersId) ? formData.usersId.map(Number): [Number(formData.usersId)];
-
-      console.log('Dati della competenza da inviare:', formData);
-        //this.popupVisible = true; 
-        this.competenzaForm.reset();
-        this.authSrv.competenze(this.competenzaForm.value).subscribe(
-        
-          (response) => {
-            if (response) 
-            this.router.navigate(['/login']);
-          },
-          (error) => {
-            // alert(error);
-            console.error(error);
-          }
-        );
-    
-    } else {
-      // Segna tutti i campi come toccati per mostrare gli errori di validazione
-      this.competenzaForm.markAllAsTouched();
-    }
-  }
+  
   checkEmailConfirmedState(): void {
-    this.authSrv.getEmailConfirmedState().subscribe(
+    this.authSrv.getEmailConfirmedState(this.registerForm.value).subscribe(
       (confirmed) => {
         if(confirmed===true){
+          this.validazione=false;
+          this.colesePP=true;
           this.state.competenze = confirmed;
        this.state.popupVisible = false;
         this.authSrv.setState(this.state);
@@ -162,9 +132,16 @@ export class LoginComponent implements OnInit {
         } 
       },
       (error) => {
-        console.error('Error getting email confirmation state:', error);
+        this.handleError(error);
   
       }
     );
+  }
+  handleError(error: any): void {
+    // Qui puoi gestire diversi tipi di errori in modi diversi
+    // Ad esempio, potresti voler mostrare un messaggio all'utente
+    console.error('Si è verificato un errore:', error.message);
+    this.errorMessage = error.message; // Salva il messaggio di errore
+        
   }
 }

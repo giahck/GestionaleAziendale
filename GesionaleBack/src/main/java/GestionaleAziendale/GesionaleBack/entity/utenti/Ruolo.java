@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "ruoli")
 public class Ruolo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idRuolo;
     @Enumerated(EnumType.STRING)
     private RuoloEnum nomeRuolo;
