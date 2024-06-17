@@ -1,6 +1,7 @@
 package GestionaleAziendale.GesionaleBack.entity.utenti;
 
 
+import GestionaleAziendale.GesionaleBack.entity.ticket.Ticket;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -51,6 +52,8 @@ public class Users implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "competenza_id"))
     private Set<Competenza> competenze= new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> tickets;
     @Column(nullable = false)
     private String password;
 

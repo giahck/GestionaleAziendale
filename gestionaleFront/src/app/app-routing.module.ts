@@ -11,7 +11,7 @@ import { MaschineComponent } from './components/maschine/maschine.component';
 import { SettingComponent } from './components/setting/setting.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
+ {path: '', redirectTo: 'home', pathMatch: 'full'},
   {
     path: 'login',
     component: LoginComponent,
@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {path: 'settings', component: SettingComponent,canActivate: [AuthGuard],},
 
- /*  { path: '**', redirectTo: '/login' } */ 
+/* { path: '**', redirectTo: '/login' } */
 
 ];
 

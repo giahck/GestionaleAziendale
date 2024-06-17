@@ -18,11 +18,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { EmailVerifiedComponent } from './auth/email-verified/email-verified.component';
 import { CompetenzeComponent } from './components/competenze/competenze.component';
-/* import { TicketsComponent } from './components/tickets/tickets.component'; */
-/* import { CreateTicketsComponent } from './components/tickets/create-tickets/create-tickets.component'; */
-/* import { MaschineComponent } from './components/maschine/maschine.component'; */
-/* import { CreateMaschineComponent } from './components/maschine/create-maschine/create-maschine.component';
-import { StatusMaschineComponent } from './components/maschine/status-maschine/status-maschine.component'; */
 import { SettingComponent } from './components/setting/setting.component';
 import { ChatTiketComponent } from './components/chat-tiket/chat-tiket.component';
 import { SublevelMenuComponent } from './components/nav-bar/sublevel-menu.component';
@@ -39,11 +34,6 @@ import { MashineRouteModule } from './components/maschine/maschine-route.module'
     NavBarComponent,
     EmailVerifiedComponent,
     CompetenzeComponent,
-    /* TicketsComponent, */
-   /*  CreateTicketsComponent, */
-   /*  MaschineComponent, */
-   /*  CreateMaschineComponent,
-    StatusMaschineComponent, */
     SettingComponent,
     ChatTiketComponent,
     SublevelMenuComponent,
@@ -67,7 +57,7 @@ import { MashineRouteModule } from './components/maschine/maschine-route.module'
     
   ],
   providers: [
-    provideClientHydration(),
+  //  provideClientHydration(),
     
     {
       provide: HTTP_INTERCEPTORS,

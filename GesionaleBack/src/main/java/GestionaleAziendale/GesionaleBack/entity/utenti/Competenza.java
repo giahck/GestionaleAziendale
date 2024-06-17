@@ -2,6 +2,7 @@ package GestionaleAziendale.GesionaleBack.entity.utenti;
 
 
 
+import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,10 @@ public class Competenza {
         this.usersId.add(user);
         user.getCompetenze().add(this);
     }
+    @OneToOne
+    @JoinColumn(name = "id_machine")
+    private Machine machine;
+
     @Override
     public String toString() {
         return "Competenza{" +
