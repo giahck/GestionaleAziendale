@@ -28,11 +28,50 @@ Le competenze rappresentano le abilità e le conoscenze necessarie per svolgere 
 
 - **Competenze <-> Utente**: le competenze sono associati a utenti specifiche che definiscono le abilità necessarie per quel ruolo. Questa relazione consente di definire le competenze richieste per svolgere determinate responsabilità.
 
+### Macchine
+
+Le macchine rappresentano le risorse hardware gestite dall'azienda. Ogni macchina è identificata da un ID univoco e ha attributi come modello, produttore e data di acquisto.
+
+### Parti
+
+Le parti sono componenti delle macchine, ciascuna con un proprio ID univoco, nome e descrizione. Ogni parte è associata a una specifica macchina e può avere molteplici pezzi e ticket associati.
+
+### Pezzi (Pieces)
+
+I pezzi sono parti specifiche identificate da un numero di serie e caratterizzate da un materiale specifico. Ogni pezzo è collegato a una parte specifica della macchina.
+
+### Ticket
+
+I ticket rappresentano le richieste di assistenza o manutenzione relative alle parti o alle macchine. Ogni ticket ha un ID univoco, una descrizione del problema e uno stato corrente (aperto, in corso, chiuso, ecc.).
+
+## Relazioni
+
+- **Macchine <-> Parti**: Ogni macchina può avere molte parti, gestite tramite una relazione uno-a-molti.
+- **Parti <-> Pezzi**: Ogni parte può essere composta da molti pezzi, stabilita tramite una relazione uno-a-molti.
+- **Parti <-> Ticket**: Ogni parte può essere associata a molti ticket, gestita tramite una relazione uno-a-molti.
+
+## Integrazione con API ChatGPT per Gestione dei Ticket
+
+### Interazione dell'Operatore
+
+L'operatore avvia una richiesta specificando la macchina o la parte coinvolta nel problema attraverso l'interfaccia utente del sistema.
+
+### Invio della Richiesta all'API
+
+L'API ChatGPT riceve la richiesta dettagliata, ad esempio: "Come posso risolvere il problema sulla macchina con identificatore [ID]?".
+
+### Elaborazione della Richiesta
+
+L'API elabora la richiesta utilizzando modelli di linguaggio per comprendere il contesto e fornire una risposta pertinente, che potrebbe includere suggerimenti di risoluzione del problema, procedure di manutenzione, possibili cause del guasto, o altro supporto informativo.
+
+### Risposta dell'API
+
+La risposta dell'API ChatGPT viene integrata direttamente nel sistema di gestione dei ticket, associandola al ticket corrispondente. Questo processo permette di tenere traccia delle interazioni e di garantire una risoluzione efficace e tempestiva dei problemi segnalati.
+
 ## Note
 
-- Il sistema è progettato per essere flessibile e adattabile alle esigenze specifiche dell'organizzazione.
-- La gestione degli utenti, dei ruoli e delle competenze avviene in modo efficiente e intuitivo attraverso un'interfaccia utente moderna e user-friendly.
-### I code with: 
+- Il sistema è progettato per gestire in modo flessibile le risorse hardware dell'organizzazione, facilitando la manutenzione e l'assistenza attraverso l'integrazione avanzata con l'API ChatGPT.
+- L'interfaccia utente moderna e user-friendly permette una gestione intuitiva delle macchine, delle parti e dei ticket, migliorando l'efficienza operativa complessiva dell'organizzazione. 
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="30" alt="javascript logo"  />
   <img width="12" />
