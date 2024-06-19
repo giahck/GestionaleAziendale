@@ -1,5 +1,6 @@
 package GestionaleAziendale.GesionaleBack.dto;
 
+import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Ruolo;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Users;
 import jakarta.validation.constraints.Max;
@@ -18,8 +19,8 @@ public class CompetenzeRegDto {
     @NotBlank(message = "Descrizione cannot be blank")
     private String descrizione;
 
-    @NotNull(message = "Id Risorsa cannot be null")
-    private Long idRisorsa;
+    /*@NotNull(message = "Id Risorsa cannot be null")
+    private Long idRisorsa;*/
 
     @Min(value = 1, message = "Livello should not be less than 1")
     @Max(value = 5, message = "Livello should not be greater than 5")
@@ -27,5 +28,7 @@ public class CompetenzeRegDto {
 
    // @NotNull(message = "Ruoli cannot be null")
     private Set<Integer> usersId;
+
+    private Machine machine;
 
 }

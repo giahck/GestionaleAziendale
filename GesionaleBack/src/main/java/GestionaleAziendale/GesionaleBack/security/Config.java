@@ -48,6 +48,7 @@ public class Config {
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/auth/**").permitAll());
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/ruolo/**").permitAll());
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/competenze/**").permitAll());
+        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/machine/**").permitAll());
         //nega l'accesso a qualsiasi servizio che non sia get e path /api/users
         httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/**").denyAll());
 

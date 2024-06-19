@@ -24,7 +24,7 @@ public class Competenza {
     private int idCompetenza;
     private String nomeCompetenza;
     private String descrizione;
-    private Long idRisorsa; // Foreign Key
+    //private Long idRisorsa; // Foreign Key
     private int livello;
 
     @ManyToMany(mappedBy = "competenze")

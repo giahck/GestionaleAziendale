@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "pieces")
-public abstract class Piece {
+public class Piece {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
