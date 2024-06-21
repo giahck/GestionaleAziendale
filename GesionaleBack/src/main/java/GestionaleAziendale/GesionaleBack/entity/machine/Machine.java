@@ -1,9 +1,13 @@
 package GestionaleAziendale.GesionaleBack.entity.machine;
 
+import GestionaleAziendale.GesionaleBack.entity.machine.genericMachine.MachineGeneric;
 import GestionaleAziendale.GesionaleBack.entity.ticket.Ticket;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Competenza;
 import GestionaleAziendale.GesionaleBack.enums.StatoMaschineEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +25,7 @@ import java.util.List;
 @Entity
 @Table(name = "machines")
 @Inheritance(strategy = InheritanceType.JOINED)
+
 public abstract class Machine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +41,8 @@ public abstract class Machine {
     @Column(nullable = false,name = "stato_macchina")
     private StatoMaschineEnum statoMaschine;
 
-    @JsonIgnore(value = true)
+    /*@JsonIgnore(value = true)*/
+    @JsonManagedReference
     @OneToMany(mappedBy = "machine")
     private List<Parts> parts;
 

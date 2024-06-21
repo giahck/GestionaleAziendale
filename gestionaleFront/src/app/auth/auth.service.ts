@@ -112,33 +112,40 @@ export class AuthService {
   }
   restore() {
     if (typeof localStorage !== 'undefined') {
-      const userLocalStorage = localStorage.getItem('user');
+      // Check for 'user' in localStorage
+      let userLocalStorage = localStorage.getItem('user');
+      let token = localStorage.getItem('token');
+  
       if (userLocalStorage) {
+        // If 'user' exists, parse it and get the token from it
         const user = JSON.parse(userLocalStorage);
-        const token = user.accessToken; // Adjust this based on your actual structure
-
-        if (token) {
-          const isExpired = this.jwtHelper.isTokenExpired(token);
-          if (!isExpired) {
-            // Token is valid
-            //  console.log('token: ', token);
-            this.authSub.next(user);
-          } else {
-            // Token is expired
-            localStorage.removeItem('user');
-            this.router.navigate(['/login']);
-          }
+        if (user.accessToken) {
+          token = user.accessToken;
+        }
+      }
+  
+      if (token) {
+        // Validate the token
+        const isExpired = this.jwtHelper.isTokenExpired(token);
+        if (!isExpired) {
+          // Token is valid
+          const user = userLocalStorage ? JSON.parse(userLocalStorage) : { accessToken: token };
+          this.authSub.next(user);
         } else {
-          // No token found
+          // Token is expired, clear localStorage and navigate to login
           localStorage.removeItem('user');
+          localStorage.removeItem('token');
           this.router.navigate(['/login']);
         }
       } else {
-        // No user found in localStorage
+        // No token found, clear localStorage and navigate to login
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
         this.router.navigate(['/login']);
       }
     } else {
-      // console.error('localStorage is not available');
+      // localStorage is not available
+      console.error('localStorage is not available');
     }
   }
 

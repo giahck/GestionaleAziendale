@@ -5,6 +5,7 @@ export interface InavBarData {
     label: string;
     expanded?: boolean;
     items?: InavBarData[];
+    visibilita?: number;
 }
 export const fadeInOut = trigger('fadeInOut', [
     transition(':enter', [

@@ -24,6 +24,7 @@ import { SublevelMenuComponent } from './components/nav-bar/sublevel-menu.compon
 import { TiketsRouterModule } from './components/tickets/tikets-router.module';
 import { MashineModule } from './components/maschine/maschine.module';
 import { MashineRouteModule } from './components/maschine/maschine-route.module';
+import { BodyComponent } from './components/nav-bar/body/body.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { MashineRouteModule } from './components/maschine/maschine-route.module'
     SettingComponent,
     ChatTiketComponent,
     SublevelMenuComponent,
+    BodyComponent,
    
   ],
   imports: [

@@ -8,14 +8,22 @@ import GestionaleAziendale.GesionaleBack.maperDto.mapperDtoMachine.MachineGeneri
 import GestionaleAziendale.GesionaleBack.repository.machineRepository.MachineGenericRepository;
 import GestionaleAziendale.GesionaleBack.repository.machineRepository.MachineRepository;
 import GestionaleAziendale.GesionaleBack.repository.machineRepository.PartsRepository;
+import com.cloudinary.Cloudinary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.BooleanUtils.forEach;
 
 @Service
 public class GenericMachineService {
+    private static final Logger log = LoggerFactory.getLogger(GenericMachineService.class);
     @Autowired
     private MachineGenericMapper machineGenericMapper;
     @Autowired
@@ -24,8 +32,20 @@ public class GenericMachineService {
     private PartsRepository partsRepository;
     @Autowired
     private MachineRepository machineRepository;
+    @Autowired
+    private Cloudinary cloudinary;
 
-    public Machine addMachine(GenericMachineDto genericMachineDto) {
+    public Machine addMachine(GenericMachineDto genericMachineDto, MultipartFile fotoMachine) {
+        if (fotoMachine != null && !fotoMachine.isEmpty()) {
+            System.out.println("Photo not null");
+            try {
+                String url = (String) cloudinary.uploader().upload(fotoMachine.getBytes(), null).get("url");
+                genericMachineDto.setPhoto(url);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         MachineGeneric machineGeneric = machineGenericMapper.genericDtoToMachine(genericMachineDto);
         if (genericMachineDto.getPartsId() != null && !genericMachineDto.getPartsId().isEmpty()) {
             machineGeneric.setParts(genericMachineDto.getPartsId().stream().map(id -> {
@@ -38,8 +58,21 @@ public class GenericMachineService {
         }
         return machineGenericRepository.save(machineGeneric);
     }
-    public List<Machine> getAllMachine() {
+
+    public List<Machine> getAllMachines() {
         return machineRepository.findAll();
+    }
+
+    public List<Machine> getAllMachinesAndSubclasses() {
+        return machineRepository.findAllMachinesAndSubclasses();
+    }
+
+    public Machine getMachineById(int id) {
+        Optional<Machine> optionalMachine = machineRepository.findById(id);
+        if (!optionalMachine.isPresent()) {
+            throw new IllegalArgumentException("Machine with id " + id + " not found");
+        }
+        return optionalMachine.get();
     }
 
 }

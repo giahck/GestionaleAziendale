@@ -5,16 +5,26 @@ import { MaschineComponent } from './maschine.component';
 import { StatusMaschineComponent } from './status-maschine/status-maschine.component';
 import { CreateMaschineComponent } from './create-maschine/create-maschine.component';
 
+import { MacchinaComponent } from './componentiMacchine/macchina/macchina.component';
+import { MenuCreateComponent } from './componentiMacchine/menu-create/menu-create.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
+
 
 
 @NgModule({
   declarations: [
     MaschineComponent,
     StatusMaschineComponent,
-    CreateMaschineComponent
-  ],
-  imports: [
-    CommonModule,
+    CreateMaschineComponent,
+   MenuCreateComponent,
+    MacchinaComponent,
+  /*   PartiComponent, */
+  
+],
+imports: [
+  CommonModule,
+  ReactiveFormsModule,
     MashineRouteModule
   ]
 })

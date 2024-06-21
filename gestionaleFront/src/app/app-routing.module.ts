@@ -12,10 +12,10 @@ import { SettingComponent } from './components/setting/setting.component';
 
 const routes: Routes = [
  {path: '', redirectTo: 'home', pathMatch: 'full'},
+ {path: 'home', component: HomeComponent,canActivate: [AuthGuard],},
   {
     path: 'login',
     component: LoginComponent,
-    
   },
   {path: 'chat-tiket', component: ChatTiketComponent,canActivate: [AuthGuard],},
   {path: 'tickets' ,canActivate: [AuthGuard],

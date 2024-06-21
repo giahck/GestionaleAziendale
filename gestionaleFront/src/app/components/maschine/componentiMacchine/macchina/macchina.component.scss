@@ -1,0 +1,52 @@
+.card-selected {
+    max-width: 20%; /* o qualsiasi altra dimensione preferisci */
+    margin: auto; /* Centra la card nella colonna */
+  }
+  
+  .d-flex {
+    display: flex;
+    flex-direction: row; /* Disposizione orizzontale per default */
+  }
+  
+  @media (max-width: 576px) {
+    /* Sovrascrivi per dispositivi 'sm' o più piccoli */
+    .d-flex {
+      flex-direction: column !important; /* Forza la disposizione verticale per tutte le card */
+    }
+    .card-selected {
+      max-width: 100%; /* Mantiene la card selezionata grande allo stesso modo */
+    }
+  }
+  .order-first {
+    order: -1;
+  }
+  
+  .order-last {
+    order: 0;
+  }
+  
+  .card-selected {
+    border: 2px solid #007bff;
+  }
+  .card-small {
+    width: 100%;
+    max-width: 200px; /* Definisci la larghezza massima della card */
+    margin: 0 auto;   /* Centra la card */
+  }
+  
+  .card-img-top-small {
+    max-height: 100px; /* Riduci l'altezza massima dell'immagine */
+    object-fit: cover; /* Mantieni le proporzioni dell'immagine */
+  }
+  
+  .card-body-small {
+    padding: 0.5rem; /* Riduci il padding della card */
+  }
+  
+  .card-title-small {
+    font-size: 1rem; /* Riduci la dimensione del font del titolo */
+  }
+  
+  .card-text-small {
+    font-size: 0.875rem; /* Riduci la dimensione del font del testo */
+  }

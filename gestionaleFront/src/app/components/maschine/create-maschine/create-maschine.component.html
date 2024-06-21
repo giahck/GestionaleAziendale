@@ -1,1 +1,52 @@
-<p>create-maschine works!</p>
+<div class="container-fluid mb-3">
+  <div class="row mb-2">
+    <div class="d-flex flex-row border align-content-center">
+      <i class="bi bi-pencil-fill fa-2x" (click)="addMachine()"></i>
+      <i class="bi bi-eraser-fill fa-2x"></i>
+    </div>
+  </div>
+  <div *ngIf="showAddMachine">
+    <app-menu-create></app-menu-create>
+  </div>
+
+  <div class="container-fluid mt-3">
+    <div class="row">
+      <app-macchina
+        [machines]="machine"
+        [pieces]="pieces"
+        [parts]="parts"
+      ></app-macchina>
+      <!-- <app-pezzi [pieces]="pieces"></app-pezzi>
+      <app-parti [parts]="parts"></app-parti> -->
+    </div>
+  </div>
+</div>
+
+<!-- <div *ngFor="let machine of Machine">
+    <h2>{{ machine.nomeMacchina }}</h2>
+    <p>Marca: {{ machine.marca }}</p>
+    <p>Modello: {{ machine.modello }}</p>
+    <p>Data di Acquisto: {{ machine.dataAcquisto }}</p>
+    <p>Stato: {{ machine.statoMaschine }}</p>
+    <p>Descrizione: {{ machine.description }}</p>
+    <p>Matricola: {{ machine.matricola }}</p>
+    <img src={{machine.photo}} alt="">
+    <div *ngIf="machine.parts && machine.parts.length">
+      <h3>Parts:</h3>
+      <div *ngFor="let part of machine.parts">
+        <p>Nome Parte: {{ part.nomeParte }}</p>
+        <p>Descrizione: {{ part.descrizione }}</p>
+        <p>Note: {{ part.note }}</p>
+        <div *ngIf="part.pieces && part.pieces.length">
+          <h4>Pieces:</h4>
+          <div *ngFor="let piece of part.pieces">
+            <p>Nome Pezzo: {{ piece.nomePezzo }}</p>
+            <p>Descrizione: {{ piece.descrizione }}</p>
+            <p>Seriale: {{ piece.seriale }}</p>
+            <p>Materiale: {{ piece.materiale }}</p>
+            <p>Quantità: {{ piece.quantityPiece }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->

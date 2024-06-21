@@ -57,7 +57,6 @@ export class NavBarComponent implements OnInit {
   collapsed = false;
   navData = navbarData;
   multiple: boolean = false;
-
   constructor(
     private authSrv: AuthService,
     private router: Router,

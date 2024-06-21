@@ -30,7 +30,7 @@ public class GenericMachineDto {
     @NotBlank(message = "Description cannot be blank")
     private String description;
 
-
+    private String photo;
     private List<Integer> partsId;
     private int competenzaId;
 

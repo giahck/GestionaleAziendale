@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-
 @NoArgsConstructor
 @AllArgsConstructor
 public class PartsDto {
@@ -23,7 +22,7 @@ public class PartsDto {
     private String note;
     @NotNull(message = "Id Machine cannot be null")
     private int quantityParts;
-    private Machine machine;
-    private List<Ticket> tickets;
-    private List<Piece> pieces;
+    @NotNull(message = "Id Machine cannot be null")
+    private int machineId;
+
 }

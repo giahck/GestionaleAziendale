@@ -1,0 +1,15 @@
+.input-invalid {
+    border-color: red; /* o background-color: red; per il colore di sfondo */
+    color: red;
+    background-color: rgba(255, 0, 0, 0.231);
+}
+.textarea-small-font {
+    font-size: 0.8rem; /* Riduce la dimensione del testo */
+  }
+  .custom-width {
+    width: 30%; /* o qualsiasi altra larghezza desiderata */
+  }
+  .img-thumbnail {
+    max-width: 300px;
+    max-height: 150px;
+  }
