@@ -23,11 +23,12 @@ public class MachineController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('MANAGER') ")
-    public Machine addMachine(@RequestPart @Validated GenericMachineDto genericMachineDto, @RequestPart("fotoMachine") MultipartFile fotoMachine, BindingResult validation) {
+    public Machine addMachine(@RequestPart("genericMachineDto") @Validated GenericMachineDto genericMachineDto,
+                              @RequestPart("photo") MultipartFile photo, BindingResult validation) {
         if (validation.hasErrors()) {
             throw new RuntimeException("Richiesta non valida: " + validation.getAllErrors().stream().map(e -> e.getDefaultMessage()).reduce("", (s1, s2) -> s1 + "\n" + s2));
         }
-        return genericMachineService.addMachine(genericMachineDto,fotoMachine);
+        return genericMachineService.addMachine(genericMachineDto,photo);
     }
 
     @GetMapping("")

@@ -2,6 +2,8 @@ package GestionaleAziendale.GesionaleBack.entity.utenti;
 
 
 import GestionaleAziendale.GesionaleBack.entity.ticket.Ticket;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -44,7 +46,7 @@ public class Users implements UserDetails {
             joinColumns = @JoinColumn(name = "utente_id"),
             inverseJoinColumns = @JoinColumn(name = "ruolo_id"))
     private Set<Ruolo> ruolo = new HashSet<>();
-
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "utente_competenza",

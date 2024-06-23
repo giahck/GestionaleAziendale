@@ -11,6 +11,7 @@ import java.util.Set;
 
 @Data
 public class UserDto {
+    private int id;
     @NotBlank
     @Email(message = "Deve essere un indirizzo email valido")
     private String email;

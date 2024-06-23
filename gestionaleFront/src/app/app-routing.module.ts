@@ -3,11 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 
-import { EmailVerifiedComponent } from './auth/email-verified/email-verified.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ChatTiketComponent } from './components/chat-tiket/chat-tiket.component';
-import { TicketsComponent } from './components/tickets/tickets.component';
-import { MaschineComponent } from './components/maschine/maschine.component';
 import { SettingComponent } from './components/setting/setting.component';
 
 const routes: Routes = [

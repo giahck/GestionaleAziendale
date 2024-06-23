@@ -46,7 +46,7 @@ export class AuthService {
   }
   competenze(data: Competenze) {
     ///competenze/register
-    return this.http.post(`${this.apiURL}auth/competenze`, data, {
+    return this.http.post(`${this.apiURL}competenze/add`, data, {
       responseType: 'text',
     });
   }
@@ -96,6 +96,12 @@ export class AuthService {
             sessionStorage.setItem('token', dataResponse.accessToken);
           }
           localStorage.setItem('user', JSON.stringify(dataResponse));
+          this.state.next({
+            popupVisible: false, // Hide any popups after login
+            competenze: true, // Assuming user has certain competencies after login
+            id: dataResponse.id // Assigning userId from dataResponse
+          });
+          
           this.autoLogout(dataResponse);
         }
         this.authSub.next(dataResponse);

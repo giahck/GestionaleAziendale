@@ -69,7 +69,7 @@ export class NavBarComponent implements OnInit {
     });
     if (isPlatformBrowser(this.platformId)) {
       this.screenWidth = window.innerWidth;
-      console.log(window.innerWidth);
+   //   console.log(window.innerWidth);
     }
   }
 

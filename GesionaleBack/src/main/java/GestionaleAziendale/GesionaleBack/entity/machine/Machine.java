@@ -43,11 +43,12 @@ public abstract class Machine {
 
     /*@JsonIgnore(value = true)*/
     @JsonManagedReference
-    @OneToMany(mappedBy = "machine")
+    @OneToMany(mappedBy = "machine", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Parts> parts;
 
 
-    @OneToOne(mappedBy = "machine")
+    @JsonManagedReference
+    @OneToOne(mappedBy = "machine", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Competenza competenza;
 
 

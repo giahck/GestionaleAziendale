@@ -17,7 +17,7 @@ export enum StatoMaschineEnum {
     partsId?: number[];
     competenzaId?: number;
     parts: Part[];
-    photo: string | null;
+    photo?: string | null;
 }
 
 export interface Part {

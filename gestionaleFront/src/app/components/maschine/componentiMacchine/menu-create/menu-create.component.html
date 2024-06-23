@@ -20,6 +20,14 @@
                     Inserisci la marca
                   </div>
             </div>
+            <!-- matricola -->
+            <div class="d-flex flex-column text-center m-2">
+              <label for="matricola" class="form-label">Matricola</label>
+              <input type="text" class="form-control" id="matricola" formControlName="matricola" [ngClass]="{'is-invalid': addMachineForm.get('matricola')?.invalid && (addMachineForm.get('matricola')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('matricola')?.invalid && (addMachineForm.get('matricola')?.touched || isFormSubmitted)}">
+              <div *ngIf="addMachineForm.get('matricola')?.invalid && isFormSubmitted" class="text-danger">
+                  Inserisci la matricola
+                </div>
+          </div>
             <!-- modello macchina -->
             <div class="d-flex flex-column text-center m-2">
                 <label for="modello" class="form-label">Modello</label>
@@ -38,11 +46,11 @@
             </div>
             <!-- stato macchina -->
             <div class="d-flex flex-column text-center m-2">
-              <label for="statoMaschin" class="form-label">Stato Macchina</label>
-              <select class="form-select" id="statoMaschin" formControlName="statoMaschin" [ngClass]="{'is-invalid': addMachineForm.get('statoMaschin')?.invalid && (addMachineForm.get('statoMaschin')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('statoMaschin')?.invalid && (addMachineForm.get('statoMaschin')?.touched || isFormSubmitted)}">
+              <label for="statoMaschine" class="form-label">Stato Macchina</label>
+              <select class="form-select" id="statoMaschine" formControlName="statoMaschine" [ngClass]="{'is-invalid': addMachineForm.get('statoMaschine')?.invalid && (addMachineForm.get('statoMaschine')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('statoMaschine')?.invalid && (addMachineForm.get('statoMaschine')?.touched || isFormSubmitted)}">
                 <option *ngFor="let stato of statoMaschineValues" [value]="stato">{{ stato }}</option>
               </select>
-              <div *ngIf="addMachineForm.get('statoMaschin')?.invalid && isFormSubmitted" class="text-danger">
+              <div *ngIf="addMachineForm.get('statoMaschine')?.invalid && isFormSubmitted" class="text-danger">
                 Seleziona uno stato
               </div>
             </div>
@@ -77,3 +85,55 @@
       <!-- </div> -->
     </div>
   </div>
+
+<!-- Modale Bootstrap -->
+<div class="modal fade" *ngIf="showModal" tabindex="-1" role="dialog" [ngClass]="{'show': showModal}" style="display: block;">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Utenti</h5>
+        <button type="button" class="btn btn-dark" (click)="showModal = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body overflow-auto">
+        <select [(ngModel)]="selectedUserId">
+          <option *ngFor="let item of userDati" [value]="item.id">{{item.nome}} {{item.cognome}}</option>
+        </select>
+        <div *ngIf="selectedUser">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-6">
+                <div>
+                  <p>Nome: {{selectedUser.nome}} </p>
+                  <p>Cognome: {{selectedUser.cognome}}</p>
+                  <p>Email: {{selectedUser.email}}</p>
+                  <p>N. Telefono: {{selectedUser.telefono}}</p>
+                  <p>Data di Nascita: {{selectedUser.dataDiNascita}}</p>
+                  <p>indirizzo: {{selectedUser.indirizzo}}</p>
+                </div>
+              </div>
+              <div class="col-6" >
+                <h2>COMPETENZE</h2>
+                <h4>ALLEGA UNA COMPETENZA ALLA MACCHINA</h4>
+                <div *ngFor="let key of selectedUser.competenze">
+                  <div class="border border-2 p-3 mb-3" [ngClass]="{'border-danger': selectedCompetenzaId === key.idCompetenza}"  (click)="onCompetenzaClick(key.idCompetenza)">
+                  <p>Nome competenza: {{key.nomeCompetenza}}</p>
+                  <p>Descrizione competenza: {{key.descrizione}}</p>
+                  <p>Livello: {{key.livello}}</p>
+                  <p>Machina collegata: {{key.machine}}</p>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <h3>Se non salvi la macchina vera chiusa</h3>
+        <button type="button" class="btn btn-secondary" (click)="showModal = false">Chiudi</button>
+        <button type="button" class="btn btn-primary" (click)="addMacchina()" >Salva cambiamenti</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,6 @@ import { Machine, Part, Piece } from './../../../models/machin/machine.interface
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MachinsService } from '../../../service/machins.service';
 import { Subscription } from 'rxjs';
-import { log } from 'console';
 
 @Component({
   selector: 'app-create-maschine',
@@ -14,19 +13,19 @@ export class CreateMaschineComponent implements OnInit,OnDestroy{
   parts: Part[] = [];
   pieces: Piece[] = [];
   machinesSubscription!: Subscription;
-  showAddMachine: boolean = false;
+  showAddMachine: boolean = true;
 
   constructor(private machineSrv: MachinsService) { }
 
   ngOnInit(): void {
+    this.machineSrv.getMachines();
     this.machinesSubscription = this.machineSrv.machines$.subscribe(
       (machines: Machine[]) => {
         this.machine = machines;
-        console.log('Machines in component:', this.machine);
+      //  console.log('Machines in component:', this.machine);
         this.extractPartsAndPieces();
       }
     );
-    this.machineSrv.getMachines();
   }
 
   ngOnDestroy(): void {
@@ -51,7 +50,7 @@ export class CreateMaschineComponent implements OnInit,OnDestroy{
 
  
   addMachine() {
-    console.log('Add machine');
+ //   console.log('Add machine');
     this.showAddMachine = !this.showAddMachine;
   }
 }

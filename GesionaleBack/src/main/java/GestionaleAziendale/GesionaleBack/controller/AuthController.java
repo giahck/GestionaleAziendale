@@ -54,14 +54,5 @@ public class AuthController {
 
         return userService.isEmailConfirmed(id);
     }
-    @Autowired
-    private CompetenzeService competenzeService;
-    @PostMapping("/competenze")
-    public CompetenzeRegDto saveCompetenze(@RequestBody @Validated CompetenzeRegDto competenzeDto, BindingResult bindingResult) {
-        System.out.println(competenzeDto);
-        if (bindingResult.hasErrors()) {
-            throw new RuntimeException("Richiesta non valida: " + bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).reduce("", (s1, s2) -> s1 + "\n" + s2));
-        }
-        return competenzeService.saveCompetenza(competenzeDto);
-    }
+
 }

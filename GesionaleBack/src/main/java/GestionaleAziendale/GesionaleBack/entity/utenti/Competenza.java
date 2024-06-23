@@ -3,6 +3,7 @@ package GestionaleAziendale.GesionaleBack.entity.utenti;
 
 
 import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +27,7 @@ public class Competenza {
     private String descrizione;
     //private Long idRisorsa; // Foreign Key
     private int livello;
-
+    @JsonBackReference
     @ManyToMany(mappedBy = "competenze")
     private Set<Users> usersId= new HashSet<>(); ;
 
@@ -34,6 +35,7 @@ public class Competenza {
         this.usersId.add(user);
         user.getCompetenze().add(this);
     }
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "id_machine")
     private Machine machine;
@@ -42,7 +44,10 @@ public class Competenza {
     public String toString() {
         return "Competenza{" +
                 "idCompetenza=" + idCompetenza +
-                // do not include users
+                ", nomeCompetenza='" + nomeCompetenza + '\'' +
+                ", descrizione='" + descrizione + '\'' +
+                ", livello='" + livello + '\'' +
+                ", machine='" + machine + '\'' +
                 '}';
     }
 

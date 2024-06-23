@@ -66,5 +66,10 @@ public class CompetenzeService {
 
         return competenzeRegDto;
     }
+    public Competenza getCompetenzeById(int id) {
+        Competenza competenza = competenzaRepository.findById(id).orElse(null);
+        System.out.println("Retrieved Competenza: " + competenza);
+        return competenza;
+    }
 }
 

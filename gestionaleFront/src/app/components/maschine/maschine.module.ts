@@ -8,7 +8,7 @@ import { CreateMaschineComponent } from './create-maschine/create-maschine.compo
 import { MacchinaComponent } from './componentiMacchine/macchina/macchina.component';
 import { MenuCreateComponent } from './componentiMacchine/menu-create/menu-create.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -25,7 +25,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 imports: [
   CommonModule,
   ReactiveFormsModule,
-    MashineRouteModule
+    MashineRouteModule,
+    FormsModule,
+    
   ]
 })
 export class MashineModule { }
