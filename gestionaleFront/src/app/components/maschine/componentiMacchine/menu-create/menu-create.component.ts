@@ -19,7 +19,7 @@ export class MenuCreateComponent implements OnInit,OnDestroy{
   imageUrl: string | ArrayBuffer | null = null;
   userDati: UserDati[]= [];
   usersSubscription!:Subscription;
-  showModal: boolean = true;
+  showModal: boolean = false;
   selectedUserId!: number;
   selectedCompetenzaId!: number;
   constructor(private machineSrv:MachinsService, private fb: FormBuilder,private userDatisrv:UsersService) {}
@@ -67,8 +67,8 @@ export class MenuCreateComponent implements OnInit,OnDestroy{
 
   onMachineSubmit() {
     this.isFormSubmitted = true;
-    this.showModal = true;
     if (this.addMachineForm.valid) {
+      this.showModal = true;
       console.log(this.addMachineForm.value);
     } else {
       console.log('Il form non è valido.',this.addMachineForm.value);
@@ -82,7 +82,7 @@ export class MenuCreateComponent implements OnInit,OnDestroy{
   }
   onCompetenzaClick(idCompetenze:number) {
     this.selectedCompetenzaId = idCompetenze;
-    console.log('Competenza selezionata:', this.selectedCompetenzaId)
+   // console.log('Competenza selezionata:', this.selectedCompetenzaId)
   }
   addMacchina(): void {
     if (this.selectedUserId) {

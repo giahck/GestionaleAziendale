@@ -20,24 +20,28 @@ public class PartsService {
     @Autowired
     private PartsMapper partsMapper;
     @Autowired
-    private MachineRepository machineService;
-    public List<Parts> addPartsList(List<PartsDto> partsList) {
-        List<Parts> addedParts = new ArrayList<>();
+    private MachineRepository machineRepository;
+    @Autowired
+    private GenericMachineService genericMachineService;
+    public List<Machine> addPartsList(List<PartsDto> partsList) {
+        /*List<Parts> addedParts = new ArrayList<>();*/
         for (PartsDto partsDto : partsList) {
             if (partsDto == null)
                 throw new IllegalArgumentException("PartDto is null");
             Parts parts = partsMapper.partsDtoToParts(partsDto);
 
-            Optional<Machine> optionalMachine = machineService.findById(partsDto.getMachineId());
+            Optional<Machine> optionalMachine = machineRepository.findById(partsDto.getMachineId());
             if (!optionalMachine.isPresent()) {
                 System.out.println("Machine with id " + partsDto.getMachineId() + " not found");
                 continue;
             }
 
             parts.setMachine(optionalMachine.get());
-            addedParts.add(partsRepository.save(parts));
+          /*  addedParts.add(partsRepository.save(parts));*/
+            partsRepository.save(parts);
         }
-        return addedParts;
+
+        return genericMachineService.getAllMachinesAndSubclasses();
     }
     public List<Parts> getAllParts() {
         return partsRepository.findAll();

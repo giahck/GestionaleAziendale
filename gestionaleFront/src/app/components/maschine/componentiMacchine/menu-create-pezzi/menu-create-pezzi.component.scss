@@ -1,20 +1,8 @@
-.input-invalid {
-    border-color: red; /* o background-color: red; per il colore di sfondo */
-    color: red;
-    background-color: rgba(255, 0, 0, 0.231);
-}
-.textarea-small-font {
+.alert-message {
+    white-space: pre-wrap;
+  }
+  .textarea-small-font {
     font-size: 0.8rem; /* Riduce la dimensione del testo */
-  }
-  .custom-width {
-    width: 30%; /* o qualsiasi altra larghezza desiderata */
-  }
-  .img-thumbnail {
-    max-width: 300px;
-    max-height: 150px;
-  }
-  .border-danger {
-    border-color: red !important;
   }
   .modal-open {
     overflow: hidden; /* Impedisce lo scroll della pagina principale */
@@ -29,3 +17,4 @@
     background-color: rgba(0, 0, 0, 0.5); /* Colore scuro con trasparenza */
     z-index: 1040; /* Z-index inferiore rispetto al modal ma superiore agli altri contenuti */
   }
+  

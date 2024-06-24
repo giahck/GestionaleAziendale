@@ -3,8 +3,6 @@ form {
     border-radius: 0.5rem; 
     padding: 2rem; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); // Ombra sottile
-  }form:hover {
-    transform: scale(1.02); /* Effetto di rimpicciolimento temporaneo al passaggio del mouse */
   }
   
   button[type="submit"] {

@@ -1,6 +1,7 @@
 package GestionaleAziendale.GesionaleBack.controller.machineController;
 
 import GestionaleAziendale.GesionaleBack.dto.dtoMachine.PartsDto;
+import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
 import GestionaleAziendale.GesionaleBack.entity.machine.Parts;
 import GestionaleAziendale.GesionaleBack.service.serviceMachine.PartsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class PartsController {
     private PartsService partsService;
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('MANAGER') ")
-    public List<Parts> addParts(@RequestBody @Validated List<PartsDto> partsList, BindingResult validation) {
+    public List<Machine> addParts(@RequestBody @Validated List<PartsDto> partsList, BindingResult validation) {
         if (validation.hasErrors()) {
             throw new RuntimeException("Richiesta non valida: " + validation.getAllErrors().stream().map(e -> e.getDefaultMessage()).reduce("", (s1, s2) -> s1 + "\n" + s2));
         }

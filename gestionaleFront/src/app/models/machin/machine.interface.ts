@@ -21,6 +21,7 @@ export enum StatoMaschineEnum {
 }
 
 export interface Part {
+  machine?: Machine;
   id: number;
   nomeParte: string;
   descrizione: string;

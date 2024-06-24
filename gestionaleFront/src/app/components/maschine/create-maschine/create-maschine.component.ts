@@ -2,6 +2,7 @@ import { Machine, Part, Piece } from './../../../models/machin/machine.interface
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MachinsService } from '../../../service/machins.service';
 import { Subscription } from 'rxjs';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-create-maschine',
@@ -13,8 +14,9 @@ export class CreateMaschineComponent implements OnInit,OnDestroy{
   parts: Part[] = [];
   pieces: Piece[] = [];
   machinesSubscription!: Subscription;
-  showAddMachine: boolean = true;
-
+  showAddMachine: boolean = false;
+  showPezzi: boolean = false;
+  selectedMachineId: Machine | null = null;
   constructor(private machineSrv: MachinsService) { }
 
   ngOnInit(): void {
@@ -35,22 +37,43 @@ export class CreateMaschineComponent implements OnInit,OnDestroy{
   private extractPartsAndPieces(): void {
     const partsMap = new Map<number, Part>();
     const piecesMap = new Map<number, Piece>();
-    this.machine.forEach(machine => {
-      machine.parts.forEach(part => {
-        partsMap.set(part.id, part);
-        part.pieces.forEach(piece => {
-          piecesMap.set(piece.id, piece);
-        });
+  
+    
+    if (this.machine) {
+      this.machine.forEach(machine => {
+        if (machine.parts) {
+          machine.parts.forEach(part => {
+            partsMap.set(part.id, part);
+            if (part.pieces) {
+              part.pieces.forEach(piece => {
+                piecesMap.set(piece.id, piece);
+              });
+            }
+          });
+        }
       });
-    });
-
+    }
+  
     this.parts = Array.from(partsMap.values());
     this.pieces = Array.from(piecesMap.values());
   }
-
+  addParti()
+  {
+    this.showPezzi = !this.showPezzi;
+    this.showAddMachine = false;
+  }
+  addPezzi(){
+    
+  }
  
   addMachine() {
  //   console.log('Add machine');
     this.showAddMachine = !this.showAddMachine;
+    this.showPezzi = false;
   }
+  machineSelected(id: Machine | null) {
+    this.selectedMachineId = id;
+    console.log('Machine selected:', this.selectedMachineId);
+  }
+
 }

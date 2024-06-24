@@ -7,15 +7,15 @@ import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
+/* import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
-import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
+import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse'; */
 import { ReactiveFormsModule } from '@angular/forms';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
+/* import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs'; */
 import { TokenInterceptor } from './auth/token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+/* import { MdbModalModule } from 'mdb-angular-ui-kit/modal'; */
 import { EmailVerifiedComponent } from './auth/email-verified/email-verified.component';
 import { CompetenzeComponent } from './components/competenze/competenze.component';
 import { SettingComponent } from './components/setting/setting.component';
@@ -45,14 +45,14 @@ import { BodyComponent } from './components/nav-bar/body/body.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MdbDropdownModule,
-    MdbRippleModule,
-    MdbCollapseModule,
+   /*  MdbDropdownModule,
+    MdbRippleModule, */
+    /* MdbCollapseModule, */
     ReactiveFormsModule,
-    MdbFormsModule,
-    MdbTabsModule,
+   /*  MdbFormsModule,
+    MdbTabsModule, */
     HttpClientModule,
-    MdbModalModule,
+    /* MdbModalModule, */
     TiketsRouterModule,
     MashineModule,
     MashineRouteModule,

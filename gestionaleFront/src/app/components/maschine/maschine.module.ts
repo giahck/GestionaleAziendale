@@ -9,6 +9,8 @@ import { MacchinaComponent } from './componentiMacchine/macchina/macchina.compon
 import { MenuCreateComponent } from './componentiMacchine/menu-create/menu-create.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { MenuCreatePezziComponent } from './componentiMacchine/menu-create-pezzi/menu-create-pezzi.component';
+import { MenuCreatePartiComponent } from './componentiMacchine/menu-create-parti/menu-create-parti.component';
 
 
 
@@ -19,6 +21,8 @@ import { FormsModule } from '@angular/forms';
     CreateMaschineComponent,
    MenuCreateComponent,
     MacchinaComponent,
+    MenuCreatePezziComponent,
+    MenuCreatePartiComponent,
   /*   PartiComponent, */
   
 ],

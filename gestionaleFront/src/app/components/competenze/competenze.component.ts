@@ -34,12 +34,15 @@ export class CompetenzeComponent implements OnInit {
     });
   }
   onCompetenzaSubmit(): void {
+    const userString = localStorage.getItem('user');
     console.log('Dati della competenza da inviare:', this.competenzaForm.value);
-    if (this.competenzaForm.valid) {
+    if (this.competenzaForm.valid&&userString) {
+      const userObject = JSON.parse(userString);
+      const userId = userObject.id;
       const formData = { ...this.competenzaForm.value };
       formData.idRisorsa = Number(formData.idRisorsa);
       formData.livello = Number(formData.livello);
-      formData.usersId = [this.authSrv.getState().id];
+      formData.usersId = [userId];
       console.log('Dati della competenza da inviare:', formData);
 
       console.log('Dati della competenza da inviare:', formData);

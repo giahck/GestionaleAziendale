@@ -1,17 +1,36 @@
 <div class="container-fluid mb-3">
   <div class="row mb-2">
     <div class="d-flex flex-row border align-content-center">
-      <i class="bi bi-pencil-fill fa-2x" (click)="addMachine()"></i>
+      <div class="d-flex justify-content-center"></div>
+      <div class="d-flex flex-column text-center p-2">
+        <label for="addMachine">Add Macchina</label>
+        <i class="bi bi-pencil-fill fa-2x" (click)="addMachine()"></i>
+      </div>
+      <div class="d-flex flex-column text-center p-2">
+        <label for="addMachine" >Add Parti</label>
+       <i class="bi bi-file-plus-fill fa-2x " (click)="addParti()"></i>
+      </div>
+      <div class="d-flex flex-column text-center p-2">
+        <label for="addMachine" >Add Pezzi</label>
+       <i class="bi bi-file-plus-fill fa-2x " (click)="addPezzi()"></i>
+      </div>
+      <div class="d-flex flex-column text-center p-2">
+        <label for="addMachine">Cancella</label>
       <i class="bi bi-eraser-fill fa-2x"></i>
+      </div>
     </div>
   </div>
   <div *ngIf="showAddMachine">
     <app-menu-create></app-menu-create>
   </div>
+  <div *ngIf="showPezzi">
+    <app-menu-create-pezzi [selectedMachineId]="selectedMachineId"></app-menu-create-pezzi>
+  </div>
 
   <div class="container-fluid mt-3">
     <div class="row">
       <app-macchina
+      (machineSelected)="machineSelected($event)"
         [machines]="machine"
         [pieces]="pieces"
         [parts]="parts"

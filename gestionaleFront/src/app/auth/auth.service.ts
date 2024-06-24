@@ -42,6 +42,7 @@ export class AuthService {
 
   // Getter method
   getState(): StatoRegister {
+    console.log('Current state:', this.state.getValue());
     return this.state.getValue();
   }
   competenze(data: Competenze) {
