@@ -1,6 +1,7 @@
 package GestionaleAziendale.GesionaleBack.service.serviceMachine;
 
 import GestionaleAziendale.GesionaleBack.dto.dtoMachine.PieceDto;
+import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
 import GestionaleAziendale.GesionaleBack.entity.machine.Parts;
 import GestionaleAziendale.GesionaleBack.entity.machine.Piece;
 import GestionaleAziendale.GesionaleBack.maperDto.mapperDtoMachine.PieceMapper;
@@ -20,8 +21,9 @@ public class PieceService {
     private PieceMapper pieceMapper;
     @Autowired
     private PartsService partsService;
-
-    public List<Piece> addPieceList(List<PieceDto> pieceList) {
+    @Autowired
+    private GenericMachineService genericMachineService;
+    public List<Machine> addPieceList(List<PieceDto> pieceList) {
         List<Piece> addedPiece = new ArrayList<>();
         for (PieceDto pieceDto : pieceList) {
             if (pieceDto == null)
@@ -32,7 +34,8 @@ public class PieceService {
             piece.setParts(parts);
             addedPiece.add(pieceRepository.save(piece));
         }
-        return addedPiece;
+        /*return addedPiece;*/
+        return genericMachineService.getAllMachinesAndSubclasses();
     }
     public List<Piece> getAllPiece() {
         return pieceRepository.findAll();

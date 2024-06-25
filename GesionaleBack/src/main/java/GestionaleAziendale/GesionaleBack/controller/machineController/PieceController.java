@@ -2,6 +2,7 @@ package GestionaleAziendale.GesionaleBack.controller.machineController;
 
 import GestionaleAziendale.GesionaleBack.dto.dtoMachine.PartsDto;
 import GestionaleAziendale.GesionaleBack.dto.dtoMachine.PieceDto;
+import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
 import GestionaleAziendale.GesionaleBack.entity.machine.Parts;
 import GestionaleAziendale.GesionaleBack.entity.machine.Piece;
 import GestionaleAziendale.GesionaleBack.service.serviceMachine.PieceService;
@@ -20,7 +21,7 @@ public class PieceController {
     private PieceService pieceService;
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('MANAGER') ")
-    public List<Piece> addPiece(@RequestBody @Validated List<PieceDto> pieceList, BindingResult validation) {
+    public List<Machine> addPiece(@RequestBody @Validated List<PieceDto> pieceList, BindingResult validation) {
         if (validation.hasErrors()) {
             throw new RuntimeException("Richiesta non valida: " + validation.getAllErrors().stream().map(e -> e.getDefaultMessage()).reduce("", (s1, s2) -> s1 + "\n" + s2));
         }

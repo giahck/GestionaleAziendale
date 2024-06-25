@@ -26,11 +26,15 @@
   <div *ngIf="showPezzi">
     <app-menu-create-pezzi [selectedMachineId]="selectedMachineId"></app-menu-create-pezzi>
   </div>
+  <div *ngIf="showParti">
+    <app-menu-create-parti  [partSelectedId]="partSelectedId"></app-menu-create-parti>
+  </div>
 
   <div class="container-fluid mt-3">
     <div class="row">
       <app-macchina
       (machineSelected)="machineSelected($event)"
+      (partSelected)="partSelected($event)"
         [machines]="machine"
         [pieces]="pieces"
         [parts]="parts"

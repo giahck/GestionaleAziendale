@@ -1,6 +1,7 @@
 package GestionaleAziendale.GesionaleBack.service.serviceMachine;
 
 import GestionaleAziendale.GesionaleBack.dto.dtoMachine.GenericMachineDto;
+import GestionaleAziendale.GesionaleBack.dto.queryDto.ListMaschinDto;
 import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
 import GestionaleAziendale.GesionaleBack.entity.machine.Parts;
 import GestionaleAziendale.GesionaleBack.entity.machine.genericMachine.MachineGeneric;
@@ -84,6 +85,16 @@ public class GenericMachineService {
             throw new IllegalArgumentException("Machine with id " + id + " not found");
         }
         return optionalMachine.get();
+    }
+
+    public List<ListMaschinDto> getAllMachinesDetails() {
+
+        return machineGenericRepository.findMachineDetails();
+        /*machineRepository.findMachineDetails();*/
+       // System.out.println("\n\n\n\n"+machineRepository.findMachineDetails());
+/*
+        return null;
+*/
     }
 
 }

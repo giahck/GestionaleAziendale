@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, of, tap, throwError } from 'rxjs';
-import { Machine, Part } from '../models/machin/machine.interface';
+import { Machine, Part, Piece } from '../models/machin/machine.interface';
 import { environment } from '../../environments/environment.development';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MachinsService } from './machins.service';
@@ -11,9 +11,14 @@ import { machine } from 'node:os';
   providedIn: 'root'
 })
 export class PezziEpartiService {
+  apiUrl=environment.apiURL;
   private partiSubject = new BehaviorSubject<Part[]>([]);
   parti$: Observable<Part[]> = this.partiSubject.asObservable();
-  apiUrl=environment.apiURL;
+
+  private pezziSubject = new BehaviorSubject<Piece[]>([]);
+  pezzi$: Observable<Piece[]> = this.pezziSubject.asObservable();
+
+
   constructor(private http:HttpClient, private machinSrv:MachinsService) { }
 
   getParti$(): Observable<Part[]> {
@@ -45,6 +50,42 @@ export class PezziEpartiService {
         })
      );
    }
+
+   
+
+
+
+   getPezzi$(): Observable<Piece[]> {
+    return this.pezzi$;
+  }
+
+  setPezzi(pezzi: Piece[]): void {
+    this.pezziSubject.next(pezzi);
+  }
+
+  getPezzi(): void {
+   
+     this.http.get<Piece[]>(`${this.apiUrl}machine/piece`).pipe(
+       catchError(error => {
+         this.handleError(error);
+         return of([]); 
+       }),
+       tap((pezzi: Piece[]) => {
+         this.setPezzi(pezzi);
+       
+       })
+     ).subscribe();
+   }
+   postPezzi(pezzi: Piece[]): Observable<Machine[]> {
+     return this.http.post<Machine[]>(`${this.apiUrl}machine/piece/add`, pezzi).pipe(
+       catchError(this.handleError),
+       tap((machine: Machine[]) => {
+         this.machinSrv.setMachines(machine);
+        })
+     );
+   }
+
+
 
 
   private handleError(error: HttpErrorResponse) {

@@ -3,5 +3,5 @@ export interface Competenze {
     descrizione: string;
     idRisorsa: number;
     livello: number;
-    usersId: number[];
+    usersId: number[]|number;
 }

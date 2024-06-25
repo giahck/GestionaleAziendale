@@ -21,7 +21,9 @@ export class MenuCreateComponent implements OnInit,OnDestroy{
   usersSubscription!:Subscription;
   showModal: boolean = false;
   selectedUserId!: number;
+  selectedMachineId!: number;
   selectedCompetenzaId!: number;
+  partSelectedId!:number;
   constructor(private machineSrv:MachinsService, private fb: FormBuilder,private userDatisrv:UsersService) {}
 
   ngOnInit(): void {

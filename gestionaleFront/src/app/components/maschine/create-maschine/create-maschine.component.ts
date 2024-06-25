@@ -16,7 +16,9 @@ export class CreateMaschineComponent implements OnInit,OnDestroy{
   machinesSubscription!: Subscription;
   showAddMachine: boolean = false;
   showPezzi: boolean = false;
+  showParti: boolean = false;
   selectedMachineId: Machine | null = null;
+  partSelectedId: Part | null = null;
   constructor(private machineSrv: MachinsService) { }
 
   ngOnInit(): void {
@@ -61,19 +63,27 @@ export class CreateMaschineComponent implements OnInit,OnDestroy{
   {
     this.showPezzi = !this.showPezzi;
     this.showAddMachine = false;
+    this.showParti= false
   }
   addPezzi(){
-    
+    this.showPezzi = false;
+    this.showAddMachine = false;
+    this.showParti= !this.showParti
   }
  
   addMachine() {
  //   console.log('Add machine');
     this.showAddMachine = !this.showAddMachine;
     this.showPezzi = false;
+    this.showParti= false
   }
   machineSelected(id: Machine | null) {
     this.selectedMachineId = id;
-    console.log('Machine selected:', this.selectedMachineId);
+   // console.log('Machine selected:', this.selectedMachineId);
+  }
+  partSelected(id: Part | null) {
+    this.partSelectedId = id;
+   // console.log('Machine selected:', this.selectedMachineId);
   }
 
 }

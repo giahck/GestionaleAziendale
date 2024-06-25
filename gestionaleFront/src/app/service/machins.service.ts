@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Machine } from '../models/machin/machine.interface';
 import { BehaviorSubject, Observable, catchError, of, tap, throwError } from 'rxjs';
 import { log } from 'console';
+import { Competenze } from '../models/competenze.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -62,5 +63,9 @@ export class MachinsService {
     }
     // Ritorna un observable con un messaggio di errore utile per il consumatore del servizio
     return throwError(errorMessage);
+  }
+
+  getMachine():Observable<Machine[]>{
+  return this.http.get<Machine[]>(`${this.apiUrl}machine/competenze`);
   }
 }

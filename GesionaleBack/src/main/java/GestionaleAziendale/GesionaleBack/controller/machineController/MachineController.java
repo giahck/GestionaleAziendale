@@ -1,6 +1,7 @@
 package GestionaleAziendale.GesionaleBack.controller.machineController;
 
 import GestionaleAziendale.GesionaleBack.dto.dtoMachine.GenericMachineDto;
+import GestionaleAziendale.GesionaleBack.dto.queryDto.ListMaschinDto;
 import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
 import GestionaleAziendale.GesionaleBack.entity.machine.genericMachine.MachineGeneric;
 import GestionaleAziendale.GesionaleBack.service.serviceMachine.GenericMachineService;
@@ -36,5 +37,12 @@ public class MachineController {
     public List<Machine> getAllMachinesAndSubclasses() {
         return genericMachineService.getAllMachinesAndSubclasses();
     }
+
+    @GetMapping("/details")
+    @PreAuthorize("hasAuthority('MANAGER') ")
+    public List<ListMaschinDto> getAllMachines() {
+        return genericMachineService.getAllMachinesDetails();
+    }
+
 
 }

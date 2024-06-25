@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { StatoRegister } from '../../models/stato-register.interface';
+import { MachinsService } from '../../service/machins.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-competenze',
   templateUrl: './competenze.component.html',
@@ -12,11 +14,13 @@ export class CompetenzeComponent implements OnInit {
   showSuccessAlert = false;
   showErrorAlert = false;
   competenzaForm!: FormGroup;
+ // usersSubscription!:Subscription;
  // state!: StatoRegister;
   constructor(
     private fb: FormBuilder,
     private authSrv: AuthService,
-    private router: Router
+    private router: Router,
+    private maschine:MachinsService
   ) {}
   skip(){
     this.authSrv.setState({
@@ -26,6 +30,8 @@ export class CompetenzeComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+
+
     this.competenzaForm = this.fb.group({
       nomeCompetenza: ['', Validators.required],
       descrizione: ['', Validators.required],

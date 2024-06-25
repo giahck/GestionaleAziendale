@@ -31,6 +31,7 @@ export interface Part {
 }
 
 export interface Piece {
+  part?: Part;
   id: number;
   nomePezzo: string;
   descrizione: string;
