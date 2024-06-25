@@ -29,6 +29,6 @@ public class CompetenzeRegDto {
    // @NotNull(message = "Ruoli cannot be null")
     private Set<Integer> usersId;
 
-    private Machine machine;
+    private int machineId;
 
 }

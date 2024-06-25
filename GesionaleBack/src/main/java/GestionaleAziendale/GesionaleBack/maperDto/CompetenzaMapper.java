@@ -13,8 +13,9 @@ public interface CompetenzaMapper {
     CompetenzaMapper INSTANCE = Mappers.getMapper(CompetenzaMapper.class);
 
     @Mapping(target = "usersId", ignore = true)
+    @Mapping(target = "machineId", ignore = true)
     CompetenzeRegDto toDto(Competenza entity);
-
     @Mapping(target = "usersId", ignore = true)
+    @Mapping(target = "machine", ignore = true)
     Competenza toEntity(CompetenzeRegDto dto);
 }

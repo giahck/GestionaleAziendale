@@ -3,8 +3,7 @@ import { environment } from '../../environments/environment.development';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Machine } from '../models/machin/machine.interface';
 import { BehaviorSubject, Observable, catchError, of, tap, throwError } from 'rxjs';
-import { log } from 'console';
-import { Competenze } from '../models/competenze.interface';
+import { MachinaCompetenza } from '../models/machin/machina-competenza.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +45,11 @@ export class MachinsService {
     );
   }
 
+  getMachine():Observable<MachinaCompetenza[]>{
+  return this.http.get<Machine[]>(`${this.apiUrl}machine/details`).pipe(
+    catchError(this.handleError)
+  );
+  }
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Si è verificato un errore sconosciuto!';
@@ -65,7 +69,4 @@ export class MachinsService {
     return throwError(errorMessage);
   }
 
-  getMachine():Observable<Machine[]>{
-  return this.http.get<Machine[]>(`${this.apiUrl}machine/competenze`);
-  }
 }

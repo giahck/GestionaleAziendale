@@ -25,4 +25,5 @@ export interface Role {
     descrizione: string;
     livello: number;
     machine: number | null;
+    machineId: number | null;
   }

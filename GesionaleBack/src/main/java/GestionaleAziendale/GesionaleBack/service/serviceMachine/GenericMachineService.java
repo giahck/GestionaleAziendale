@@ -89,7 +89,7 @@ public class GenericMachineService {
 
     public List<ListMaschinDto> getAllMachinesDetails() {
 
-        return machineGenericRepository.findMachineDetails();
+        return machineRepository.findSelectedMachineDetailsForCompetenze();
         /*machineRepository.findMachineDetails();*/
        // System.out.println("\n\n\n\n"+machineRepository.findMachineDetails());
 /*

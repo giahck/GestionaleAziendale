@@ -13,7 +13,9 @@ public interface MachineRepository extends JpaRepository<Machine, Integer> {
     @Query("SELECT m FROM Machine m")
     List<Machine> findAllMachinesAndSubclasses();
 
-    @Query("SELECT m, g.description FROM Machine m LEFT JOIN MachineGeneric g ON m.id = g.id")
-    List<ListMaschinDto> findMachineDetails();
+    @Query("SELECT new GestionaleAziendale.GesionaleBack.dto.queryDto.ListMaschinDto(mg.id, mg.nomeMacchina, mg.marca, mg.modello, mg.competenza, mg.description) FROM MachineGeneric mg LEFT JOIN mg.competenza")
+    List<ListMaschinDto> findSelectedMachineDetailsForCompetenze();
+
+
 
 }

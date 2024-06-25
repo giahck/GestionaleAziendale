@@ -26,9 +26,19 @@
   </div>
 
   <div class="mb-3">
-    <label for="competenzaIdRisorsa" class="form-label">ID Risorsa</label>
-    <input type="number" class="form-control" id="competenzaIdRisorsa" formControlName="idRisorsa">
-    <div *ngIf="competenzaForm.get('idRisorsa')?.invalid && competenzaForm.get('idRisorsa')?.touched" class="text-danger">
+    <label for="competenzaIdRisorsa" class="form-label">Scegli macchina</label>
+    <select class="form-control" id="competenzaIdRisorsa" formControlName="machineId">
+      <ng-container *ngFor="let macchina of macchine">
+        <option *ngIf="!macchina.competenza" [value]="macchina.id" class="d-flex justify-content-between text-center">
+          
+            <span>{{ macchina.nomeMacchina }}</span>
+            <span>-{{ macchina.marca }}</span>
+            <span> -{{ macchina.modello }}</span>
+         
+        </option>
+      </ng-container>
+    </select>
+    <div *ngIf="competenzaForm.get('machineId')?.invalid && competenzaForm.get('machineId')?.touched" class="text-danger">
       Il campo ID Risorsa è richiesto.
     </div>
   </div>

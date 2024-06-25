@@ -103,6 +103,9 @@ public class Users implements UserDetails {
     public String toString() {
         return "Users{" +
                 "id=" + id +
+                ", email='" + email + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", nome='" + nome + '\'' +
                 // do not include competenze
                 '}';
     }
