@@ -4,8 +4,9 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 
 import { AuthGuard } from './auth/auth.guard';
-import { ChatTiketComponent } from './components/chat-tiket/chat-tiket.component';
+
 import { SettingComponent } from './components/setting/setting.component';
+
 
 const routes: Routes = [
  {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -14,7 +15,9 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-  {path: 'chat-tiket', component: ChatTiketComponent,canActivate: [AuthGuard],},
+  {path: 'chat-tiket',canActivate: [AuthGuard], 
+    loadChildren: () => import('./components/chat-tiket/chat-ticket.module').then(m => m.ChatTicketModule)
+  },
   {path: 'tickets' ,canActivate: [AuthGuard],
     loadChildren: () => import('./components/tickets/tickets.module').then(m => m.TicketsModule)
   },
@@ -28,7 +31,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

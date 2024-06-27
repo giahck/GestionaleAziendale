@@ -1,1 +1,32 @@
-<p>chat-tiket works!</p>
+<div class="container PrincipalContainer rounded-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Chat Tiket</h1>
+
+      <div class="chat-container" #chatContainer>
+        <div *ngFor="let mesKey of message">
+          <div *ngIf="mesKey.from === 'User'">
+            <div class="alert alert-primary" role="alert">
+              <span>{{mesKey.from }}</span>
+              <span>{{mesKey.UserMessage?.content}}</span>
+            </div>
+          </div>
+          <div *ngIf="mesKey.from === 'bot'">
+            <div class="alert alert-secondary" role="alert">
+              <div *ngFor="let item of mesKey.choices">
+                <p>{{item.index}}</p>
+                <p>{{item.message.content}}</p>
+                <p>{{item.message.role}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div>
+    <input #messageInput type="text" value="" placeholder="Scrivi un messaggio...">
+    <button (click)="sendMessage(messageInput.value)">Invia</button>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.container.PrincipalContainer{
+    background-color: blueviolet;
+}
+.chat-container {
+    height: 40vh; /* Imposta l'altezza massima desiderata */
+    overflow-y: scroll; /* Attiva lo scroll verticale se il contenuto supera l'altezza massima */
+    scrollbar-width: none;  
+}

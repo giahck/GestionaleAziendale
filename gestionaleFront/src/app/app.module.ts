@@ -19,7 +19,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EmailVerifiedComponent } from './auth/email-verified/email-verified.component';
 import { CompetenzeComponent } from './components/competenze/competenze.component';
 import { SettingComponent } from './components/setting/setting.component';
-import { ChatTiketComponent } from './components/chat-tiket/chat-tiket.component';
+
 import { SublevelMenuComponent } from './components/nav-bar/sublevel-menu.component';
 import { TiketsRouterModule } from './components/tickets/tikets-router.module';
 import { MashineModule } from './components/maschine/maschine.module';
@@ -36,7 +36,6 @@ import { BodyComponent } from './components/nav-bar/body/body.component';
     EmailVerifiedComponent,
     CompetenzeComponent,
     SettingComponent,
-    ChatTiketComponent,
     SublevelMenuComponent,
     BodyComponent,
    
