@@ -1,0 +1,6 @@
+<h3>Seleziona Macchina</h3>
+<div class=" d-flex justify-content-center">
+  <div *ngFor="let machine of userMachine">
+    <p (click)="selezionaDescrizione(machine.description )">{{ machine.description }} {{machine.machines[0].nomeMacchina}}</p>
+  </div>
+</div>

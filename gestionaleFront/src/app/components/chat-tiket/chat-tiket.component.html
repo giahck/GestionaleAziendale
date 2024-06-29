@@ -1,32 +1,47 @@
 <div class="container PrincipalContainer rounded-5">
   <div class="row">
     <div class="col-md-12">
-      <h1>Chat Tiket</h1>
+      <div class="d-flex justify-content-around mb-3">
+        <h2>Chat Tiket</h2>
+        <button (click)="activePanel()" class="send-button">Problem</button>
+      </div>
 
-      <div class="chat-container" #chatContainer>
-        <div *ngFor="let mesKey of message">
-          <div *ngIf="mesKey.from === 'User'">
-            <div class="alert alert-primary" role="alert">
-              <span>{{mesKey.from }}</span>
-              <span>{{mesKey.UserMessage?.content}}</span>
+      <div *ngIf="activeOpzion; else noMessages" class="chat-container" #chatContainer [ngClass]="{'active-opzion': activeOpzion}">
+        <div *ngFor="let mesKey of message" [@messageAnimation]>
+          <div *ngIf="mesKey.from === 'User'" class="message user-message">
+            <div class="chat-bubble user-bubble" >
+              <p class="sender">{{mesKey.from }}</p>
+              <p class="content">{{mesKey.UserMessage?.content}}</p>
             </div>
           </div>
-          <div *ngIf="mesKey.from === 'bot'">
-            <div class="alert alert-secondary" role="alert">
+          <div *ngIf="mesKey.from === 'bot'" class="d-flex justify-content-end" >
+            <div class="message bot-message">
+            <div class="chat-bubble bot-bubble">
               <div *ngFor="let item of mesKey.choices">
-                <p>{{item.index}}</p>
-                <p>{{item.message.content}}</p>
-                <p>{{item.message.role}}</p>
+                <p class="sender">{{mesKey.from}}</p>
+                <p class="content">{{item.message.content}}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+      <ng-template #noMessages>
+        <div class="chat-container">
+          <app-scelta-machine [testo]="descrizione" (testoSelezionato)="aggiornaDescrizione($event)"></app-scelta-machine>
+
   </div>
-  
-  <div>
-    <input #messageInput type="text" value="" placeholder="Scrivi un messaggio...">
-    <button (click)="sendMessage(messageInput.value)">Invia</button>
+      </ng-template>
+
+      <div class="d-flex justify-content-center m-2 blocco-input" [ngClass]="{'active-opzion': activeOpzion}">
+        <span *ngIf="activeOpzion" class="input-wrapper" >
+          <input #messageInput type="text" placeholder="Scrivi un messaggio..." class="message-input" (keydown.enter)="sendMessage(messageInput.value)">
+          <button  (click)="sendMessage(messageInput.value)" class="send-button">Invia</button>
+        </span>
+        <div *ngIf="!activeOpzion" class="input-wrapper">
+          <textarea name="message" id="messages" class="message-textarea" [(ngModel)]="descrizione"></textarea>
+          <button (click)="sendTextareaMessage()" class="send-button">Invia</button>
+        </div>
+      </div>
   </div>
 </div>

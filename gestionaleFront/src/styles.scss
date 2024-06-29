@@ -5,26 +5,26 @@
 @import "../node_modules/bootstrap/scss/functions";
 @import "../node_modules/bootstrap/scss/variables";
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  position: relative;
-  font-family: "Nunito", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
+    position: relative;
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
   background: #229147;
 }
 
-$text: #d40909;
-$background: #1b1b8b;
-$primary: #83451d;
+$text: #7209d4;
+$background: #681b8b;
+$primary: #96C919;
 $secondary: #A21547;
 $accent: #574f4f;
-$warning: #734912;
+$warning: #6d7312;
 $pkmn-red: $accent;
 
 $custom-colors: (
