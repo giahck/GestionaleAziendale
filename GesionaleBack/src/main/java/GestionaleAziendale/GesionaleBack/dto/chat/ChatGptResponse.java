@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatGptResponse {
-
+    private String from;
     private List<Choice> choices;
 
     @Data

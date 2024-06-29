@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +48,17 @@ public class AppConfig {
         config.put("api_secret", secret);
        // config.put("folder", folder);
         return new Cloudinary(config);
+    }
 
+    @Value("${openai.api.key}")
+    String openaiApiKey;
+    @Bean
+    public RestTemplate restTemplate() {
+        RestTemplate restTemplate=new RestTemplate();
+        restTemplate.getInterceptors().add((request, body, execution) -> {
+            request.getHeaders().add("Authorization", "Bearer " + openaiApiKey);
+            return execution.execute(request, body);
+        });
+        return restTemplate;
     }
 }

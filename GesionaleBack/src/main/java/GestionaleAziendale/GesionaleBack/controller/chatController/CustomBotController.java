@@ -2,7 +2,7 @@ package GestionaleAziendale.GesionaleBack.controller.chatController;
 
 import GestionaleAziendale.GesionaleBack.dto.chat.ChatGPTRequest;
 import GestionaleAziendale.GesionaleBack.dto.chat.ChatGptResponse;
-import GestionaleAziendale.GesionaleBack.service.chat.ChatGPTService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/bot")
+@RequestMapping("/auth")
 public class CustomBotController {
 
     @Value("${openai.model}")
@@ -29,6 +29,7 @@ public class CustomBotController {
     public String chat(@RequestParam("prompt") String prompt){
         ChatGPTRequest request=new ChatGPTRequest(model, prompt);
         ChatGptResponse chatGptResponse = template.postForObject(apiURL, request, ChatGptResponse.class);
+
         return chatGptResponse.getChoices().get(0).getMessage().getContent();
     }
 }

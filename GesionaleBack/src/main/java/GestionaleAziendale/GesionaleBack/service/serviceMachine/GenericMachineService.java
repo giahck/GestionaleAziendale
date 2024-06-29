@@ -45,8 +45,8 @@ public class GenericMachineService {
         if (fotoMachine != null && !fotoMachine.isEmpty()) {
             System.out.println("Photo not null");
             try {
-               // String url = (String) cloudinary.uploader().upload(fotoMachine.getBytes(), null).get("url");
-               // genericMachineDto.setPhoto(url);
+                String url = (String) cloudinary.uploader().upload(fotoMachine.getBytes(), null).get("url");
+                genericMachineDto.setPhoto(url);
             } catch (Exception e) {
                 e.printStackTrace();
             }

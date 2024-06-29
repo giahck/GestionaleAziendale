@@ -1,13 +1,12 @@
 package GestionaleAziendale.GesionaleBack.controller;
 
-import GestionaleAziendale.GesionaleBack.dto.UserDto;
+import GestionaleAziendale.GesionaleBack.dto.UserMachineDto;
 import GestionaleAziendale.GesionaleBack.dto.UsersDatiDto;
-import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
-import GestionaleAziendale.GesionaleBack.entity.utenti.Users;
 import GestionaleAziendale.GesionaleBack.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,4 +27,8 @@ public class UsersController {
     public List<UserDto> getAllUsers(){
         return userService.getAllUsersDipendenti();
     }*/
+     @GetMapping("/{id}/machine")
+    public List<UserMachineDto> getUserData(@PathVariable Integer id){
+        return userService.getUserData(id);
+    }
 }

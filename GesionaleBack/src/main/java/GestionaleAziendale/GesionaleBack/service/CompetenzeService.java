@@ -54,9 +54,6 @@ private MachineRepository machineRepository;
             throw new BadRequestException("La macchina con id " + competenzeDto.getMachineId() + " non esiste");
         }
         competenza = competenzaRepository.save(competenza);
-
-
-
         System.out.println(competenza);
         return null;
     }
