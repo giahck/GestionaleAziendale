@@ -1,6 +1,63 @@
 <h3>Seleziona Macchina</h3>
-<div class=" d-flex justify-content-center">
-  <div *ngFor="let machine of userMachine">
-    <p (click)="selezionaDescrizione(machine.description )">{{ machine.description }} {{machine.machines[0].nomeMacchina}}</p>
+<div class="container-fluid p-0 m-0">
+  <div *ngFor="let machineU of userMachine">
+    <div *ngFor="let machine of machineU.machines" class="row m-4 justify-content-center">
+      <div class="col-md-6 col-sm-12 col-lg-4 "
+           [ngClass]="{'containe-selected': selectedMachine === machine, 'containe-default': selectedMachine !== machine}">
+        <div (click)="selezionaDescrizioneMacchina(machine)" class="container-clickable">
+          <p class="messagePriority">Nome della macchina:</p>
+          <p class="message-contenuto">{{ machine.nomeMacchina }}</p>
+          <p class="messagePriority">Descrizione Macchina:</p>
+          <p class="message-contenuto">{{ machine.description }}</p>
+          <p class="messagePriority">Marca:</p>
+          <p class="message-contenuto">{{ machine.marca }}</p>
+          <p class="messagePriority">Stato:</p>
+          <p class="message-contenuto">{{ machine.statoMacchina }}</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 col-lg-8"
+           *ngIf="selectedMachine === machine && machine.parts.length>0 &&  machine.parts[0].partId !== 0"
+          >
+        <h3>Parti della macchina</h3>
+           <div *ngFor="let part of machine.parts">
+          <div (click)="selezionaDescrizioneMacchinaParte(part)" class="container-clickable conteiner-partClic"
+          [ngClass]="{'conteiner-partClicA': selectedParts === part, 'conteiner-partClic': selectedParts !== part}">
+            <p class="messagePriority">Nome della Parte:</p>
+            <p class="message-contenuto">{{ part.nomeParte }} {{part.partId}}</p>
+            <p class="messagePriority">Descrizione Parte:</p>
+            <p class="message-contenuto">{{ part.descrizione }}</p>
+            <p class="messagePriority">Note della parte:</p>
+            <p class="message-contenuto">{{ part.note }}</p>
+            <p class="messagePriority">Quantità della parte:</p>
+            <p class="message-contenuto">{{ part.quantityParts }}</p>
+          </div>
+         
+          <div class="col-sm-12"
+          *ngIf="selectedMachine === machine  && selectedParts === part"
+          [ngClass]="{'containe-selected-part': selectedMachine === machine}">
+       <h3>Pezzi della parte {{part.nomeParte}}</h3>
+       <div class="container-fluid row">
+
+          <div *ngFor="let pieces of part.pieces" class="col-sm-6 col-lg-4 col-xl-3">
+            <div >
+
+              <div (click)="selezionaDescrizioneMacchinaPartePiece(pieces)" class="container-clickable conteiner-partClic">
+                <p class="messagePriority">Nome del Pezzo:</p>
+                <p class="message-contenuto">{{ pieces.nomePezzo }}</p>
+                <p class="messagePriority">Descrizione Parte:</p>
+                <p class="message-contenuto">{{ pieces.descrizione }}</p>
+                <p class="messagePriority">Quantita pezzi:</p>
+                <p class="message-contenuto">{{ pieces.quantityPiece }}</p>
+              </div>
+            </div>
+         </div>
+       </div>
+     </div>
+
+        </div>
+      </div>
+   
+
+    </div>
   </div>
 </div>

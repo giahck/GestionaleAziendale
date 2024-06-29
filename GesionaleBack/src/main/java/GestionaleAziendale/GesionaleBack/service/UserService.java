@@ -107,8 +107,8 @@ public class UserService {
 //metodo template jdbcTemplate
 
     public List<UserMachineDto> getUserData(int userId) {
-        String sql = "SELECT u.id as user_id, mg.description, mg.photo, " +
-                "m.id as machine_id, m.nome_macchina, m.marca, m.stato_macchina, " +
+        String sql = "SELECT u.id as user_id,  " +
+                "m.id as machine_id, m.nome_macchina, m.marca, m.stato_macchina, mg.description, mg.photo," +
                 "p.id as part_id, p.nome_parte, p.descrizione, p.note, p.quantity_parts, " +
                 "pc.id as piece_id, pc.nome_pezzo, pc.quantity_piece, pc.descrizione " +
                 "FROM users u " +
@@ -140,8 +140,6 @@ public class UserService {
             if (userDto == null) {
                 userDto = new UserMachineDto();
                 userDto.setUserId(userId);
-                userDto.setDescription(rs.getString("description"));
-                userDto.setPhoto(rs.getString("photo"));
                 userDto.setMachines(new ArrayList<>());
                 userMap.put(userId, userDto);
             }
@@ -154,6 +152,8 @@ public class UserService {
                 machineDto.setNomeMacchina(rs.getString("nome_macchina"));
                 machineDto.setMarca(rs.getString("marca"));
                 machineDto.setStatoMacchina(rs.getString("stato_macchina"));
+                machineDto.setDescription(rs.getString("description"));
+                machineDto.setPhoto(rs.getString("photo"));
                 machineDto.setParts(new ArrayList<>());
                 machineMap.put(machineId, machineDto);
                 userDto.getMachines().add(machineDto);

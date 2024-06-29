@@ -10,8 +10,8 @@ import java.util.List;
 public class UserMachineDto {
 
     private int userId;
-    private String description;
-    private String photo;
+
+
     private List<MachineDto> machines;
 
     @Data
@@ -21,6 +21,8 @@ public class UserMachineDto {
         private int machineId;
         private String nomeMacchina;
         private String marca;
+        private String description;
+        private String photo;
         private String statoMacchina;
         private List<PartDto> parts;
 

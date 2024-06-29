@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild 
 import { FormsModule } from '@angular/forms';
 import { TiketService } from '../../service/tiket.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { log } from 'console';
 @Component({
   selector: 'app-chat-tiket',
   templateUrl: './chat-tiket.component.html',
@@ -18,22 +19,28 @@ import { animate, style, transition, trigger } from '@angular/animations';
   
 })
 export class ChatTiketComponent implements OnInit,OnDestroy{
-  activeOpzion: boolean = true;
+  activeOpzion: boolean = false;
   requestMessage: string = '';
   sendeMessage: string = '';
   descrizione: string = '';
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
   message:ChatGptResponse[]=[];
   @ViewChild('messageInput') messageInput!: ElementRef;
- 
+  @ViewChild('messageTextarea') messageTextarea!: ElementRef<HTMLTextAreaElement>;
   constructor(private tiketService: TiketService, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewChecked() {
     this.scrollToBottom();
+    this.scrollToBottomText();
   }
   scrollToBottom(): void {
     try {
       this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+    } catch(err) { }
+  }
+  scrollToBottomText(): void {
+    try {
+      this.messageTextarea.nativeElement.scrollTop = this.messageTextarea.nativeElement.scrollHeight;
     } catch(err) { }
   }
   ngOnDestroy(): void {
@@ -69,6 +76,17 @@ export class ChatTiketComponent implements OnInit,OnDestroy{
   aggiornaDescrizione(nuovaDescrizione: string){
     this.descrizione = nuovaDescrizione;
   }
-  sendTextareaMessage(){}
+  sendTextareaMessage(descrizione: string){
+
+      const message = { content: descrizione, from: 'User' };
+    this.tiketService.sendMessage(message);
+    const userMessage: UserMessage = { content: descrizione };
+    const userMessag: ChatGptResponse = { from: 'User', UserMessage: userMessage };
+    
+    this.message.push(userMessag);
+    this.tiketService.setUtMess(this.message);
+    this.descrizione = '';
+
+  }
 
 }

@@ -1,4 +1,4 @@
-<div class="container PrincipalContainer rounded-5">
+<div class="container-fluid PrincipalContainer rounded-5">
   <div class="row">
     <div class="col-md-12">
       <div class="d-flex justify-content-around mb-3">
@@ -39,8 +39,8 @@
           <button  (click)="sendMessage(messageInput.value)" class="send-button">Invia</button>
         </span>
         <div *ngIf="!activeOpzion" class="input-wrapper">
-          <textarea name="message" id="messages" class="message-textarea" [(ngModel)]="descrizione"></textarea>
-          <button (click)="sendTextareaMessage()" class="send-button">Invia</button>
+          <textarea #messageTextarea name="message" id="messages" class="message-textarea" [(ngModel)]="descrizione"></textarea>
+          <button (click)="sendTextareaMessage(descrizione)" class="send-button">Invia</button>
         </div>
       </div>
   </div>
