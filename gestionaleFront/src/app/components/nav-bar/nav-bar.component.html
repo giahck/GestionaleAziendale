@@ -1,3 +1,4 @@
+<div *ngIf="user">
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
   <div class="logo-container">
     <button type="button" class="btn btn-dark" (click)="toggleCollapse()" data-mdb-ripple-init>G</button>
@@ -6,6 +7,9 @@
       <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
           <i class="fal fa-times close-icon"></i>
       </button>
+  </div>
+  <div>
+    <p class="text-center mt-3">{{user.nome}} {{user.cognome}}</p>
   </div>
   <div class="scrollwrap scrollwrap_delayed">
     <ul class="sidenav-nav">
@@ -47,5 +51,6 @@
         <button *ngIf="user"  (click)="logout()" routerLinkActive="active" class="btn btn-dark p-2">Logout</button>
         <button *ngIf="!user"  [routerLink]="['/login']" routerLinkActive="active" class="btn btn-dark p-2">login</button>
     </ul>
+</div>
 </div>
 </div>

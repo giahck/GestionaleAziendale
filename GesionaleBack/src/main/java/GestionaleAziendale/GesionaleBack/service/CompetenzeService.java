@@ -2,6 +2,7 @@ package GestionaleAziendale.GesionaleBack.service;
 
 
 import GestionaleAziendale.GesionaleBack.dto.CompetenzeRegDto;
+import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Competenza;
 
 
@@ -11,6 +12,7 @@ import GestionaleAziendale.GesionaleBack.maperDto.CompetenzaMapper;
 import GestionaleAziendale.GesionaleBack.repository.CompetenzaRepository;
 import GestionaleAziendale.GesionaleBack.repository.RuoloRepository;
 import GestionaleAziendale.GesionaleBack.repository.UserRepository;
+import GestionaleAziendale.GesionaleBack.repository.machineRepository.MachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +31,34 @@ public class CompetenzeService {
     private RuoloRepository ruoloRepository;
     @Autowired
     private UserRepository utentiRepository;
+@Autowired
+private MachineRepository machineRepository;
 
     public CompetenzeRegDto saveCompetenza(CompetenzeRegDto competenzeDto) {
+        Competenza competenza = competenzaMapper.toEntity(competenzeDto);
+        Set<Integer> userIds = competenzeDto.getUsersId();
+        for (Integer userId : userIds) {
+            Users user = utentiRepository.findById(userId).orElse(null);
+            System.out.println("User: " + user);
+            if (user != null) {
+                user.getCompetenze().add(competenza);
+                competenza.addUser(user);
+            } else {
+                throw new BadRequestException("L'utente con id " + userId + " non esiste");
+            }
+        }
+        Machine machine = machineRepository.findById(competenzeDto.getMachineId()).orElse(null);
+        if (machine != null) {
+            competenza.setMachine(machine);
+        } else {
+            throw new BadRequestException("La macchina con id " + competenzeDto.getMachineId() + " non esiste");
+        }
+        competenza = competenzaRepository.save(competenza);
+        System.out.println(competenza);
+        return null;
+    }
+
+   /* public CompetenzeRegDto saveCompetenza(CompetenzeRegDto competenzeDto) {
         Set<Integer> userIds = competenzeDto.getUsersId();
         System.out.println(competenzeDto);
         Set<Users> usersSet = new HashSet<>();
@@ -65,6 +93,11 @@ public class CompetenzeService {
         }
 
         return competenzeRegDto;
+    }*/
+    public Competenza getCompetenzeById(int id) {
+        Competenza competenza = competenzaRepository.findById(id).orElse(null);
+        System.out.println("Retrieved Competenza: " + competenza);
+        return competenza;
     }
 }
 

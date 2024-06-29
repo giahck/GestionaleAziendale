@@ -11,6 +11,7 @@ interface SideNavToggle {
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit{
+  
   title = 'gestionaleFront';
   isSideNavCollapsed = false;
   screenWidth = 0;

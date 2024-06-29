@@ -32,6 +32,7 @@ export const navbarData: InavBarData[]= [
     label: 'Maschine',
     items: [
       {
+        visibilita: 3,
         routeLink: 'create-maschine',
         label: 'Create Maschine',
       },
@@ -42,6 +43,7 @@ export const navbarData: InavBarData[]= [
     ],
   },
   {
+    
     routeLink: 'settings',
     icon: 'fa fa-cog',
     label: 'Settings',

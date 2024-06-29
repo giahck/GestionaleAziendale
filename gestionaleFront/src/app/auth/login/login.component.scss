@@ -53,9 +53,8 @@
 }
 
 button {
-  background-color: #F0E68C;
-  ;
-  color: #991b1b;
+  background-color: #dd9b5d;
+  color: #800c0c;
 }
 
 a {
@@ -63,8 +62,12 @@ a {
 }
 
 button:hover {
-  background-color: #c23a3a;
-  color: #000;
+  background-color: #911010;
+  color: #ffffff;
+}
+button:active {
+  background-color: #991b1b;
+  color: #dd9b5d;
 }
 
 a:hover {
@@ -73,7 +76,7 @@ a:hover {
 }
 
 
-$nav-pills-link-active-bg: #F0E68C;
+$nav-pills-link-active-bg: #dd9b5d;
 $nav-pills-link-active-color: #c23a3a;
 
 .nav-pills {

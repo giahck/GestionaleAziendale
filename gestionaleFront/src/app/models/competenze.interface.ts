@@ -1,7 +1,7 @@
 export interface Competenze {
     nomeCompetenza: string;
     descrizione: string;
-    idRisorsa: number;
+    machineId: number;
     livello: number;
-    usersId: number[];
+    usersId: number[]|number;
 }

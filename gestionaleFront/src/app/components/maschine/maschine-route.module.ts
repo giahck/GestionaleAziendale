@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { StatusMaschineComponent } from './status-maschine/status-maschine.component';
@@ -19,4 +19,9 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MashineRouteModule { }
+export class MashineRouteModule implements OnInit{
+  constructor() { }
+  ngOnInit(): void {
+    
+  }
+ }

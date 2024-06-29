@@ -41,7 +41,7 @@ public class AuthService {
                     user.setRememberMe(loginDto.getRememberMe());
                     userRepository.save(user);
                 }
-
+                userDto.setId(user.getId());
                 return userDto;
             } else {
                 throw new ResourceNotFoundException("Errore nel login, riloggarsi");

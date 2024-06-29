@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import '@fortawesome/fontawesome-free/css/all.css';
-@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
+/* @import 'mdb-angular-ui-kit/assets/scss/mdb.scss'; */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
 * {
     margin: 0;
     padding: 0;
@@ -15,4 +16,27 @@ body {
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
+  background: #229147;
 }
+
+$text: #7209d4;
+$background: #681b8b;
+$primary: #96C919;
+$secondary: #A21547;
+$accent: #574f4f;
+$warning: #6d7312;
+$pkmn-red: $accent;
+
+$custom-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "accent": $accent,
+  "dark": $background,
+  "light": $text,
+  "danger": lighten($accent, 20%),
+  "warning": lighten($warning, 20%),
+  "success": $accent,
+  "info": $secondary
+  ) !default;
+  $theme-colors: map-merge($theme-colors, $custom-colors);
+  @import "../node_modules/bootstrap/scss/bootstrap";

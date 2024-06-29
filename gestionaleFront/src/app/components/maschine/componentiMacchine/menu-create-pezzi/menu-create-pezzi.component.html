@@ -1,0 +1,110 @@
+<div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="showSuccessAlert">
+  Pezzi della macchina aggiunti con successo!
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show alert-message" role="alert" *ngIf="showErrorAlert">
+    {{messageAlert}}
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
+</div>
+<div class="container-fluid">
+    <h2 class="text-center">INSERISCI LE PARTI DELLA MACCHINA NEL SISTEMA</h2>
+    <div class="row">
+      <!-- <div class="col-12 border mt-2 mb-2"> -->
+        <form [formGroup]="addPezziForm" (ngSubmit)="onPezziSubmit()">
+          <div class="d-flex justify-content-center align-content-center ">
+            <!-- nome macchina -->
+            <div class="d-flex flex-column text-center m-2">
+                <label for="nomeParte" class="form-label">Nome Parte della macchina</label>
+                <input type="text" class="form-control" id="nomeParte" formControlName="nomeParte" [ngClass]="{'is-invalid': addPezziForm.get('nomeParte')?.invalid && (addPezziForm.get('nomeParte')?.touched || isFormSubmitted), 'input-invalid': addPezziForm.get('nomeParte')?.invalid && (addPezziForm.get('nomeParte')?.touched || isFormSubmitted)}">
+                <div *ngIf="addPezziForm.get('nomeParte')?.invalid && isFormSubmitted" class="text-danger">
+                    Inserisci il nome del blocco
+                  </div>
+            </div>
+            <!-- note -->
+            <div class="d-flex flex-column text-center m-2">
+              <label for="note" class="form-label">Nota della macchina</label>
+              <input type="text" class="form-control" id="note" formControlName="note" [ngClass]="{'is-invalid': addPezziForm.get('note')?.invalid && (addPezziForm.get('note')?.touched || isFormSubmitted), 'input-invalid': addPezziForm.get('note')?.invalid && (addPezziForm.get('note')?.touched || isFormSubmitted)}">
+              <div *ngIf="addPezziForm.get('note')?.invalid && isFormSubmitted" class="text-danger">
+                  Inserisci la note
+                </div>
+          </div>
+          <!-- Quantità dei pezzi -->
+            <div class="d-flex flex-column text-center m-2">
+            <label for="quantityParts" class="form-label">Quantità di pezzi</label>
+            <input type="number" min="1" value="1" class="form-control form-control-sm" id="quantityParts" formControlName="quantityParts" style="width: 75px; height: calc(1.5em + .75rem + 2px);" [ngClass]="{'is-invalid': addPezziForm.get('quantityParts')?.invalid && (addPezziForm.get('quantityParts')?.touched || isFormSubmitted), 'input-invalid': addPezziForm.get('quantityParts')?.invalid && (addPezziForm.get('quantityParts')?.touched || isFormSubmitted)}">
+            <div *ngIf="addPezziForm.get('quantityParts')?.invalid && isFormSubmitted" class="text-danger">
+                Inserisci la quantità di pezzi
+            </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center">
+          <!-- descrizione -->
+            <div class="custom-width d-flex flex-column text-center m-2">
+                <label for="descrizione" class="form-label">Descrizione Della macchina</label>
+                <textarea class="form-control  textarea-small-font w-100 " id="descrizione" formControlName="descrizione" placeholder="Inserisci una descrizione della parte" 
+                [ngClass]="{'is-invalid': addPezziForm.get('descrizione')?.invalid && (addPezziForm.get('descrizione')?.touched || isFormSubmitted), 'input-invalid': addPezziForm.get('descrizione')?.invalid && (addPezziForm.get('descrizione')?.touched || isFormSubmitted)}"></textarea>
+                <div *ngIf="addPezziForm.get('descrizione')?.invalid && isFormSubmitted" class="text-danger">
+                    Inserisci la descrizione
+                </div>
+            </div>
+          <!-- Submit button -->
+           
+          <div class="d-flex align-items-center">
+            <button type="submit" class="btn btn-dark p-1 m-2 btn-size-custom">
+              Aggiungi Pezzo
+            </button>
+            <button *ngIf="parti.length>0" type="button" (click)="addPartSrv()" class="btn btn-dark p-1 m-2 btn-size-custom">
+              Riepilogo Add
+            </button>
+            
+          </div>
+          
+        </div>
+        </form> 
+      <!-- </div> -->
+    </div>
+  </div>
+
+<!-- Modal Bootstrap -->
+<div class="modal fade page-under-modal" *ngIf="showModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" [ngClass]="{'show': showModal}" style="display: block;">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Utenti</h5>
+        <button type="button" class="btn btn-dark" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body overflow-auto">
+        <div class="container">
+          <div *ngFor="let item of parti" class="row m-3">
+            
+              <div class="col-6 border border-1 border-danger p-2">
+                <div class="m-2"> 
+                  <p class="m-1">Nome parte: {{item.nomeParte}}</p>
+                  <p class="m-1">Descrizione: {{item.descrizione}}</p>
+                  <p class="m-1">note: {{item.note}}</p>
+                  <p class="m-1">Quantita di ricambi: {{item.quantityParts}}</p>
+                </div>
+              </div>
+              <div class="col-6 border border-1 border-danger p-2">
+                <div class="m-2"> 
+                  <p class="m-1">Nome Macchina: {{item.machine?.nomeMacchina}}</p>  
+                  <p class="m-1 ">Nome Macchina: {{item.machine?.description}}</p>  
+                  <p class="m-1 bg-danger">Nome Macchina: {{item.machine?.statoMaschine}}</p>  
+                  <p class="m-1">Nome Marca: {{item.machine?.marca}}</p>  
+              </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <h3>Se non salvi la macchina verrà chiusa</h3>
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Chiudi</button>
+        <button type="button" class="btn btn-primary" (click)="addPatiSave()">Salva cambiamenti</button>
+      </div>
+    </div>
+  </div>
+</div>

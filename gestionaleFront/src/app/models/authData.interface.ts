@@ -1,5 +1,6 @@
 
     export interface AuthData {
+        id: number;
         accessToken: string;
         email: string;
         cognome: string;

@@ -1,0 +1,53 @@
+<div class="container-fluid">
+
+<div *ngIf="selectedPart && selectedMachine ">
+  <div class="container-fluid"> 
+    <div class="row" >
+    <div *ngFor="let pices of selectedPart.pieces" class="card mb-2 col-md-3"> 
+      
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Pezzi di {{selectedPart.nomeParte}}:</h6>
+          <strong>{{ pices.nomePezzo }}:</strong> {{ pices.descrizione }}
+        </div>
+    </div>
+    </div>
+    </div>
+</div>
+  <div class="row justify-content-center flex-wrap">
+    <!-- Loop per ogni macchina -->
+    <div *ngFor="let machine of machines" [class]="selectedMachine === machine ? 'col-12 mb-2' : 'col-lg-3 col-md-4 mb-2'" [ngClass]="{'order-first': selectedMachine === machine, 'order-last': selectedMachine !== machine}">
+      <!-- Usa 'd-flex flex-row' per disporre gli elementi in orizzontale se la macchina è selezionata, altrimenti mantieni il layout della card -->
+      <div class="d-flex" [class.flex-row]="selectedMachine === machine" [class.flex-column]="selectedMachine !== machine">
+        <!-- Colonna per la card della macchina -->
+        <div class="flex-grow-1" [class.card-selected]="selectedMachine === machine" (click)="toggleParts(machine)">
+          <div class="card h-100">
+            <img [src]="machine.photo" class="card-img-top" alt="Immagine di {{ machine.nomeMacchina }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ machine.nomeMacchina }}</h5>
+              <p class="card-text">{{ machine.description }}</p>
+              <button class="btn btn-primary" (click)="toggleParts(machine, $event)">
+                {{ isExpanded(machine) ? "Nascondi Parti" : "Mostra Parti" }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Condizione per visualizzare le parti della macchina selezionata -->
+        <div *ngIf="selectedMachine && selectedMachine === machine" class="flex-grow-1 ml-2">
+          <div class="container-fluid"> 
+            <div class="row" >
+              <div *ngFor="let part of selectedMachine.parts" class="card mb-2 col-md-3">
+                 <div class="card-body" [class.card-selecte]="selectedPart === part">
+                  <h6 class="card-subtitle mb-2 text-muted">Parti di {{selectedMachine.nomeMacchina}}:</h6>
+                 <strong>{{ part.nomeParte }}:</strong> {{ part.descrizione }}
+                 <button class="btn btn-primary" (click)="togglePezzi(part, $event)">
+                  {{ isExpandedPezzi(part) ? "Nascondi pezzi" : "Mostra Pezzi" }}
+                </button>
+                </div>
+            </div>
+          </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

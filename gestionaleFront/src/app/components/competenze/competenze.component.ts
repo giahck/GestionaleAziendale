@@ -1,8 +1,9 @@
+import { MachinaCompetenza } from './../../models/machin/machina-competenza.interface';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
-import { StatoRegister } from '../../models/stato-register.interface';
+import { MachinsService } from '../../service/machins.service';
 @Component({
   selector: 'app-competenze',
   templateUrl: './competenze.component.html',
@@ -11,12 +12,15 @@ import { StatoRegister } from '../../models/stato-register.interface';
 export class CompetenzeComponent implements OnInit {
   showSuccessAlert = false;
   showErrorAlert = false;
+  macchine!: MachinaCompetenza[];
   competenzaForm!: FormGroup;
+ // usersSubscription!:Subscription;
  // state!: StatoRegister;
   constructor(
     private fb: FormBuilder,
     private authSrv: AuthService,
-    private router: Router
+    private router: Router,
+    private maschine:MachinsService
   ) {}
   skip(){
     this.authSrv.setState({
@@ -26,20 +30,32 @@ export class CompetenzeComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.maschine.getMachine().subscribe(
+      (machines: MachinaCompetenza[]) => {
+        this.macchine = machines;
+      },
+      (error) => {
+        this.handleError(error);
+      }
+    );
+
     this.competenzaForm = this.fb.group({
       nomeCompetenza: ['', Validators.required],
       descrizione: ['', Validators.required],
-      idRisorsa: ['', Validators.required],
+      machineId: ['', Validators.required],
       livello: [, Validators.required],
     });
   }
   onCompetenzaSubmit(): void {
+    const userString = localStorage.getItem('user');
     console.log('Dati della competenza da inviare:', this.competenzaForm.value);
-    if (this.competenzaForm.valid) {
+    if (this.competenzaForm.valid&&userString) {
+      const userObject = JSON.parse(userString);
+      const userId = userObject.id;
       const formData = { ...this.competenzaForm.value };
       formData.idRisorsa = Number(formData.idRisorsa);
       formData.livello = Number(formData.livello);
-      formData.usersId = [this.authSrv.getState().id];
+      formData.usersId = [userId];
       console.log('Dati della competenza da inviare:', formData);
 
       console.log('Dati della competenza da inviare:', formData);
@@ -61,18 +77,12 @@ export class CompetenzeComponent implements OnInit {
         },
         (error) => {
           this.handleError(error);
-
-          // Mostra l'alert di errore
           this.showErrorAlert = true;
-
-          // Nascondi l'alert dopo 5 secondi (opzionale)
           setTimeout(() => (this.showErrorAlert = false), 5000);
-
           this.competenzaForm.markAllAsTouched();
         }
       );
     } else {
-      // Segna tutti i campi come toccati per mostrare gli errori di validazione
       this.competenzaForm.markAllAsTouched();
     }
   }

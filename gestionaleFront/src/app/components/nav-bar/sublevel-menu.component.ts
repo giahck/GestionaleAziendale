@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { InavBarData, fadeInOut } from './inav-bar-data.interface';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { AuthData } from '../../models/authData.interface';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-sublevel-menu',
@@ -14,7 +16,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
           params: {transitionParams: '400ms cubic-bezier(0.86, 0, 0.07, 1)', height: '0'}}"
       class="sublevel-nav"
     >
-      <li *ngFor="let item of data.items" class="sublevel-nav-item">
+      <li *ngFor="let item of data.items" class="sublevel-nav-item" >
+        <div  *ngIf="!item.visibilita || (item.visibilita===user?.ruoloId?.[0] )"> 
           <a class="sublevel-nav-link"
           (click)="handleClick(item)"
             *ngIf="item.items && item.items.length > 0"
@@ -45,6 +48,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
               [expanded]="item.expanded"
             ></app-sublevel-menu>
           </div>
+        </div>
       </li>
     </ul>
   `,
@@ -71,14 +75,19 @@ export class SublevelMenuComponent  implements OnInit{
     label: '',
     icon: '',
     items: [],
+    visibilita: 0,
   }
   @Input() collapsed=false;
   @Input()animating:boolean|undefined;
   @Input()expanded:boolean|undefined;
   @Input()multiple:boolean=false;
-  constructor(public router: Router) {}
+  user!: AuthData | null;
+  constructor(public router: Router,private authSrv: AuthService) {}
 
   ngOnInit(): void {
+    this.authSrv.user$.subscribe((user) => {
+      this.user = user;
+    });
   }
 
   handleClick(item: any): void {

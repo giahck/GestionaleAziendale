@@ -1,0 +1,16 @@
+.alert-message {
+    white-space: pre-wrap;
+  }
+  .modal-open {
+    overflow: hidden; /* Impedisce lo scroll della pagina principale */
+    pointer-events: none; /* Disabilita gli eventi del mouse sugli elementi sottostanti */
+  }
+  .page-under-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Colore scuro con trasparenza */
+    z-index: 1040; /* Z-index inferiore rispetto al modal ma superiore agli altri contenuti */
+  }

@@ -1,0 +1,23 @@
+/* @import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+$text: #d40909;
+$background: #00002B;
+$primary: #171412;
+$secondary: #A21547;
+$accent: #574f4f;
+$warning: #1a1105;
+$pkmn-red: $accent;
+
+$custom-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "accent": $accent,
+    "dark": $background,
+    "light": $text,
+    "danger": lighten($accent, 20%),
+    "warning": lighten($warning, 20%),
+    "success": $accent,
+    "info": $secondary
+    ) !default;
+    $theme-colors: map-merge($theme-colors, $custom-colors);
+    @import "../node_modules/bootstrap/scss/bootstrap"; */
