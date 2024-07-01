@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { StatusMaschineComponent } from './status-maschine/status-maschine.component';
 import { CreateMaschineComponent } from './create-maschine/create-maschine.component';
+import { AuthGuard } from '../../auth/auth.guard';
+import { UserGuard } from '../../user-guard.guard';
 const routes: Routes = [
   {
     path: 'status-maschine',
@@ -10,7 +12,9 @@ const routes: Routes = [
   },
   {
     path: 'create-maschine',
-    component: CreateMaschineComponent
+    component: CreateMaschineComponent,
+    canActivate: [AuthGuard,UserGuard],
+    data: { roles: [3, 5] },
   }
 ];
 

@@ -1,3 +1,11 @@
+
+.container-fluid{
+  background:  linear-gradient(50deg, rgb(73, 226, 43), orange);
+    border: 1px solid rgba(0, 0, 0, 0.2); // Bordo sottile
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); // Ombra sottile
+}
 .input-invalid {
     border-color: red; /* o background-color: red; per il colore di sfondo */
     color: red;
@@ -7,7 +15,7 @@
     font-size: 0.8rem; /* Riduce la dimensione del testo */
   }
   .custom-width {
-    width: 30%; /* o qualsiasi altra larghezza desiderata */
+    width: 100%; /* o qualsiasi altra larghezza desiderata */
   }
   .img-thumbnail {
     max-width: 300px;

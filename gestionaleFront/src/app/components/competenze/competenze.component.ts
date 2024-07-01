@@ -23,16 +23,17 @@ export class CompetenzeComponent implements OnInit {
     private maschine:MachinsService
   ) {}
   skip(){
-    this.authSrv.setState({
+   /*  this.authSrv.setState({
       competenze: false,
       popupVisible: false,
       id: null
-    });
+    }); */
   }
   ngOnInit(): void {
     this.maschine.getMachine().subscribe(
       (machines: MachinaCompetenza[]) => {
         this.macchine = machines;
+        console.log('Macchine:', this.macchine);
       },
       (error) => {
         this.handleError(error);

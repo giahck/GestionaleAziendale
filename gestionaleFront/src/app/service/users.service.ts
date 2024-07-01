@@ -14,6 +14,21 @@ export class UsersService {
   private UserDatiLoaded = false;
   apiUrl = environment.apiURL;
   constructor(private http: HttpClient) {}
+  getUserIdFromLocalStorage(): any {
+    const userId = localStorage.getItem('user');
+    if (!userId) {
+      console.error('UserID non trovato nel localStorage');
+      return null;
+    }
+    try {
+      const user = JSON.parse(userId);
+      console.log('UserID trovato nel localStorage:', user);
+      return user;
+    } catch (error) {
+      console.error('Errore nel parsing dell\'userID dal localStorage', error);
+      return null;
+    }
+  }
   getUserDati$(): Observable<UserDati[]> {
     if (!this.UserDatiLoaded) {
       this.getUserDati();

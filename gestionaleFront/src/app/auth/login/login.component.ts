@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
 
     this.authSrv.state$.subscribe((state) => {
       this.state = state;
-      console.log('State:', this.state);
+     // console.log('State:', this.state);
     });
     this.checkRememberMe();
   }
@@ -97,6 +97,8 @@ export class LoginComponent implements OnInit {
        //  this.id = response;
         },
         (error) => {
+          this.registerForm.reset();
+          this.state.popupVisible = false; 
           this.handleError(error);
         }
       );
@@ -118,16 +120,17 @@ export class LoginComponent implements OnInit {
 
   
   checkEmailConfirmedState(): void {
+   // this.colesePP=true;
     this.authSrv.getEmailConfirmedState(this.registerForm.value).subscribe(
       (confirmed) => {
         if(confirmed===true){
           this.validazione=false;
-          this.colesePP=true;
-          this.state.competenze = confirmed;
+         /*  this.state.competenze = confirmed; */
        this.state.popupVisible = false;
         this.authSrv.setState(this.state);
+         this.router.navigate(['/']);
       }else{
-          this.state.competenze = confirmed;
+          /* this.state.competenze = confirmed; */
           this.state.popupVisible = true;
         } 
       },

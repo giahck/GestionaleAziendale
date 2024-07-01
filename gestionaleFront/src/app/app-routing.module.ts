@@ -6,6 +6,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from './auth/auth.guard';
 
 import { SettingComponent } from './components/setting/setting.component';
+import { UserGuard } from './user-guard.guard';
 
 
 const routes: Routes = [
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'tickets' ,canActivate: [AuthGuard],
     loadChildren: () => import('./components/tickets/tickets.module').then(m => m.TicketsModule)
   },
-  {path: 'maschines',canActivate: [AuthGuard],
+  {path: 'maschines',canActivate: [AuthGuard,UserGuard],
+    data: { roles: [3, 5] },
     loadChildren: () => import('./components/maschine/maschine.module').then(m => m.MashineModule)
   },
   {path: 'settings', component: SettingComponent,canActivate: [AuthGuard],},

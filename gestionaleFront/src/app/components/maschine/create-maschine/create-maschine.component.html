@@ -15,6 +15,10 @@
        <i class="bi bi-file-plus-fill fa-2x " (click)="addPezzi()"></i>
       </div>
       <div class="d-flex flex-column text-center p-2">
+        <label for="addMachine" >Add Competenze</label>
+       <i class="bi bi-mortarboard fa-2x " (click)="addCompetenze()"></i>
+      </div>
+      <div class="d-flex flex-column text-center p-2">
         <label for="addMachine">Cancella</label>
       <i class="bi bi-eraser-fill fa-2x"></i>
       </div>
@@ -28,6 +32,9 @@
   </div>
   <div *ngIf="showParti">
     <app-menu-create-parti  [partSelectedId]="partSelectedId"></app-menu-create-parti>
+  </div>
+  <div *ngIf="showCompetenze">
+    <app-competenze></app-competenze>
   </div>
 
   <div class="container-fluid mt-3">

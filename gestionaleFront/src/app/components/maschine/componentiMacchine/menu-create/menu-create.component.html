@@ -1,78 +1,99 @@
-<div class="container-fluid">
+<div class="container-fluid p-2">
     <h2 class="text-center">INSERISCI LA MACCHINA NEL SISTEMA</h2>
     <div class="row">
       <!-- <div class="col-12 border mt-2 mb-2"> -->
         <form [formGroup]="addMachineForm" (ngSubmit)="onMachineSubmit()">
           <div class="d-flex justify-content-center align-content-center ">
+            <div class="container">
+              <div class="row">
             <!-- nome macchina -->
-            <div class="d-flex flex-column text-center m-2">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
+              <div class="d-flex flex-column text-center m-2">
                 <label for="nomeMacchina" class="form-label">Nome Macchina</label>
                 <input type="text" class="form-control" id="nomeMacchina" formControlName="nomeMacchina" [ngClass]="{'is-invalid': addMachineForm.get('nomeMacchina')?.invalid && (addMachineForm.get('nomeMacchina')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('nomeMacchina')?.invalid && (addMachineForm.get('nomeMacchina')?.touched || isFormSubmitted)}">
-                <div *ngIf="addMachineForm.get('nomeMacchina')?.invalid && isFormSubmitted" class="text-danger">
-                    Inserisci il nome della macchina
-                  </div>
+                <div *ngIf="addMachineForm.get('nomeMacchina')?.invalid && isFormSubmitted" class="text-secondary">
+                  Inserisci il nome della macchina
+                </div>
+              </div>
             </div>
             <!-- marca macchina -->
-            <div class="d-flex flex-column text-center m-2">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
+              <div class="d-flex flex-column text-center m-2">
                 <label for="marca" class="form-label">Marca</label>
                 <input type="text" class="form-control" id="marca" formControlName="marca" [ngClass]="{'is-invalid': addMachineForm.get('marca')?.invalid && (addMachineForm.get('marca')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('marca')?.invalid && (addMachineForm.get('marca')?.touched || isFormSubmitted)}">
-                <div *ngIf="addMachineForm.get('marca')?.invalid && isFormSubmitted" class="text-danger">
-                    Inserisci la marca
-                  </div>
+                <div *ngIf="addMachineForm.get('marca')?.invalid && isFormSubmitted" class="text-secondary">
+                  Inserisci la marca
+                </div>
+              </div>
             </div>
             <!-- matricola -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
             <div class="d-flex flex-column text-center m-2">
               <label for="matricola" class="form-label">Matricola</label>
               <input type="text" class="form-control" id="matricola" formControlName="matricola" [ngClass]="{'is-invalid': addMachineForm.get('matricola')?.invalid && (addMachineForm.get('matricola')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('matricola')?.invalid && (addMachineForm.get('matricola')?.touched || isFormSubmitted)}">
-              <div *ngIf="addMachineForm.get('matricola')?.invalid && isFormSubmitted" class="text-danger">
+              <div *ngIf="addMachineForm.get('matricola')?.invalid && isFormSubmitted" class="text-secondary">
                   Inserisci la matricola
                 </div>
-          </div>
+              </div>
+            </div>
             <!-- modello macchina -->
-            <div class="d-flex flex-column text-center m-2">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
+              <div class="d-flex flex-column text-center m-2">
                 <label for="modello" class="form-label">Modello</label>
                 <input type="text" class="form-control" id="modello" formControlName="modello" [ngClass]="{'is-invalid': addMachineForm.get('modello')?.invalid && (addMachineForm.get('modello')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('modello')?.invalid && (addMachineForm.get('modello')?.touched || isFormSubmitted)}">
-                <div *ngIf="addMachineForm.get('modello')?.invalid && isFormSubmitted" class="text-danger">
-                    Inserisci la modello
-                  </div>
+                <div *ngIf="addMachineForm.get('modello')?.invalid && isFormSubmitted" class="text-secondary">
+                  Inserisci la modello
+                </div>
+              </div>
             </div>
             <!-- data di aquisto -->
-            <div class="d-flex flex-column text-center m-2">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
+              <div class="d-flex flex-column text-center m-2">
                 <label for="dataAcquisto" class="form-label">Data di aquisto</label>
                 <input type="date" class="form-control" id="dataAcquisto" formControlName="dataAcquisto" [ngClass]="{'is-invalid': addMachineForm.get('dataAcquisto')?.invalid && (addMachineForm.get('dataAcquisto')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('dataAcquisto')?.invalid && (addMachineForm.get('dataAcquisto')?.touched || isFormSubmitted)}">
-                <div *ngIf="addMachineForm.get('dataAcquisto')?.invalid && isFormSubmitted" class="text-danger">
-                    Inserisci la dataAcquisto
-                  </div>
+                <div *ngIf="addMachineForm.get('dataAcquisto')?.invalid && isFormSubmitted" class="text-secondary">
+                  Inserisci la dataAcquisto
+                </div>
+              </div>
             </div>
             <!-- stato macchina -->
-            <div class="d-flex flex-column text-center m-2">
-              <label for="statoMaschine" class="form-label">Stato Macchina</label>
-              <select class="form-select" id="statoMaschine" formControlName="statoMaschine" [ngClass]="{'is-invalid': addMachineForm.get('statoMaschine')?.invalid && (addMachineForm.get('statoMaschine')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('statoMaschine')?.invalid && (addMachineForm.get('statoMaschine')?.touched || isFormSubmitted)}">
-                <option *ngFor="let stato of statoMaschineValues" [value]="stato">{{ stato }}</option>
-              </select>
-              <div *ngIf="addMachineForm.get('statoMaschine')?.invalid && isFormSubmitted" class="text-danger">
-                Seleziona uno stato
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
+              <div class="d-flex flex-column text-center m-2">
+                <label for="statoMaschine" class="form-label">Stato Macchina</label>
+                <select class="form-select" id="statoMaschine" formControlName="statoMaschine" [ngClass]="{'is-invalid': addMachineForm.get('statoMaschine')?.invalid && (addMachineForm.get('statoMaschine')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('statoMaschine')?.invalid && (addMachineForm.get('statoMaschine')?.touched || isFormSubmitted)}">
+                  <option *ngFor="let stato of statoMaschineValues" [value]="stato">{{ stato }}</option>
+                </select>
+                <div *ngIf="addMachineForm.get('statoMaschine')?.invalid && isFormSubmitted" class="text-secondary">
+                  Seleziona uno stato
+                </div>
+              </div>
+            </div>
+            <div class="d-flex col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
+              <!-- descrizione -->
+              <div class="custom-width d-flex flex-column text-center m-2">
+                <label for="description" class="form-label">Descrizione Della macchina</label>
+                <textarea class="form-control textarea-custom" id="description" formControlName="description" placeholder="Inserisci una descrizione della macchina" 
+                [ngClass]="{'is-invalid': addMachineForm.get('description')?.invalid && (addMachineForm.get('description')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('description')?.invalid && (addMachineForm.get('description')?.touched || isFormSubmitted)}"></textarea>
+                <div *ngIf="addMachineForm.get('description')?.invalid && isFormSubmitted" class="text-secondary">
+                  Inserisci la descrizione
+                </div>
+              </div>
+            </div>
+            <div class="d-flex col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
+               <!-- pohto -->
+               <div class="d-flex flex-column text-center m-2">
+                <label for="photo" class="form-label">Carica Immagine</label>
+                <input type="file" class="form-control" id="photo" (change)="onFileChange($event)" 
+                       [ngClass]="{'is-invalid': addMachineForm.get('photo')?.invalid && (addMachineForm.get('photo')?.touched || isFormSubmitted)}">
+                      
               </div>
             </div>
           </div>
-
+            </div>
+          </div>
           <div class="d-flex justify-content-center">
-          <!-- descrizione -->
-            <div class="custom-width d-flex flex-column text-center m-2">
-                <label for="description" class="form-label">Descrizione Della macchina</label>
-                <textarea class="form-control textarea-small-font" id="description" formControlName="description" placeholder="Inserisci una descrizione della macchina" 
-                [ngClass]="{'is-invalid': addMachineForm.get('description')?.invalid && (addMachineForm.get('description')?.touched || isFormSubmitted), 'input-invalid': addMachineForm.get('description')?.invalid && (addMachineForm.get('description')?.touched || isFormSubmitted)}"></textarea>
-                <div *ngIf="addMachineForm.get('description')?.invalid && isFormSubmitted" class="text-danger">
-                    Inserisci la descrizione
-                </div>
-                </div>
-                <!-- pohto -->
-                <div class="d-flex flex-column text-center m-2">
-                    <label for="photo" class="form-label">Carica Immagine</label>
-                    <input type="file" class="form-control" id="photo" (change)="onFileChange($event)" 
-                           [ngClass]="{'is-invalid': addMachineForm.get('photo')?.invalid && (addMachineForm.get('photo')?.touched || isFormSubmitted)}">
-                          
-                  </div>
+         
+               
           <!-- Submit button -->
           <div class="d-flex align-items-center">
             <button type="submit" class="btn btn-dark p-2 btn-size-custom">

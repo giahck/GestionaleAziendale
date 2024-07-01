@@ -3,16 +3,17 @@
   <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
 </div>
 
-<div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="showErrorAlert">
+<div class="alert alert-stext-secondary alert-dismissible fade show" role="alert" *ngIf="showErrorAlert">
   Si è verificato un errore durante l'aggiunta della competenza.
   <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
 </div>
 
-<form [formGroup]="competenzaForm" (ngSubmit)="onCompetenzaSubmit()">
+<form class="p-4 text-center" [formGroup]="competenzaForm" (ngSubmit)="onCompetenzaSubmit()">
+  <h2>Crea la competenzza opportuna per la macchina</h2>
   <div class="mb-3">
     <label for="competenzaNome" class="form-label">Nome Competenza</label>
     <input type="text" class="form-control" id="competenzaNome" formControlName="nomeCompetenza">
-    <div *ngIf="competenzaForm.get('nomeCompetenza')?.invalid && competenzaForm.get('nomeCompetenza')?.touched" class="text-danger">
+    <div *ngIf="competenzaForm.get('nomeCompetenza')?.invalid && competenzaForm.get('nomeCompetenza')?.touched" class="text-secondary">
       Il campo Nome Competenza è richiesto.
     </div>
   </div>
@@ -20,7 +21,7 @@
   <div class="mb-3">
     <label for="competenzaDescrizione" class="form-label">Descrizione</label>
     <textarea class="form-control" id="competenzaDescrizione" formControlName="descrizione" rows="3"></textarea>
-    <div *ngIf="competenzaForm.get('descrizione')?.invalid && competenzaForm.get('descrizione')?.touched" class="text-danger">
+    <div *ngIf="competenzaForm.get('descrizione')?.invalid && competenzaForm.get('descrizione')?.touched" class="text-secondary">
       Il campo Descrizione è richiesto.
     </div>
   </div>
@@ -38,25 +39,22 @@
         </option>
       </ng-container>
     </select>
-    <div *ngIf="competenzaForm.get('machineId')?.invalid && competenzaForm.get('machineId')?.touched" class="text-danger">
+    <div *ngIf="competenzaForm.get('machineId')?.invalid && competenzaForm.get('machineId')?.touched" class="text-secondary">
       Il campo ID Risorsa è richiesto.
     </div>
   </div>
 
-  <div class="mb-3">
+  <div class="row justify-content-center">
+    <div class="col-md-6 d-flex flex-column justify-content-end">
     <label for="competenzaLivello" class="form-label">Livello</label>
-    <input type="number" class="form-control" id="competenzaLivello" formControlName="livello">
-    <div *ngIf="competenzaForm.get('livello')?.invalid && competenzaForm.get('livello')?.touched" class="text-danger">
+      <input type="number" class="form-control w-25 m-auto" id="competenzaLivello" formControlName="livello">
+      <div *ngIf="competenzaForm.get('livello')?.invalid && competenzaForm.get('livello')?.touched" class="text-secondary">
       Il campo Livello è richiesto.
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <button type="submit" class="btn btn-primary btn-block mb-4">Aggiungi Competenza</button>
-    </div>
-    <div class="col-md-6">
-      <button type="button" class="btn btn-primary btn-block mb-4" (click)="skip()" [routerLink]="['/']" routerLinkActive="active">Skip</button>
+    <div class="col-md-6 d-flex justify-content-start align-items-center m-0">
+      <button type="submit" class="btn btn-dark my-3">Aggiungi Competenza</button>
     </div>
   </div>
 </form>

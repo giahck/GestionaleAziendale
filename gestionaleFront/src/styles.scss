@@ -10,21 +10,25 @@
     box-sizing: border-box;
 }
 
-body {
+body, html {
     position: relative;
     font-family: "Nunito", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
-  background: #229147;
+    
+
+    background: #f4f7fa!important;
+
+ 
 }
 
 $text: #7209d4;
 $background: #681b8b;
 $primary: #96C919;
-$secondary: #A21547;
+$secondary: #a25b15;
 $accent: #574f4f;
-$warning: #6d7312;
+$warning: #3a1273;
 $pkmn-red: $accent;
 
 $custom-colors: (

@@ -14,3 +14,13 @@
     background-color: rgba(0, 0, 0, 0.5); /* Colore scuro con trasparenza */
     z-index: 1040; /* Z-index inferiore rispetto al modal ma superiore agli altri contenuti */
   }
+  .custom-width {
+    width: 100%; /* o qualsiasi altra larghezza desiderata */
+  }
+.container-fluid{
+  background:  linear-gradient(50deg, rgb(73, 226, 43), orange);
+    border: 1px solid rgba(0, 0, 0, 0.2); // Bordo sottile
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); // Ombra sottile
+}

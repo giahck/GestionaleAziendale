@@ -36,7 +36,7 @@ export class AuthService {
 
   // Setter method
   setState(newState: StatoRegister) {
-    console.log('New state:', newState);
+   // console.log('New state:', newState);
     this.state.next(newState);
   }
 
@@ -69,6 +69,7 @@ export class AuthService {
               email: registerForm.email,
               password: registerForm.password,
               rememberMe: false,
+              
             }).subscribe();
           }
         }),
