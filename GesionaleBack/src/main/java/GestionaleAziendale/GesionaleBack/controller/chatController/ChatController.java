@@ -37,7 +37,7 @@ public class ChatController {
     @Autowired
     private ChatGPTService chatGPTService;
     @MessageMapping("/greet")
-    @SendToUser("/topic/messages")// tutti i client connessi a /topic/messages riceveranno il messaggio
+    @SendToUser("/topic/messages")// solo per l'utente che ha inviato il messaggio
     public ChatGptResponse send(@Payload MessageClient message, SimpMessageHeaderAccessor headerAccessor) throws JsonProcessingException {
 
         ChatGPTRequest request=new ChatGPTRequest(model, message.getContent());
@@ -45,17 +45,6 @@ public class ChatController {
         assert chatGptResponse != null;
         chatGptResponse.setFrom("bot");
         System.out.println(chatGptResponse);
-//        Message botMessage1 = new Message("assistant", "Hello! How can I assist you today?");
-//        ChatGptResponse.Choice choice1 = new ChatGptResponse.Choice(0, botMessage1);
-//
-//        Message botMessage2 = new Message("assistant", "Is there anything else you need?");
-//        ChatGptResponse.Choice choice2 = new ChatGptResponse.Choice(1, botMessage2);
-//
-//        List<ChatGptResponse.Choice> choices = new ArrayList<>();
-//        choices.add(choice1);
-//        choices.add(choice2);
-
-      //  return new ChatGptResponse("bot", choices);
         return chatGPTService.convert(chatGptResponse,message);
     }
 

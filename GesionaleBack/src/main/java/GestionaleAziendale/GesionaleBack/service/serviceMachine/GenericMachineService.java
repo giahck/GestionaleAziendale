@@ -2,11 +2,14 @@ package GestionaleAziendale.GesionaleBack.service.serviceMachine;
 
 import GestionaleAziendale.GesionaleBack.dto.dtoMachine.GenericMachineDto;
 import GestionaleAziendale.GesionaleBack.dto.queryDto.ListMaschinDto;
+import GestionaleAziendale.GesionaleBack.dto.queryDto.MachineGenericStatusDto;
 import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
 import GestionaleAziendale.GesionaleBack.entity.machine.Parts;
 import GestionaleAziendale.GesionaleBack.entity.machine.genericMachine.MachineGeneric;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Competenza;
+import GestionaleAziendale.GesionaleBack.entity.utenti.Users;
 import GestionaleAziendale.GesionaleBack.maperDto.mapperDtoMachine.MachineGenericMapper;
+import GestionaleAziendale.GesionaleBack.repository.UserRepository;
 import GestionaleAziendale.GesionaleBack.repository.machineRepository.MachineGenericRepository;
 import GestionaleAziendale.GesionaleBack.repository.machineRepository.MachineRepository;
 import GestionaleAziendale.GesionaleBack.repository.machineRepository.PartsRepository;
@@ -15,10 +18,13 @@ import com.cloudinary.Cloudinary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,7 +46,11 @@ public class GenericMachineService {
     private Cloudinary cloudinary;
     @Autowired
     private CompetenzeService competenzeService;
+    @Autowired
+    private UserRepository userRepository;
+
     @Transactional
+
     public Machine addMachine(GenericMachineDto genericMachineDto, MultipartFile fotoMachine) {
         if (fotoMachine != null && !fotoMachine.isEmpty()) {
             System.out.println("Photo not null");
@@ -63,10 +73,10 @@ public class GenericMachineService {
             }).collect(Collectors.toList()));
         }
         Competenza competenze = competenzeService.getCompetenzeById(genericMachineDto.getCompetenzaId());
-        if (competenze != null){
-              machineGeneric.setCompetenza(competenze);
+        if (competenze != null) {
+            machineGeneric.setCompetenza(competenze);
             competenze.setMachine(machineGeneric);
-       }
+        }
 
         return machineGenericRepository.save(machineGeneric);
     }
@@ -88,13 +98,34 @@ public class GenericMachineService {
     }
 
     public List<ListMaschinDto> getAllMachinesDetails() {
+        List<ListMaschinDto> machineDetails = machineRepository.findSelectedMachineDetailsForCompetenze();
 
-        return machineRepository.findSelectedMachineDetailsForCompetenze();
-        /*machineRepository.findMachineDetails();*/
-       // System.out.println("\n\n\n\n"+machineRepository.findMachineDetails());
-/*
-        return null;
-*/
+        for (ListMaschinDto machineDetail : machineDetails) {
+            Competenza competenza = machineDetail.getCompetenza();
+            if (competenza != null) {
+                List<ListMaschinDto.UserNameDto> users = userRepository.findUserNamesByCompetenzaId(competenza.getIdCompetenza());
+                machineDetail.setUtenti(users);
+            }
+        }
+
+        return machineDetails;
     }
 
-}
+    public List<MachineGenericStatusDto> getMachineStatus(Principal principal) {
+        System.out.println("Principal: " + principal.getName());
+
+        Optional<Users> userOptional = userRepository.findByEmail(principal.getName());
+        if (userOptional.isPresent()) {
+            Users user = userOptional.get();
+            if (user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("MANAGER"))) {
+                return machineGenericRepository.findMachineStatus();
+            } else {
+                return machineGenericRepository.findMachineStatusByUserCompetenze(new ArrayList<>(user.getCompetenze()));
+            }
+        } else {
+            throw new UsernameNotFoundException("User not found");
+        }
+    }
+
+
+    }

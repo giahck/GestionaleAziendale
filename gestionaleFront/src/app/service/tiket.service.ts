@@ -36,9 +36,9 @@ export class TiketService  {
     this.stompClient = Stomp.over(socket);
 
     this.stompClient.connect({}, (frame:any) => {
-      console.log("Connesso al WebSocket:", frame);
+      //console.log("Connesso al WebSocket:", frame);
       this.stompClient.subscribe(this.topic, (message:any) => {
-        console.log("Messaggio ricevuto:",);
+      //  console.log("Messaggio ricevuto:",);
         if (message.body) {
          // const parsedMessage = JSON.parse(message.body);
           const parsedMessage = JSON.parse(message.body) as ChatGptResponse;

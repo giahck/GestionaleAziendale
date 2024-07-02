@@ -42,6 +42,7 @@ export class UsersService {
     if (this.UserDatiLoaded) {
       return;
     }
+   // console.log('Chiamata API per ottenere i dati degli utenti');
     this.http.get<UserDati[]>(`${this.apiUrl}users`).subscribe(
       (UserDati: UserDati[]) => {
         this.setUserDati(UserDati), (this.UserDatiLoaded = true);

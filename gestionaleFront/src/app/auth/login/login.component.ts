@@ -81,9 +81,9 @@ export class LoginComponent implements OnInit {
     }
   }
   onRegisterSubmit(): void {
-    console.log('Register form value:', this.registerForm.value);
+    //console.log('Register form value:', this.registerForm.value);
     if (this.registerForm.valid) {
-      console.log('Register form value: ', this.registerForm.value);
+   //   console.log('Register form value: ', this.registerForm.value);
      // this.popupVisible = true;
      this.errorMessage = 'Esegui la verifica dopo la registrazione clicca qui';
       this.state.popupVisible = true; 
@@ -127,8 +127,8 @@ export class LoginComponent implements OnInit {
           this.validazione=false;
          /*  this.state.competenze = confirmed; */
        this.state.popupVisible = false;
-        this.authSrv.setState(this.state);
-         this.router.navigate(['/']);
+      //  this.authSrv.setState(this.state);
+         
       }else{
           /* this.state.competenze = confirmed; */
           this.state.popupVisible = true;
@@ -141,8 +141,6 @@ export class LoginComponent implements OnInit {
     );
   }
   handleError(error: any): void {
-    // Qui puoi gestire diversi tipi di errori in modi diversi
-    // Ad esempio, potresti voler mostrare un messaggio all'utente
     console.error('Si è verificato un errore:', error.message);
     this.errorMessage = error.message; // Salva il messaggio di errore
         

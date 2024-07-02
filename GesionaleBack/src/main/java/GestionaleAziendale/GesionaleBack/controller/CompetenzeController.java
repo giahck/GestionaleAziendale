@@ -1,19 +1,23 @@
 package GestionaleAziendale.GesionaleBack.controller;
 
 import GestionaleAziendale.GesionaleBack.dto.CompetenzeRegDto;
+import GestionaleAziendale.GesionaleBack.dto.UserDtoCompetenze;
+import GestionaleAziendale.GesionaleBack.dto.competenzeAllDto;
+import GestionaleAziendale.GesionaleBack.repository.CompetenzaRepository;
 import GestionaleAziendale.GesionaleBack.service.CompetenzeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/competenze")
 public class CompetenzeController {
+    @Autowired
+    private CompetenzaRepository competenzaRepository;
     @Autowired
     private CompetenzeService competenzeService;
     @PostMapping("/add")
@@ -24,6 +28,17 @@ public class CompetenzeController {
             throw new RuntimeException("Richiesta non valida: " + bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).reduce("", (s1, s2) -> s1 + "\n" + s2));
         }
         return competenzeService.saveCompetenza(competenzeDto);
+    }
+    @GetMapping("/all")
+    public List<competenzeAllDto> getAllCompetenze() {
+
+        List<competenzeAllDto> competenzeWithMachine =   competenzaRepository.findAllCompetenzeWithMachine();
+        for (competenzeAllDto competenza : competenzeWithMachine) {
+            List<UserDtoCompetenze> users = competenzaRepository.findUsersByCompetenzaId(competenza.getIdCompetenza());
+            competenza.setUsers(users);
+        }
+
+        return competenzeWithMachine;
     }
 
 }

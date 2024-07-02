@@ -44,14 +44,15 @@ private MachineRepository machineRepository;
                 user.getCompetenze().add(competenza);
                 competenza.addUser(user);
             } else {
-                throw new BadRequestException("L'utente con id " + userId + " non esiste");
+                System.out.println("L'utente con id " + userId + " non esiste");
             }
         }
         Machine machine = machineRepository.findById(competenzeDto.getMachineId()).orElse(null);
         if (machine != null) {
             competenza.setMachine(machine);
         } else {
-            throw new BadRequestException("La macchina con id " + competenzeDto.getMachineId() + " non esiste");
+            System.out.println("La macchina con id " + competenzeDto.getMachineId() + " non esiste");
+          //  throw new BadRequestException("La macchina con id " + competenzeDto.getMachineId() + " non esiste");
         }
         competenza = competenzaRepository.save(competenza);
         System.out.println(competenza);

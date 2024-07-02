@@ -15,6 +15,7 @@ import GestionaleAziendale.GesionaleBack.exeptions.ResourceNotFoundException;
 import GestionaleAziendale.GesionaleBack.maperDto.UserMapper;
 import GestionaleAziendale.GesionaleBack.maperDto.UserRegisterMapper;
 import GestionaleAziendale.GesionaleBack.maperDto.users.UsersDatiMapper;
+import GestionaleAziendale.GesionaleBack.repository.CompetenzaRepository;
 import GestionaleAziendale.GesionaleBack.repository.RuoloRepository;
 import GestionaleAziendale.GesionaleBack.repository.UserRepository;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Users;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.sql.PreparedStatement;
@@ -49,7 +51,8 @@ public class UserService {
     private UsersDatiMapper usersDatiMapper;
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
+    @Autowired
+    private CompetenzaRepository competenzaRepository;
     public Users saveUserRegister(UserRegDto userDto) {
 
         Users user = userRegisterMapper.toEntity(userDto);
@@ -105,8 +108,16 @@ public class UserService {
     }
 
 //metodo template jdbcTemplate
-
+public boolean isUserConnectedWithCompetenze(int userId) {
+    Users user = userRepository.findById(userId)
+            .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato con id: " + userId));
+    return !user.getCompetenze().isEmpty();
+}
     public List<UserMachineDto> getUserData(int userId) {
+        System.out.println("userId: " + userId+" "+userRepository.existsById(userId));
+        if (!isUserConnectedWithCompetenze(userId)) {
+            throw new ResourceNotFoundException("Utente non trovato nella tabella delle competenze con id: " + userId);
+        }
         String sql = "SELECT u.id as user_id,  " +
                 "m.id as machine_id, m.nome_macchina, m.marca, m.stato_macchina, mg.description, mg.photo," +
                 "p.id as part_id, p.nome_parte, p.descrizione, p.note, p.quantity_parts, " +

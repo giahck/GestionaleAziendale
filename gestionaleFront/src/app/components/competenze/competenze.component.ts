@@ -1,34 +1,31 @@
+import { UsersService } from './../../service/users.service';
 import { MachinaCompetenza } from './../../models/machin/machina-competenza.interface';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
-import { Router } from '@angular/router';
 import { MachinsService } from '../../service/machins.service';
+import { Subscription } from 'rxjs';
+import { UserDati } from '../../models/user-dati.interface';
 @Component({
   selector: 'app-competenze',
   templateUrl: './competenze.component.html',
   styleUrl: './competenze.component.scss',
 })
-export class CompetenzeComponent implements OnInit {
+export class CompetenzeComponent implements OnInit,OnDestroy {
   showSuccessAlert = false;
   showErrorAlert = false;
   macchine!: MachinaCompetenza[];
   competenzaForm!: FormGroup;
+  usersSubscription!:Subscription;
  // usersSubscription!:Subscription;
  // state!: StatoRegister;
   constructor(
     private fb: FormBuilder,
     private authSrv: AuthService,
-    private router: Router,
-    private maschine:MachinsService
+    private maschine:MachinsService,
+    private usersSrv: UsersService,
   ) {}
-  skip(){
-   /*  this.authSrv.setState({
-      competenze: false,
-      popupVisible: false,
-      id: null
-    }); */
-  }
+ 
   ngOnInit(): void {
     this.maschine.getMachine().subscribe(
       (machines: MachinaCompetenza[]) => {
@@ -39,13 +36,20 @@ export class CompetenzeComponent implements OnInit {
         this.handleError(error);
       }
     );
-
+      this.usersSubscription=this.usersSrv.getUserDati$().subscribe((userDati:UserDati[]) => {
+      //this.userDati = userDati;
+        console.log('UserDati:', userDati);
+      }
+    );
     this.competenzaForm = this.fb.group({
       nomeCompetenza: ['', Validators.required],
       descrizione: ['', Validators.required],
       machineId: ['', Validators.required],
       livello: [, Validators.required],
     });
+  }
+  ngOnDestroy():void{
+    this.usersSubscription.unsubscribe();
   }
   onCompetenzaSubmit(): void {
     const userString = localStorage.getItem('user');
@@ -88,8 +92,7 @@ export class CompetenzeComponent implements OnInit {
     }
   }
   handleError(error: any): void {
-    // Qui puoi gestire diversi tipi di errori in modi diversi
-    // Ad esempio, potresti voler mostrare un messaggio all'utente
+ 
     console.error('Si è verificato un errore:', error);
   }
   closeAlert() {

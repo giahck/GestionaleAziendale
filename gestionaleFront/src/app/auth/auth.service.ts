@@ -23,7 +23,7 @@ export class AuthService {
   //private stateKey = 'authState';
   private state = new BehaviorSubject<StatoRegister>({
     popupVisible: false,
-    competenze: false,
+    //competenze: false,
     id: null,
   });
   state$: Observable<StatoRegister> = this.state.asObservable();
@@ -42,7 +42,7 @@ export class AuthService {
 
   // Getter method
   getState(): StatoRegister {
-    console.log('Current state:', this.state.getValue());
+    //console.log('Current state:', this.state.getValue());
     return this.state.getValue();
   }
   competenze(data: Competenze) {
@@ -80,7 +80,7 @@ export class AuthService {
       );
   }
   register(data: Register) {
-    console.log('data: ', data);
+    //console.log('data: ', data);
     return this.http
       .post(`${this.apiURL}auth/register`, data, { responseType: 'text' })
       .pipe(
@@ -100,10 +100,11 @@ export class AuthService {
           localStorage.setItem('user', JSON.stringify(dataResponse));
           this.state.next({
             popupVisible: false, // Hide any popups after login
-            competenze: true, // Assuming user has certain competencies after login
+          //  competenze: true, // Assuming user has certain competencies after login
             id: dataResponse.id // Assigning userId from dataResponse
           });
           
+          this.router.navigate(['/']);
           this.autoLogout(dataResponse);
         }
         this.authSub.next(dataResponse);

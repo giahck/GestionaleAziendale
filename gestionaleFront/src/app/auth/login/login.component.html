@@ -1,24 +1,24 @@
 <div class="tabs-container ">
   <ul class="nav nav-pills d-flex justify-content-center align-items-center text-center" id="pills-tab" role="tablist" style="width: 70%; margin: auto;">
     <!-- Login Tab -->
-    <li class="nav-item flex-fill" *ngIf="!state.competenze">
+    <li class="nav-item flex-fill" >
       <a class="nav-link active ms-3" id="login-tab" data-bs-toggle="pill" href="#login" role="tab" aria-controls="login" aria-selected="true">Login   </a>
     </li>
 
     <!-- Register Tab -->
-    <li class="nav-item flex-fill " *ngIf="!state.competenze">
+    <li class="nav-item flex-fill " >
       <a class="nav-link" id="register-tab" data-bs-toggle="pill" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
     </li>
 
     <!-- Nuova Competenza Tab -->
-    <li class="nav-item flex-fill" *ngIf="state.competenze">
+  <!--   <li class="nav-item flex-fill" *ngIf="state.competenze">
       <a class="nav-link active" id="competenza-tab" data-bs-toggle="pill" href="#competenza" role="tab" aria-controls="competenza" aria-selected="false">Nuova Competenza</a>
-    </li>
-  </ul>
+    </li>-->
+  </ul> 
 
   <div class="tab-content" id="pills-tabContent">
     <!-- Login Tab Content -->
-    <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab" *ngIf="!state.competenze">
+    <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab" >
       <div class="container mt-4 login-container">
         <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
           <!-- Social login buttons -->
@@ -94,7 +94,7 @@
     </div>
 
     <!-- Register Tab Content -->
-    <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab" *ngIf="!state.competenze">
+    <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab" >
       <div class="container mt-4">
         <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
           <!-- Social signup buttons -->
@@ -289,6 +289,6 @@
     <h2>Validazione Email</h2>
     <p>{{ errorMessage }}</p>
 <!--     <button type="button" class="btn btn-primary" (click)="closePopup()" *ngIf="colesePP">Close</button>
- -->    <button type="button" class="btn btn-primary" (click)="checkEmailConfirmedState()" *ngIf="validazione" [disabled]="state.competenze">Check Email Confirmation</button>
+ -->    <button type="button" class="btn btn-primary" (click)="checkEmailConfirmedState()" *ngIf="validazione" >Check Email Confirmation</button>
   </div>
 </div>

@@ -29,8 +29,8 @@ public class Parts {
     @ManyToOne
     @JoinColumn(name = "id_machine")
     private Machine machine;
-    @JsonIgnore
-    @OneToMany(mappedBy = "parts")
+    //@JsonIgnore
+    @ManyToMany(mappedBy = "parts")
     private List<Ticket> tickets;
     @JsonManagedReference
     @OneToMany(mappedBy = "parts")

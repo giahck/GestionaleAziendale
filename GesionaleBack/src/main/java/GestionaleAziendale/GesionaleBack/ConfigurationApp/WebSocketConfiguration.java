@@ -1,13 +1,16 @@
 package GestionaleAziendale.GesionaleBack.ConfigurationApp;
 
 
+import GestionaleAziendale.GesionaleBack.dto.queryDto.MachineGenericStatusDto;
 import GestionaleAziendale.GesionaleBack.security.JwtTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
@@ -28,6 +31,7 @@ import java.util.Map;
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
     /*@Autowired
     private HttpHandshakeInterceptor handshakeInterceptor;*/
+
   @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic");
@@ -36,6 +40,8 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chat").setAllowedOrigins("http://localhost:4200/").withSockJS();
+        registry.addEndpoint("/machineStatus").setAllowedOrigins("http://localhost:4200/").withSockJS();
     }
+
 
 }
