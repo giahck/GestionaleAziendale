@@ -17,7 +17,7 @@ export class CreateMaschineComponent implements OnInit,OnDestroy{
   showAddMachine: boolean = false;
   showPezzi: boolean = false;
   showParti: boolean = false;
-  showCompetenze: boolean = true;
+  showCompetenze: boolean = false;
   selectedMachineId: Machine | null = null;
   partSelectedId: Part | null = null;
   constructor(private machineSrv: MachinsService) { }

@@ -77,7 +77,12 @@ public class GenericMachineService {
             machineGeneric.setCompetenza(competenze);
             competenze.setMachine(machineGeneric);
         }
+        Users users = userRepository.findById(genericMachineDto.getUsersId()).orElse(null);
+        if (users != null) {
+            competenze.addUser(users);
 
+        }
+        System.out.println("Machine: " + users+" "+genericMachineDto.getUsersId());
         return machineGenericRepository.save(machineGeneric);
     }
 
@@ -112,7 +117,7 @@ public class GenericMachineService {
     }
 
     public List<MachineGenericStatusDto> getMachineStatus(Principal principal) {
-        System.out.println("Principal: " + principal.getName());
+       // System.out.println("Principal: " + principal.getName());
 
         Optional<Users> userOptional = userRepository.findByEmail(principal.getName());
         if (userOptional.isPresent()) {

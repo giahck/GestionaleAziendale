@@ -1,4 +1,5 @@
 export interface Competenze {
+    idCompetenza: number;
     nomeCompetenza: string;
     descrizione: string;
     machineId: number;

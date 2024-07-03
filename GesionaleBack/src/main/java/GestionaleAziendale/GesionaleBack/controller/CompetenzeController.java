@@ -3,6 +3,7 @@ package GestionaleAziendale.GesionaleBack.controller;
 import GestionaleAziendale.GesionaleBack.dto.CompetenzeRegDto;
 import GestionaleAziendale.GesionaleBack.dto.UserDtoCompetenze;
 import GestionaleAziendale.GesionaleBack.dto.competenzeAllDto;
+import GestionaleAziendale.GesionaleBack.entity.utenti.Competenza;
 import GestionaleAziendale.GesionaleBack.repository.CompetenzaRepository;
 import GestionaleAziendale.GesionaleBack.service.CompetenzeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class CompetenzeController {
     private CompetenzeService competenzeService;
     @PostMapping("/add")
     @PreAuthorize("hasAnyAuthority('DIPENDENTE','DIRETTORE','USER','MANAGER','ADMIN','IT')")
-    public CompetenzeRegDto saveCompetenze(@RequestBody @Validated CompetenzeRegDto competenzeDto, BindingResult bindingResult) {
+    public Competenza saveCompetenze(@RequestBody @Validated CompetenzeRegDto competenzeDto, BindingResult bindingResult) {
         System.out.println(competenzeDto);
         if (bindingResult.hasErrors()) {
             throw new RuntimeException("Richiesta non valida: " + bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).reduce("", (s1, s2) -> s1 + "\n" + s2));

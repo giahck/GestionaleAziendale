@@ -12,7 +12,7 @@ export const navbarData: InavBarData[]= [
     label: 'Chat-Tiket',
   },
   {
-    routeLink: 'tickets',
+    routeLink: 'ticket',
     icon: 'fa fa-ticket',
     label: 'Tickets',
     items: [
@@ -27,18 +27,18 @@ export const navbarData: InavBarData[]= [
     ],
   },
   {
-    routeLink: 'maschines',
+    routeLink: 'create-maschine',
     icon: 'fa fa-cogs',
-    label: 'Maschine',
+    label: 'Machine',
     items: [
       {
         visibilita: 3,
         routeLink: 'create-maschine',
-        label: 'Create Maschine',
+        label: 'Create Machine',
       },
       {
         routeLink: 'status-maschine',
-        label: 'Status Maschine',
+        label: 'Status Machine',
       },
     ],
   },

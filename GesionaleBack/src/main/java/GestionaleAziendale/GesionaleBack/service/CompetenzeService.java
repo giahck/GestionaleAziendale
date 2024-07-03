@@ -7,7 +7,6 @@ import GestionaleAziendale.GesionaleBack.entity.utenti.Competenza;
 
 
 import GestionaleAziendale.GesionaleBack.entity.utenti.Users;
-import GestionaleAziendale.GesionaleBack.exeptions.BadRequestException;
 import GestionaleAziendale.GesionaleBack.maperDto.CompetenzaMapper;
 import GestionaleAziendale.GesionaleBack.repository.CompetenzaRepository;
 import GestionaleAziendale.GesionaleBack.repository.RuoloRepository;
@@ -16,9 +15,6 @@ import GestionaleAziendale.GesionaleBack.repository.machineRepository.MachineRep
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -34,9 +30,10 @@ public class CompetenzeService {
 @Autowired
 private MachineRepository machineRepository;
 
-    public CompetenzeRegDto saveCompetenza(CompetenzeRegDto competenzeDto) {
+    public Competenza saveCompetenza(CompetenzeRegDto competenzeDto) {
         Competenza competenza = competenzaMapper.toEntity(competenzeDto);
         Set<Integer> userIds = competenzeDto.getUsersId();
+        if (userIds != null)
         for (Integer userId : userIds) {
             Users user = utentiRepository.findById(userId).orElse(null);
             System.out.println("User: " + user);
@@ -55,8 +52,8 @@ private MachineRepository machineRepository;
           //  throw new BadRequestException("La macchina con id " + competenzeDto.getMachineId() + " non esiste");
         }
         competenza = competenzaRepository.save(competenza);
-        System.out.println(competenza);
-        return null;
+
+        return competenza;
     }
 
    /* public CompetenzeRegDto saveCompetenza(CompetenzeRegDto competenzeDto) {

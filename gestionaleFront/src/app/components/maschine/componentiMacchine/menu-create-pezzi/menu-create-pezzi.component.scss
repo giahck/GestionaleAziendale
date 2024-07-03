@@ -18,3 +18,10 @@
     z-index: 1040; /* Z-index inferiore rispetto al modal ma superiore agli altri contenuti */
   }
   
+  .container-fluid{
+      background:  linear-gradient(50deg, rgb(73, 226, 43), orange);
+      border: 1px solid rgba(0, 0, 0, 0.2); // Bordo sottile
+      border-radius: 0.5rem;
+      padding: 2rem;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); // Ombra sottile
+  }

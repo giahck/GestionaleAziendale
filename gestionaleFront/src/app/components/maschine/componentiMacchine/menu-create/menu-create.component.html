@@ -121,12 +121,17 @@
       </div>
       <div class="modal-body overflow-auto">
         <select [(ngModel)]="selectedUserId">
-          <option *ngFor="let item of userDati" [value]="item.id">{{item.nome}} {{item.cognome}}</option>
+          <ng-container *ngFor="let item of userDati">
+            <option *ngIf="item.ruolo[0].nomeRuolo==='DIPENDENTE'" [value]="item.id">
+              {{item.nome}} {{item.cognome}}
+            </option>
+          </ng-container>
         </select>
         <div *ngIf="selectedUser">
           <div class="container-fluid">
             <div class="row">
               <div class="col-6">
+                <h4>Dipendente</h4>
                 <div>
                   <p>Nome: {{selectedUser.nome}} </p>
                   <p>Cognome: {{selectedUser.cognome}}</p>
@@ -135,27 +140,38 @@
                   <p>Data di Nascita: {{selectedUser.dataDiNascita}}</p>
                   <p>indirizzo: {{selectedUser.indirizzo}}</p>
                 </div>
-              </div>
-              <div class="col-6" >
-                <h2>COMPETENZE</h2>
-                <h4>ALLEGA UNA COMPETENZA ALLA MACCHINA</h4>
+                <h4>Competenze</h4>
                 <div *ngFor="let key of selectedUser.competenze">
-                  <div class="border border-2 p-3 mb-3" [ngClass]="{'border-danger': selectedCompetenzaId === key.idCompetenza}"  (click)="onCompetenzaClick(key.idCompetenza)">
-                  <p>Nome competenza: {{key.nomeCompetenza}}</p>
-                  <p>Descrizione competenza: {{key.descrizione}}</p>
-                  <p>Livello: {{key.livello}}</p>
-                  <p>Machina collegata: {{key.machine}}</p>
-                </div>
+                  <div class="border border-2 p-3 mb-3"   >
+                    <p>Nome competenza: {{key.nomeCompetenza}}</p>
+                    <p>Descrizione competenza: {{key.descrizione}}</p>
+                    <p>Livello: {{key.livello}}</p>
+                  </div>
                 </div>
               </div>
+              <div class="col-6">
+                <h4>Competenze</h4>
+                <div *ngFor="let keyUser of competenzeUser">
+                  <div *ngIf="keyUser.machine.nomeMacchina==null&&keyUser.machine.nomeMacchina==null">
+                    <div class="border border-2 p-3 mb-3" [ngClass]="{'border-danger': selectedCompetenzaId === keyUser.idCompetenza}"  (click)="onCompetenzaClick(keyUser.idCompetenza)">
+                      <p>Nome competenza: {{keyUser.nomeCompetenza}}</p>
+                      <p>Descrizione competenza: {{keyUser.descrizione}}</p>
+                      <p>Livello: {{keyUser.livello}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>                
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <h3>Se non salvi la macchina vera chiusa</h3>
+        <div *ngIf="isLoading" class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
         <button type="button" class="btn btn-secondary" (click)="showModal = false">Chiudi</button>
-        <button type="button" class="btn btn-primary" (click)="addMacchina()" >Salva cambiamenti</button>
+        <button type="button" class="btn btn-primary" (click)="addMacchina()" [disabled]="isLoading">Salva cambiamenti</button>
       </div>
     </div>
   </div>

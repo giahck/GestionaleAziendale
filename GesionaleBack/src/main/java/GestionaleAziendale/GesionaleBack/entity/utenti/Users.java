@@ -2,6 +2,7 @@ package GestionaleAziendale.GesionaleBack.entity.utenti;
 
 
 import GestionaleAziendale.GesionaleBack.entity.ticket.Ticket;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -55,6 +56,7 @@ public class Users implements UserDetails {
     private Set<Competenza> competenze= new HashSet<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private List<Ticket> tickets;
     @Column(nullable = false)
     private String password;

@@ -31,6 +31,7 @@ public class Parts {
     private Machine machine;
     //@JsonIgnore
     @ManyToMany(mappedBy = "parts")
+    @JsonBackReference
     private List<Ticket> tickets;
     @JsonManagedReference
     @OneToMany(mappedBy = "parts")

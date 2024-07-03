@@ -2,8 +2,7 @@
   Competenza aggiunta con successo!
   <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
 </div>
-
-<div class="alert alert-stext-secondary alert-dismissible fade show" role="alert" *ngIf="showErrorAlert">
+<div class="alert alert-danger alert-dismissible fade show alert-message" role="alert" *ngIf="showErrorAlert">
   Si è verificato un errore durante l'aggiunta della competenza.
   <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
 </div>
@@ -27,8 +26,8 @@
   </div>
 
   <div class="mb-3">
-    <label for="competenzaIdRisorsa" class="form-label">Scegli macchina</label>
-    <select class="form-control" id="competenzaIdRisorsa" formControlName="machineId">
+    <label for="competenzamachineId" class="form-label">Scegli macchina</label>
+    <select class="form-control" id="competenzamachineId" formControlName="machineId">
       <ng-container *ngFor="let macchina of macchine">
         <option *ngIf="!macchina.competenza" [value]="macchina.id" class="d-flex justify-content-between text-center">
           
@@ -40,7 +39,24 @@
       </ng-container>
     </select>
     <div *ngIf="competenzaForm.get('machineId')?.invalid && competenzaForm.get('machineId')?.touched" class="text-secondary">
-      Il campo ID Risorsa è richiesto.
+      Il campo  Risorsa è richiesto.
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="UserCompetenza" class="form-label">Scegli User</label>
+    <select class="form-control" id="UserCompetenza" formControlName="userId">
+      <ng-container *ngFor="let user of userDati">
+        <option  [value]="user.id" class="d-flex justify-content-between text-center">
+          
+            <span>{{ user.nome }}</span>
+            <span>{{ user.cognome }}</span>
+            <span> -{{ user.email }}</span>
+         
+        </option>
+      </ng-container>
+    </select>
+    <div *ngIf="competenzaForm.get('userId')?.invalid && competenzaForm.get('userId')?.touched" class="text-secondary">
+      Il campo User è richiesto.
     </div>
   </div>
 

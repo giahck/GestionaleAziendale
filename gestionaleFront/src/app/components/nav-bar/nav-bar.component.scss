@@ -6,7 +6,7 @@
     top: 0;
     width: 5rem;
     height: 100vh;
-    box-shadow: 0.063rem 0 1.25rem 0 #031a43;
+    box-shadow: 0.063rem 0 1rem 0 #035c1c;
 
     .logo-container {
         display: flex;
@@ -62,7 +62,7 @@
             display: flex;
             align-items: center;
             height: 3rem;
-            color: #991b1b;
+            color: #7209d4;
             text-decoration: none;
             border-radius: 0.625rem;
             transition: all .3s ease;
@@ -83,22 +83,22 @@
 
     .sidenav-nav-item:hover {
         .sidenav-nav-link {
-            background-color: #c23a3a;
-            color: #000;
+            background-color: #7209d4;
+            color: #f8f6f6;
         }
     }
 }
 
 .active {
-    background-color: #8d0606;
+    background-color: #8f32e6;
 
     .sidenav-link-icon,
     .sidenav-link-text {
-        color: #000;
+        color: #fffefe;
     }
 }
  .active-sublevel {
-    color: #ff0000 !important; 
+    color: #7209d4a9 !important; 
     // opacity: 1 !important;
  } 
 
@@ -139,7 +139,7 @@
         }
 
         .sublevel-nav-link:hover {
-            color: #d81111;
+            color: #851ee4;
         }
     }
 } 

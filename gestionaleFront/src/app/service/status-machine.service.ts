@@ -28,6 +28,8 @@ export class StatusMachineService {
         console.log("Messaggio ricevuto:",);
         if (message.body) {
           console.log("Messaggio ricevuto:", message.body);
+          const parsedMessage = JSON.parse(message.body) as StatusMachine;
+          console.log("Messaggio ricevuto:", parsedMessage);
         } 
       }, (error:any) => {
         console.error("Errore nella sottoscrizione:", error);
