@@ -1,1 +1,189 @@
-<p>create-tickets works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+                <div class="container">
+                    <div class="row  justify-content-center">
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column">
+                                <label for="descrizione" class="form-label">Descrizione del problema:</label>
+                                <textarea id="descrizione" class="form-control" formControlName="descrizione" [(ngModel)]="ticket.descrizione"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column">
+                                <label for="note" class="form-label">Note:</label>
+                                <textarea id="note" class="form-control" formControlName="note" [(ngModel)]="ticket.note"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column">
+                                <label for="priority" class="form-label">Priorità:</label>
+                                <select id="priority" class="form-control" formControlName="priority" [(ngModel)]="ticket.priority">
+                                    <option *ngFor="let priority of priorities" [value]="priority">{{priority}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column">
+                                <label for="stato" class="form-label">Stato:</label>
+                                <select id="stato" class="form-control" formControlName="stato" [(ngModel)]="ticket.stato">
+                                    <option *ngFor="let statoTicket of statoTicket" [value]="statoTicket">{{statoTicket}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column">
+                                <label for="dataApertura" class="form-label">Data Apertura:</label>
+                                <input class="form-control" id="dataApertura" type="datetime-local" formControlName="dataApertura" [(ngModel)]="ticket.dataApertura" />
+                            </div>
+                        </div>
+                      <!--   <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column">
+                                <label for="dataChiusura" class="form-label">Data Chiusura:</label>
+                                <input class="form-control" id="dataChiusura" type="datetime-local" formControlName="dataChiusura" [(ngModel)]="ticket.dataChiusura" />
+                            </div>
+                        </div> -->
+                        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column">
+                                <label for="dataScadenza" class="form-label">Data Scadenza:</label>
+                                <input class="form-control" id="dataScadenza" type="datetime-local" formControlName="dataScadenza" [(ngModel)]="ticket.dataScadenza" />
+                            </div>
+                        </div>
+                       <!--  <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column">
+                                <label for="dataRisposta" class="form-label">Data Risposta:</label>
+                                <input class="form-control" id="dataRisposta" type="datetime-local" formControlName="dataRisposta" [(ngModel)]="ticket.dataRisposta" />
+                            </div>
+                        </div> -->
+                        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column">
+                                <label for="dataUltimaModifica" class="form-label">Data Ultima Modifica:</label>
+                                <input class="form-control" id="dataUltimaModifica" type="datetime-local" formControlName="dataUltimaModifica" [(ngModel)]="ticket.dataUltimaModifica" />
+                            </div>
+                        </div>
+                      <!--   <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column">
+                                <label for="partIds" class="form-label">Part IDs (comma separated):</label>
+                                <input id="partIds" formControlName="partIds" [(ngModel)]="ticket.partIds" />
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column">
+                                <label for="userId" class="form-label">User ID:</label>
+                                <input id="userId" formControlName="userId" [(ngModel)]="ticket.userId" />
+                            </div>
+                        </div> -->
+                        <div class="m-3 d-flex align-items-center justify-content-center">
+                            <button type="submit" class="btn btn-dark" [disabled]="ticketForm.invalid">Submit</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+        <div class="col-12">
+            <div class="tp-wrapper">
+                <div class="tp-box" (click)="toggleFlip()" [@flipState]="flip">
+                    <div class="tp-box__side tp-box__front ">E Gira
+                        <div class="container container_front cont">
+                            <div class="row d-flex">
+                                <div class=" col-sm-8 p-2 p1 mb-1 mb-md-5" >
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                                <span class="tik col-6 tik-bon">
+                                                    <h4 class="m-0">DESCRIZIONE</h4>
+                                                    <p class="m-0">{{ticket.descrizione}}</p>
+                                                </span>
+                                                <div class="row">
+                                                    <span class="tik col-6">
+                                                        <h4 class="m-0">PRIORITÀ</h4>
+                                                        <p class="mb-2">{{ticket.priority}}</p>
+                                                        <h4 class="m-0">STATO TIKET</h4>
+                                                        <p class="mb-0">{{ticket.stato}}</p>
+                                                    </span>
+                                                    <!-- Duplica la colonna qui sotto per aggiungere un'altra colonna -->
+                                                    <span class="tik col-6 align-content-center">
+                                                        <h4 class="m-0">DATA APERTURA</h4>
+                                                        <p class="mb-2">{{ticket.dataApertura}}</p>
+                                                       
+                                                    </span>
+                                                </div>
+                                                <span class="tik col-6 tik-bon">
+                                                    <h4 class="m-0">NOTE</h4>
+                                                    <p class="m-0">{{ticket.note}}</p>
+                                                </span>
+                                                <span class="tik col-12 tik-bon ">
+                                                    <span class="d-flex justify-content-around">
+                                                    <div>
+                                                        <h4 class="m-0">DATA SCADENZA</h4>
+                                                        <p class="m-0">{{ticket.dataScadenza}}</p>
+                                                    </div>
+                                                    <div>
+                                                        <h4 class="m-0">DATA ULTIMA MODIFICA</h4>
+                                                        <p class="m-0">{{ticket.dataUltimaModifica}}</p>
+                                                    </div>
+                                                </span>
+                                                </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class=" col-sm-4 p-2 p2 mb-5" >
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                                <span class="tik col-md-6 mb-3">
+                                                    <h4 class="m-0">NOME</h4>
+                                                    <p class="m-0">{{user.nome}}</p>
+                                                </span>
+                                                <span class="tik col-md-6 mb-3">
+                                                    <h4 class="m-0">COGNOME</h4>
+                                                    <p class="m-0">{{user.cognome}}</p>
+                                                </span>
+                                                <span class="tik col-12 mb-3">
+                                                    <h4 class="m-0">EMAIL</h4>
+                                                    <p class="m-0">{{user.email}}</p>
+                                                </span>
+                                                <span class="tik col-md-6 mb-3">
+                                                    <h4 class="m-0">DATA DI NASCITA</h4>
+                                                    <p class="m-0">{{user.dataDiNascita}}</p>
+                                                </span>
+                                                <span class="tik col-md-6 mb-3">
+                                                    <h4 class="m-0">C. di NASCITA</h4>
+                                                    <p class="m-0">{{user.comuneDiNascita}}</p>
+                                                </span>
+                                                <span class="tik col-12 mb-3">
+                                                    <h4 class="m-0">n. TELEFONO</h4>
+                                                    <p class="m-0">{{user.telefono}}</p>
+                                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <div class="tp-box__side tp-box__back">E Rigira
+                        <div class="container container_back cont">
+                            <div class="row d-flex">
+                                <div class=" col-4 p-2 p1" >
+                                    <p>ciao</p>
+                                 </div>
+                                <div class=" col-8 p-2 p2" >
+                                    <div class="d-flex">
+                                        <h4>DESCRIZIONE</h4>
+                                    </div>
+                                   
+                                </div>
+                               
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

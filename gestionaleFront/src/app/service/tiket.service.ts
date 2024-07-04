@@ -16,7 +16,9 @@ export class TiketService  {
   apiUrl=environment.apiURL;
   private responseSubject = new BehaviorSubject<ChatGptResponse[]>([]);
   Mess$: Observable<ChatGptResponse[]> = this.responseSubject.asObservable();
- 
+  
+
+
   getMess$(): Observable<ChatGptResponse[]> {
     return this.Mess$;
   }

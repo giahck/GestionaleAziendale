@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
+
 public class MachineGenericStatusDto {
     private String description;
     private String matricola;
@@ -14,7 +14,8 @@ public class MachineGenericStatusDto {
     private String marca;
     private String modello;
     private StatoMaschineEnum statoMaschine;
-   /* public MachineGenericStatusDto(String description, String matricola, String photo, String nomeMacchina, String marca, String modello, StatoMaschineEnum statoMaschine) {
+    private String pdfContent;
+    public MachineGenericStatusDto(String description, String matricola, String photo, String nomeMacchina, String marca, String modello, StatoMaschineEnum statoMaschine) {
         this.description = description;
         this.matricola = matricola;
         this.photo = photo;
@@ -22,5 +23,5 @@ public class MachineGenericStatusDto {
         this.marca = marca;
         this.modello = modello;
         this.statoMaschine = statoMaschine;
-    }*/
+    }
 }

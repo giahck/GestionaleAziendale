@@ -14,11 +14,11 @@ export class StatusMaschineComponent implements OnInit, OnDestroy{
   constructor(private machineStatusSrv: StatusMachineService) { }
 
   ngOnInit(): void {
-    this.machineStatusSrv.getMachineStatus().subscribe((data: StatusMachine[]) => {
+    this.machineStatusSrv.Connect();
+    this.machineStatusSrv.getStatusMachine$().subscribe((data: StatusMachine[]) => {
       console.log(data);
       this.machineStatus = this.sortMachineStatus(data);
     });
-    this.machineStatusSrv.Connect();
 
   }
   sortMachineStatus(statusList: StatusMachine[]): StatusMachine[] {
@@ -32,6 +32,36 @@ export class StatusMaschineComponent implements OnInit, OnDestroy{
   }
   ngOnDestroy(): void {
     this.machineStatusSrv.Disconnect();
+  }
+  downloadPdf(pdfContent: string): void {
+    // Decode Base64 to binary
+    const binaryPdf = atob(pdfContent);
+
+    // Convert binary to Uint8Array
+    const bytes = new Uint8Array(binaryPdf.length);
+    for (let i = 0; i < binaryPdf.length; i++) {
+      bytes[i] = binaryPdf.charCodeAt(i);
+    }
+
+    // Create Blob object from Uint8Array
+    const blob = new Blob([bytes], { type: 'application/pdf' });
+
+    // Generate a unique file name (you can customize this as needed)
+    const fileName = `machine_status_${new Date().getTime()}.pdf`;
+
+    // Create a temporary URL for the Blob object
+    const url = window.URL.createObjectURL(blob);
+
+    // Create a link element to trigger the download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a); // Append anchor to body
+    a.click(); // Trigger the download
+    document.body.removeChild(a); // Remove anchor from body once done
+
+    // Clean up the temporary URL created for the Blob
+    window.URL.revokeObjectURL(url);
   }
 
 }

@@ -14,6 +14,7 @@ import GestionaleAziendale.GesionaleBack.repository.machineRepository.MachineGen
 import GestionaleAziendale.GesionaleBack.repository.machineRepository.MachineRepository;
 import GestionaleAziendale.GesionaleBack.repository.machineRepository.PartsRepository;
 import GestionaleAziendale.GesionaleBack.service.CompetenzeService;
+import GestionaleAziendale.GesionaleBack.service.tiketService.TicketService;
 import com.cloudinary.Cloudinary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,9 +50,10 @@ public class GenericMachineService {
     private CompetenzeService competenzeService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TicketService ticketService;
 
     @Transactional
-
     public Machine addMachine(GenericMachineDto genericMachineDto, MultipartFile fotoMachine) {
         if (fotoMachine != null && !fotoMachine.isEmpty()) {
             System.out.println("Photo not null");
@@ -116,16 +119,17 @@ public class GenericMachineService {
         return machineDetails;
     }
 
-    public List<MachineGenericStatusDto> getMachineStatus(Principal principal) {
+    public List<MachineGenericStatusDto> getMachineStatus(Principal principal) throws IOException {
        // System.out.println("Principal: " + principal.getName());
 
         Optional<Users> userOptional = userRepository.findByEmail(principal.getName());
         if (userOptional.isPresent()) {
             Users user = userOptional.get();
             if (user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("MANAGER"))) {
-                return machineGenericRepository.findMachineStatus();
+
+                return ticketService.updateMachineStatusAndSendPdf(machineGenericRepository.findMachineStatus());
             } else {
-                return machineGenericRepository.findMachineStatusByUserCompetenze(new ArrayList<>(user.getCompetenze()));
+                return ticketService.updateMachineStatusAndSendPdf(machineGenericRepository.findMachineStatusByUserCompetenze(new ArrayList<>(user.getCompetenze())));
             }
         } else {
             throw new UsernameNotFoundException("User not found");

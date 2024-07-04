@@ -1,8 +1,8 @@
+import { StatusMachine } from './../models/machin/status-machine.interface';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { StatusMachine } from '../models/machin/status-machine.interface';
-import { catchError, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of, throwError, tap } from 'rxjs';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 
@@ -13,8 +13,24 @@ export class StatusMachineService {
   apiUrl=environment.apiURL;
   stompClient: any;
   topic: string = '/topic/machineStatus';
+  private StatusMachineSubject = new BehaviorSubject<StatusMachine[]>([]);
+  statusMachine$ = this.StatusMachineSubject.asObservable();
+  private statusMachineLoaded = false;
   private isConnected: boolean = false;
   constructor(private http:HttpClient) { }
+  getStatusMachine$(): Observable<StatusMachine[]> {
+    if (!this.statusMachineLoaded) {
+      this.getMachineStatus();
+    }
+    return this.statusMachine$;
+  }
+  setStatusMachine(statusMachine: StatusMachine[]): void {
+  //  console.log("StatusMachineService.setStatusMachine:", statusMachine);
+    this.StatusMachineSubject.next(statusMachine);
+  }
+
+  
+
 
   Connect() {
     console.log("Tentativo di connessione a WebSocket con URL:", `${this.apiUrl}machineStatus`);
@@ -22,14 +38,15 @@ export class StatusMachineService {
     this.stompClient = Stomp.over(socket);
 
     this.stompClient.connect({}, (frame:any) => {
-      console.log("Connesso al WebSocket:", frame);
+    //  console.log("Connesso al WebSocket:", frame);
       this.isConnected = true;
       this.stompClient.subscribe(this.topic, (message:any) => {
-        console.log("Messaggio ricevuto:",);
+       // console.log("Messaggio ricevuto:",);
         if (message.body) {
-          console.log("Messaggio ricevuto:", message.body);
-          const parsedMessage = JSON.parse(message.body) as StatusMachine;
-          console.log("Messaggio ricevuto:", parsedMessage);
+         // console.log("Messaggio ricevuto:", message.body);
+          const parsedMessage = JSON.parse(message.body) as StatusMachine[];
+          this.setStatusMachine(parsedMessage);
+       //   console.log("Messaggio ricevuto:", parsedMessage);
         } 
       }, (error:any) => {
         console.error("Errore nella sottoscrizione:", error);
@@ -61,12 +78,16 @@ export class StatusMachineService {
 
 
   getMachineStatus(){
-    return this.http.get<StatusMachine[]>(`${this.apiUrl}machine/status`).pipe(
+     this.http.get<StatusMachine[]>(`${this.apiUrl}machine/status`).pipe(
+      tap((statusMachine: StatusMachine[]) => {
+        this.setStatusMachine(statusMachine), (this.statusMachineLoaded = true);
+      }),
       catchError(error => {
         this.handleError(error);
         return of([]); 
-      }),
-    )}
+      })
+    ).subscribe();
+  }
   
   
   private handleError(error: HttpErrorResponse) {
