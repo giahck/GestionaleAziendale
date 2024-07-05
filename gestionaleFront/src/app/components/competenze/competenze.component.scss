@@ -1,13 +1,14 @@
 form {
   margin: auto;
-    width: 50%;
-    border: 1px solid rgba(82, 120, 50, 0.2); // Bordo sottile
-    border-radius: 0.5rem; 
+    width: 100%;
+    
+    border-bottom-left-radius: 0.5rem; 
+    border-bottom-right-radius: 0.5rem; 
     padding: 2rem; 
-    background:  linear-gradient(50deg, rgb(73, 226, 43), orange);
+    background:  #f3dcd4;
     // Media query per dispositivi medium (md)
   @media (max-width: 767.98px) {
-    width: 75%; // Aumenta la larghezza per dispositivi più piccoli
+    width: 100%; // Aumenta la larghezza per dispositivi più piccoli
   }
 
   // Media query per dispositivi small (sm)
@@ -19,3 +20,4 @@ form {
   button[type="submit"] {
     cursor: pointer; /* Cambia il cursore quando si passa sopra al pulsante */
   }
+  

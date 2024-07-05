@@ -58,7 +58,7 @@ public class UserService {
         Users user = userRegisterMapper.toEntity(userDto);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         Set<Ruolo> ruoli = new HashSet<>();
-        ruoli.add(checkRuolo(RuoloEnum.USER));
+        ruoli.add(checkRuolo(RuoloEnum.DIPENDENTE));
         user.setRuoli(ruoli);
         userRepository.save(user);
         validazioneMailService.registerUser(user);

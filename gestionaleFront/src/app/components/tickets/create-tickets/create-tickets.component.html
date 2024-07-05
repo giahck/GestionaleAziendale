@@ -7,19 +7,19 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
                             <div class="d-flex flex-column">
                                 <label for="descrizione" class="form-label">Descrizione del problema:</label>
-                                <textarea id="descrizione" class="form-control" formControlName="descrizione" [(ngModel)]="ticket.descrizione"></textarea>
+                                <textarea id="descrizione" (ngModelChange)="onStatoChange($event)" class="form-control" formControlName="descrizione" [(ngModel)]="ticket.descrizione"></textarea>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
                             <div class="d-flex flex-column">
                                 <label for="note" class="form-label">Note:</label>
-                                <textarea id="note" class="form-control" formControlName="note" [(ngModel)]="ticket.note"></textarea>
+                                <textarea id="note" (ngModelChange)="onStatoChange($event)" class="form-control" formControlName="note" [(ngModel)]="ticket.note"></textarea>
                             </div>
                         </div>
                         <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
                             <div class="d-flex flex-column">
                                 <label for="priority" class="form-label">Priorità:</label>
-                                <select id="priority" class="form-control" formControlName="priority" [(ngModel)]="ticket.priority">
+                                <select (ngModelChange)="onStatoChange($event)" id="priority" class="form-control" formControlName="priority" [(ngModel)]="ticket.priority">
                                     <option *ngFor="let priority of priorities" [value]="priority">{{priority}}</option>
                                 </select>
                             </div>
@@ -27,7 +27,7 @@
                         <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
                             <div class="d-flex flex-column">
                                 <label for="stato" class="form-label">Stato:</label>
-                                <select id="stato" class="form-control" formControlName="stato" [(ngModel)]="ticket.stato">
+                                <select (ngModelChange)="onStatoChange($event)" id="stato" class="form-control" formControlName="stato" [(ngModel)]="ticket.stato">
                                     <option *ngFor="let statoTicket of statoTicket" [value]="statoTicket">{{statoTicket}}</option>
                                 </select>
                             </div>
@@ -35,7 +35,7 @@
                         <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
                             <div class="d-flex flex-column">
                                 <label for="dataApertura" class="form-label">Data Apertura:</label>
-                                <input class="form-control" id="dataApertura" type="datetime-local" formControlName="dataApertura" [(ngModel)]="ticket.dataApertura" />
+                                <input  (ngModelChange)="onStatoChange($event)" class="form-control" id="dataApertura" type="datetime-local" formControlName="dataApertura" [(ngModel)]="ticket.dataApertura" />
                             </div>
                         </div>
                       <!--   <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
@@ -47,7 +47,7 @@
                         <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
                             <div class="d-flex flex-column">
                                 <label for="dataScadenza" class="form-label">Data Scadenza:</label>
-                                <input class="form-control" id="dataScadenza" type="datetime-local" formControlName="dataScadenza" [(ngModel)]="ticket.dataScadenza" />
+                                <input (ngModelChange)="onStatoChange($event)" class="form-control" id="dataScadenza" type="datetime-local" formControlName="dataScadenza" [(ngModel)]="ticket.dataScadenza" />
                             </div>
                         </div>
                        <!--  <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
@@ -59,24 +59,28 @@
                         <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
                             <div class="d-flex flex-column">
                                 <label for="dataUltimaModifica" class="form-label">Data Ultima Modifica:</label>
-                                <input class="form-control" id="dataUltimaModifica" type="datetime-local" formControlName="dataUltimaModifica" [(ngModel)]="ticket.dataUltimaModifica" />
+                                <input (ngModelChange)="onStatoChange($event)" class="form-control" id="dataUltimaModifica" type="datetime-local" formControlName="dataUltimaModifica" [(ngModel)]="ticket.dataUltimaModifica" />
                             </div>
                         </div>
-                      <!--   <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
-                            <div class="d-flex flex-column">
-                                <label for="partIds" class="form-label">Part IDs (comma separated):</label>
-                                <input id="partIds" formControlName="partIds" [(ngModel)]="ticket.partIds" />
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
+                      
+                       <!-- <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12"> 
                             <div class="d-flex flex-column">
                                 <label for="userId" class="form-label">User ID:</label>
                                 <input id="userId" formControlName="userId" [(ngModel)]="ticket.userId" />
                             </div>
                         </div> -->
-                        <div class="m-3 d-flex align-items-center justify-content-center">
-                            <button type="submit" class="btn btn-dark" [disabled]="ticketForm.invalid">Submit</button>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
+                            <div class="d-flex flex-column justify-content-center">
+                                <label for="partIds" class="form-label">Seleziona la macchina rotta e le sue parti:</label>
+<!--                                 <input id="partIds" class="form-control m-1" formControlName="partIds" [(ngModel)]="ticket.partIds" />
+ -->                                <button type="submit" class="btn btn-primary m-1 w-50 align-self-center" (click)="openModal()" >cerca</button>
+                            </div>
                         </div>
+                        <div class="m-3 d-flex align-items-center justify-content-center">
+                            <button type="submit" (click)="onSubmit()" class="btn btn-dark" >Submit</button>
+                        </div>
+                     
+
                     </div>
                     
                 </div>
@@ -168,17 +172,36 @@
                     <div class="tp-box__side tp-box__back">E Rigira
                         <div class="container container_back cont">
                             <div class="row d-flex">
-                                <div class=" col-4 p-2 p1" >
-                                    <p>ciao</p>
+                                <div class=" col-sm-4 p-2 p1" >
+                                    
+                                        
+                                    <h4>MACCHINA</h4>
+                                     
+                                                <p>{{ selectedMachine?.marca }}</p>
+                                                <p>{{ selectedMachine?.statoMacchina }}</p>
+                                                <p>{{ selectedMachine?.description }}</p>
+                                                
+                                                <p>{{ selectedMachine?.nomeMacchina }}</p>
+                                                <img *ngIf="selectedMachine?.photo;" src="{{selectedMachine?.photo}}" alt="img" class="img-thumbnail" style="width: 150px;">
+                                              
+                                           
+                                        
+                                    
                                  </div>
-                                <div class=" col-8 p-2 p2" >
+                                <div class=" col-sm-8 p-2 p2" >
                                     <div class="d-flex">
-                                        <h4>DESCRIZIONE</h4>
-                                    </div>
-                                   
-                                </div>
-                               
-
+                                        <h4>PARTI DICHIARATE</h4>
+                                            
+                                                <div *ngFor="let item of selectedParts">
+                                                    <p>{{ item.nomeParte }}</p>
+                                                    <p>{{ item.descrizione }}</p>
+                                                    <p>{{ item.note }}</p>
+                                                    <p>{{ item.quantityParts }}</p>
+                                                    
+                                                </div>
+                                            
+                                    </div>                                   
+                                </div>                            
                             </div>
                         </div>
                     </div>
@@ -187,3 +210,68 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade modal-above-navbar"  *ngIf="showModel" tabindex="-1" role="dialog" [ngClass]="{'show': showModel}" style="display: block;">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg"  >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Seleziona una Macchina</h5>
+          <button type="button" class="btn-close"  (click)="closeModal()" aria-label="Chiudi"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control"(ngModelChange)="onStatoChangein($event)"  [(ngModel)]="searchTerm" (input)="search()" placeholder="Cerca...">
+          <div *ngIf="!selectedMachine">
+            <ul>
+              <li *ngFor="let userMachine of filteredUserMachines">
+                <ul>
+                  <li *ngFor="let machine of userMachine.machines">
+                    <button class="btn btn-link"  (click)="selectMachine(machine)">{{ machine.nomeMacchina }}</button>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <div *ngIf="filteredUserMachines.length === 0 && searchTerm.length > 0" >
+                <p>Nessun risultato trovato per '{{ searchTerm }}'.</p>
+              </div>
+          </div>
+  
+          <div *ngIf="selectedMachine" >
+              <div class="d-flex m-2">
+                  <span>                      
+                      <h5>{{ selectedMachine.nomeMacchina }}</h5>
+                    <p>Marca: {{ selectedMachine.marca }}</p>
+                    <p>Stato: {{ selectedMachine.statoMacchina }}</p>
+                    <p>Descrizione: {{ selectedMachine.description }}</p>
+                </span>
+                <img [src]="selectedMachine.photo" alt="{{ selectedMachine.nomeMacchina }}" class="img-fluid modal-img ">
+            </div>
+  
+            <h6>Parti</h6>
+            <ul>
+              <li *ngFor="let part of selectedMachine.parts" (click)="selectPart(part)">
+                {{ part.nomeParte }} - {{ part.descrizione }}
+              </li>
+            </ul>
+  
+            <div *ngIf="selectedPart">
+              <h6>Dettagli Parte: {{ selectedPart.nomeParte }}</h6>
+              <p>Descrizione: {{ selectedPart.descrizione }}</p>
+              <p>Note: {{ selectedPart.note }}</p>
+              <p>Quantità: {{ selectedPart.quantityParts }}</p>
+  
+              <h6>Pezzi</h6>
+              <ul>
+                <li *ngFor="let piece of selectedPart.pieces">
+                  {{ piece.nomePezzo }} - {{ piece.descrizione }} ({{ piece.quantityPiece }})
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Chiudi</button>
+          <button type="button" class="btn btn-primary" (click)="addMacchina()">Salva cambiamenti</button>
+        </div>
+      </div>
+    </div>
+  </div>

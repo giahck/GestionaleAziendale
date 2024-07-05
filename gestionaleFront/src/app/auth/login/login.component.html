@@ -25,35 +25,37 @@
           <div class="text-center mb-3">
             <p>Sign up with:</p>
             <a href="https://www.facebook.com" target="_blank">
-              <button type="button" class="btn btn-dark btn-floating mx-1">
-              <i class="fab fa-facebook-f"></i>
-            </button>
+              <button type="button" class="btn btn-dark btn-floating mx-1" disabled>
+                <i class="fab fa-facebook-f"></i>
+              </button>
             </a>
             <a href="https://www.google.com" target="_blank">
-              <button type="button" class="btn btn-dark btn-floating mx-1">
-              <i class="fab fa-google"></i>
-            </button>
+              <button type="button" class="btn btn-dark btn-floating mx-1" disabled>
+                <i class="fab fa-google"></i>
+              </button>
             </a>
             <a href="https://www.twitter.com" target="_blank">
-              <button type="button" class="btn btn-dark btn-floating mx-1">
-              <i class="fab fa-twitter"></i>
-            </button>
+              <button type="button" class="btn btn-dark btn-floating mx-1" disabled>
+                <i class="fab fa-twitter"></i>
+              </button>
             </a>
             <a href="https://github.com/giahck/GestionaleAziendale" target="_blank">
-              <button type="button" class="btn btn-dark btn-floating mx-1">
-              <i class="fab fa-github"></i>
-            </button>
+              <button type="button" class="btn btn-dark btn-floating mx-1" disabled>
+                <i class="fab fa-github"></i>
+              </button>
             </a>
           </div>
 
           <p class="text-center">or:</p>
 
           <!-- Email input -->
-          <div class="mb-3 d-flex flex-column text-center">
+          <div class="mb-0 d-flex flex-column text-center ">
             <label for="loginEmail" class="form-label">Email</label>
             <input type="email" id="loginEmail" class="form-control w-50 mx-auto" formControlName="email" />
+            <div class="error-placeholder text-secondary">
             <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-secondary">
               Please enter a valid email address.
+            </div>
             </div>
           </div>
 
@@ -61,8 +63,10 @@
           <div class="mb-3 d-flex flex-column text-center">
             <label for="loginPassword" class="form-label">Password</label>
             <input type="password" id="loginPassword" class="form-control w-50 mx-auto" formControlName="password" />
-            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-secondary">
-              Password must be at least 6 characters long.
+            <div class="error-placeholder text-secondary">
+              <span *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                Password must be at least 6 characters long.
+              </span>
             </div>
           </div>
 
@@ -126,64 +130,76 @@
           <div class="col-md-6 d-flex flex-column">
 
           <!-- Name input -->
-          <div class="mb-3">
+          <div class="mb-0">
             <label for="registerName" class="form-label">Nome</label>
             <input type="text" id="registerName" class="form-control" formControlName="nome" />
+            <div class="error-placeholder text-secondary">
             <div *ngIf="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched" class="text-secondary">
               Please enter your name.
+            </div>
             </div>
           </div>
 
           <!-- Cognome input -->
-          <div class="mb-3">
+          <div class="mb-0">
             <label for="registerCognome" class="form-label">Cognome</label>
             <input type="text" id="registerCognome" class="form-control" formControlName="cognome" />
+           <div class="error-placeholder text-secondary">
             <div *ngIf="registerForm.get('cognome')?.invalid && registerForm.get('cognome')?.touched" class="text-secondary">
               Please enter your cognome.
+            </div>
             </div>
           </div>
 
           <!-- Email input -->
-          <div class="mb-3">
+          <div class="mb-0">
             <label for="registerEmail" class="form-label">Email</label>
             <input type="email" id="registerEmail" class="form-control" formControlName="email" />
+            <div class="error-placeholder text-secondary">
             <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-secondary">
               Please enter a valid email address.
             </div>
+            </div>
           </div>
   <!-- Codice Fiscale input -->
-  <div class="mb-3">
+  <div class="mb-0">
     <label for="registerCodiceFiscale" class="form-label">Codice Fiscale</label>
     <input type="text" id="registerCodiceFiscale" class="form-control" formControlName="codiceFiscale" />
+    <div class="error-placeholder text-secondary">
     <div *ngIf="registerForm.get('codiceFiscale')?.invalid && registerForm.get('codiceFiscale')?.touched" class="text-secondary">
       Il campo Codice Fiscale è richiesto.
     </div>
+    </div>
   </div>
           <!-- Password input -->
-          <div class="mb-3">
+          <div class="mb-0">
             <label for="registerPassword" class="form-label">Password</label>
             <input type="password" id="registerPassword" class="form-control" formControlName="password" />
+           <div class="error-placeholder text-secondary">
             <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-secondary">
               Password must be at least 6 characters long.
+            </div>
             </div>
           </div>
 
           <!-- Repeat Password input -->
-          <div class="mb-3">
+          <div class="mb-0">
             <label for="registerRepeatPassword" class="form-label">Repeat password</label>
             <input type="password" id="registerRepeatPassword" class="form-control" formControlName="repeatPassword" />
+           <div class="error-placeholder text-secondary">
             <div *ngIf="registerForm.get('repeatPassword')?.invalid && registerForm.get('repeatPassword')?.touched" class="text-secondary">
               Passwords must match.
+            </div>
             </div>
           </div>
                 <!-- Radio buttons for sesso selection -->
                  <div class="d-flex">
-                   <div class="form-check form-check-inline mb-3">
+                   <div class="form-check form-check-inline mb-0">
                      <input class="form-check-input" type="radio" id="male" name="sesso" formControlName="sesso" value="M" />
                      <label class="form-check-label" for="male">M</label>
                     </div>
                     
-                    <div class="form-check form-check-inline mb-3">
+                    <div class="form-check form-check-inline mb-0">
                       <input class="form-check-input" type="radio" id="female" name="sesso" formControlName="sesso" value="F" />
                       <label class="form-check-label" for="female">F</label>
                     </div>
@@ -192,57 +208,69 @@
         </div>
           <div class="col-md-6">
           <!-- Data di Nascita input -->
-          <div class="mb-3">
+          <div class="mb-0">
             <label for="registerDataDiNascita" class="form-label">Data di Nascita</label>
             <input type="date" id="registerDataDiNascita" class="form-control" formControlName="dataDiNascita" />
+           <div class="error-placeholder text-secondary">
             <div *ngIf="registerForm.get('dataDiNascita')?.invalid && registerForm.get('dataDiNascita')?.touched" class="text-secondary">
               Il campo Data di Nascita è richiesto.
             </div>
+            </div>
           </div>
           <!-- Comune di Nascita input -->
-          <div class="mb-3">
+          <div class="mb-0">
             <label for="registerComuneDiNascita" class="form-label">Comune di Nascita</label>
             <input type="text" id="registerComuneDiNascita" class="form-control" formControlName="comuneDiNascita" />
+           <div class="error-placeholder text-secondary">
             <div *ngIf="registerForm.get('comuneDiNascita')?.invalid && registerForm.get('comuneDiNascita')?.touched" class="text-secondary">
               Il campo Comune di Nascita è richiesto.
+            </div>
             </div>
           </div>
 
         
 
           <!-- Telefono input -->
-          <div class="mb-3">
+          <div class="mb-0">
             <label for="registerTelefono" class="form-label">Telefono</label>
             <input type="text" id="registerTelefono" class="form-control" formControlName="telefono" />
+           <div class="error-placeholder text-secondary">
             <div *ngIf="registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched" class="text-secondary">
               Il campo Telefono è richiesto.
+            </div>
             </div>
           </div>
 
           <!-- Indirizzo input -->
-          <div class="mb-3">
+          <div class="mb-0">
             <label for="registerIndirizzo" class="form-label">Indirizzo</label>
             <input type="text" id="registerIndirizzo" class="form-control" formControlName="indirizzo" />
+           <div class="error-placeholder text-secondary">
             <div *ngIf="registerForm.get('indirizzo')?.invalid && registerForm.get('indirizzo')?.touched" class="text-secondary">
               Il campo Indirizzo è richiesto.
+            </div>
             </div>
           </div>
 
           <!-- CAP input -->
-          <div class="mb-3">
+          <div class="mb-0">
             <label for="registerCAP" class="form-label">CAP</label>
             <input type="text" id="registerCAP" class="form-control" formControlName="cap" />
+            <div class="error-placeholder text-secondary">
             <div *ngIf="registerForm.get('cap')?.invalid && registerForm.get('cap')?.touched" class="text-secondary">
               Il campo CAP è richiesto.
+            </div>
             </div>
           </div>
 
           <!-- Provincia input -->
-          <div class="mb-3">
+          <div class="mb-0">
             <label for="registerProvincia" class="form-label">Provincia</label>
             <input type="text" id="registerProvincia" class="form-control" formControlName="provincia" />
+           <div class="error-placeholder text-secondary">
             <div *ngIf="registerForm.get('provincia')?.invalid && registerForm.get('provincia')?.touched" class="text-secondary">
               Il campo Provincia è richiesto.
+            </div>
             </div>
           </div>
           </div>

@@ -1,11 +1,11 @@
-<div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="showSuccessAlert">
+<div class="alert alert-success m-0 rounded-0 alert-dismissible fade show" role="alert" *ngIf="showSuccessAlert">
   Pezzi della macchina aggiunti con successo!
-  <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
+  <button type="button" class="btn-close m-0" aria-label="Close" (click)="closeAlert()"></button>
 </div>
 
-<div class="alert alert-danger alert-dismissible fade show alert-message" role="alert" *ngIf="showErrorAlert">
+<div class="alert m-0 alert-danger rounded-0  alert-dismissible fade show alert-message" role="alert" *ngIf="showErrorAlert">
     {{messageAlert}}
-  <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
+  <button type="button" class="btn-close m-0" aria-label="Close" (click)="closeAlert()"></button>
 </div>
 <div class="container-fluid">
     <h2 class="text-center">INSERISCI LE PARTI DELLA MACCHINA NEL SISTEMA</h2>
@@ -17,13 +17,13 @@
               <div class="row justify-content-center">
             <!-- nome macchina -->
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
-            <div class="d-flex flex-column text-center m-2">
+              <div class="d-flex flex-column text-center m-2">
                 <label for="nomeParte" class="form-label">Nome Parte della macchina</label>
                 <input type="text" class="form-control" id="nomeParte" formControlName="nomeParte" [ngClass]="{'is-invalid': addPezziForm.get('nomeParte')?.invalid && (addPezziForm.get('nomeParte')?.touched || isFormSubmitted), 'input-invalid': addPezziForm.get('nomeParte')?.invalid && (addPezziForm.get('nomeParte')?.touched || isFormSubmitted)}">
-                <div *ngIf="addPezziForm.get('nomeParte')?.invalid && isFormSubmitted" class="text-danger">
-                    Inserisci il nome del blocco
-                  </div>
-            </div>
+                <div [class]="addPezziForm.get('nomeParte')?.invalid && isFormSubmitted ? 'text-danger' : 'invisible-error'">
+                  Inserisci il nome del blocco
+                </div>
+              </div>
             </div>
             <!-- note -->
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
@@ -52,7 +52,7 @@
                 <label for="descrizione" class="form-label">Descrizione Della macchina</label>
                 <textarea class="form-control  textarea-small-font w-100 " id="descrizione" formControlName="descrizione" placeholder="Inserisci una descrizione della parte" 
                 [ngClass]="{'is-invalid': addPezziForm.get('descrizione')?.invalid && (addPezziForm.get('descrizione')?.touched || isFormSubmitted), 'input-invalid': addPezziForm.get('descrizione')?.invalid && (addPezziForm.get('descrizione')?.touched || isFormSubmitted)}"></textarea>
-                <div *ngIf="addPezziForm.get('descrizione')?.invalid && isFormSubmitted" class="text-danger">
+                <div *ngIf="addPezziForm.get('descrizione')?.invalid && isFormSubmitted" class="text-danger" >
                     Inserisci la descrizione
                 </div>
             </div>

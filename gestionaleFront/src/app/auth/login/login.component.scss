@@ -12,7 +12,7 @@
     width: 70%;
   }
   form {
-    background:  linear-gradient(50deg, rgb(73, 226, 43), orange);
+    background:  #f3dcd4;
     border: 1px solid rgba(0, 0, 0, 0.2); // Bordo sottile
     border-radius: 0.5rem;
     padding: 2rem;
@@ -35,9 +35,12 @@
   align-items: center;
   /* centra verticalmente */
 }
-
+.error-placeholder {
+  min-height: 30px; /* Altezza fissa per riservare spazio */
+  color: red;
+}
 .popup {
-  background-color: #b9752d;
+  background-color: #466a8b;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(88, 80, 73, 0.669);
@@ -59,11 +62,11 @@
 }*/
 
 a {
-  color: #773297;
+  color: #466a8b;
 }
 
 button:hover {
-  background-color: #471c5b;
+  background-color: #32506d;
   color: #ffffff;
 }
 /* button:active {
@@ -72,13 +75,13 @@ button:hover {
 } */
 
 a:hover {
-  color: #000;
+  color: #466a8b;
 
 }
 
 
-$nav-pills-link-active-bg: #81CF1E;
-$nav-pills-link-active-color: #773297;
+$nav-pills-link-active-bg: #f3dcd4;
+$nav-pills-link-active-color: #466a8b;
 
 .nav-pills {
 

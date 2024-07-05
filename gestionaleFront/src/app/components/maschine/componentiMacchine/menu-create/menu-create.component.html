@@ -153,7 +153,7 @@
                 <h4>Competenze</h4>
                 <div *ngFor="let keyUser of competenzeUser">
                   <div *ngIf="keyUser.machine.nomeMacchina==null&&keyUser.machine.nomeMacchina==null">
-                    <div class="border border-2 p-3 mb-3" [ngClass]="{'border-danger': selectedCompetenzaId === keyUser.idCompetenza}"  (click)="onCompetenzaClick(keyUser.idCompetenza)">
+                    <div class="border border-2 p-3 mb-3" [ngClass]="{'border-danger': competenzeId=== keyUser.idCompetenza}"  (click)="onCompetenzaClick(keyUser.idCompetenza)">
                       <p>Nome competenza: {{keyUser.nomeCompetenza}}</p>
                       <p>Descrizione competenza: {{keyUser.descrizione}}</p>
                       <p>Livello: {{keyUser.livello}}</p>

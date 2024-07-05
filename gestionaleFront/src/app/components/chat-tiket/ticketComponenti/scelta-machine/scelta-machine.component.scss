@@ -2,40 +2,38 @@
   
 
  .containe-selected  {
-  background: linear-gradient(135deg, rgba(132, 207, 75, 0.836), rgba(255, 166, 0, 0.393));
+  background: linear-gradient(135deg, #548B8B, rgba(121, 190, 192, 0.393));
   margin-bottom: 10px;
   border-radius: 15px;
-  box-shadow: -10px 1px 14px -1px rgba(139, 0, 0, 0.5);
+  box-shadow: -10px 1px 14px -1px rgba(78, 149, 151, 0.5);
   @media (max-width: 768px) {
-    box-shadow: -1px -12px 24px -1px rgba(203, 1, 1, 0.5);
+    box-shadow: -1px -12px 24px -1px rgba(35, 153, 182, 0.5);
   }
 }
  .containe-default {
-  background: linear-gradient(135deg, rgba(189, 137, 238, 0.836), rgba(255, 166, 0, 0.393));
+  background-color: #79c4c4;
   margin-bottom: 10px;
   border-radius: 15px;
-  box-shadow: 8px 0px 27px -6px rgba(139, 0, 0, 0.5);
+  box-shadow: 8px 0px 27px -6px rgba(0, 139, 139, 0.5);
   
 }
 .containe-selected-part{
-  
+  background: linear-gradient(135deg, #548B8B, rgba(121, 190, 192, 0.393));
   margin-bottom: 10px;
   border-radius: 15px;
-  box-shadow: 8px 5px 27px -7px rgba(139, 0, 0, 0.5);
+  box-shadow: -10px 1px 14px -1px rgba(78, 149, 151, 0.5);
   @media (max-width: 768px) {
-    box-shadow: 0px 16px 24px 4px rgba(95, 203, 1, 0.5);
+    box-shadow: 0px 16px 24px 4px rgba(109, 185, 199, 0.5);
   }
 }
 .conteiner-partClic{
-//  background: linear-gradient(135deg, rgba(132, 207, 75, 0.836), rgba(255, 166, 0, 0.393));
-  padding: 5px;
+  background-color: #5b9797;  padding: 5px;
   margin-bottom: 10px;
   border-radius: 15px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 .conteiner-partClicA{
-  background: linear-gradient(135deg, rgba(132, 207, 75, 0.836), rgba(255, 166, 0, 0.393));
-  padding: 5px;
+  background: linear-gradient(135deg, #548B8B, rgba(121, 190, 192, 0.393));  padding: 5px;
   margin-bottom: 10px;
   border-radius: 15px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -43,7 +41,7 @@
   .messagePriority {
 
     font-weight: bold; /* Rende il testo in grassetto */
-    color: #3e1984; /* Colore del testo */
+    color: #405d9c; /* Colore del testo */
   }
   .container-clickable {
 
