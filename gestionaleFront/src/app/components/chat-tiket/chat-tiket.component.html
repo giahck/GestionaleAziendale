@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <div class="d-flex justify-content-around mb-3">
         <h2>Chat Tiket</h2>
-        <button (click)="activePanel()" class="send-button">Problem</button>
+        <button *ngIf="user" (click)="activePanel()" class="send-button">Problem</button>
       </div>
 
       <div *ngIf="activeOpzion; else noMessages" class="chat-container" #chatContainer [ngClass]="{'active-opzion': activeOpzion}">

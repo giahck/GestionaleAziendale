@@ -1,17 +1,18 @@
-/* .text-danger {
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-  } */
+
 
 
 .tabs-container {
+  
   margin: auto;
-
-  @media screen and (min-width: 980px) {
+ margin-right: 70px;
+ /*  @media screen and (min-width: 980px) {
     width: 600px;
+  } */
+  .login-container{
+    width: 70%;
   }
-
   form {
+    background:  #f3dcd4;
     border: 1px solid rgba(0, 0, 0, 0.2); // Bordo sottile
     border-radius: 0.5rem;
     padding: 2rem;
@@ -34,9 +35,12 @@
   align-items: center;
   /* centra verticalmente */
 }
-
+.error-placeholder {
+  min-height: 30px; /* Altezza fissa per riservare spazio */
+  color: red;
+}
 .popup {
-  background-color: #be972a;
+  background-color: #466a8b;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(88, 80, 73, 0.669);
@@ -52,32 +56,32 @@
   margin-bottom: 20px;
 }
 
-button {
+/* button {
   background-color: #dd9b5d;
   color: #800c0c;
-}
+}*/
 
 a {
-  color: #991b1b;
+  color: #466a8b;
 }
 
 button:hover {
-  background-color: #911010;
+  background-color: #32506d;
   color: #ffffff;
 }
-button:active {
+/* button:active {
   background-color: #991b1b;
   color: #dd9b5d;
-}
+} */
 
 a:hover {
-  color: #000;
+  color: #466a8b;
 
 }
 
 
-$nav-pills-link-active-bg: #dd9b5d;
-$nav-pills-link-active-color: #c23a3a;
+$nav-pills-link-active-bg: #f3dcd4;
+$nav-pills-link-active-color: #466a8b;
 
 .nav-pills {
 

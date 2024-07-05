@@ -15,6 +15,8 @@ import { Register } from '../models/register.interface';
 import { Router } from '@angular/router';
 import { Competenze } from '../models/competenze.interface';
 import { StatoRegister } from '../models/stato-register.interface';
+import { response } from 'express';
+import { UsersService } from '../service/users.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +25,7 @@ export class AuthService {
   //private stateKey = 'authState';
   private state = new BehaviorSubject<StatoRegister>({
     popupVisible: false,
-    competenze: false,
+    //competenze: false,
     id: null,
   });
   state$: Observable<StatoRegister> = this.state.asObservable();
@@ -32,24 +34,23 @@ export class AuthService {
   user$ = this.authSub.asObservable();
   jwtHelper = new JwtHelperService();
   timeOut: any;
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router,private srvUser:UsersService) {}
 
   // Setter method
   setState(newState: StatoRegister) {
-    console.log('New state:', newState);
+   // console.log('New state:', newState);
     this.state.next(newState);
   }
 
   // Getter method
   getState(): StatoRegister {
-    console.log('Current state:', this.state.getValue());
+    //console.log('Current state:', this.state.getValue());
     return this.state.getValue();
   }
-  competenze(data: Competenze) {
+  competenze(data: Competenze): Observable<Competenze>{
     ///competenze/register
-    return this.http.post(`${this.apiURL}competenze/add`, data, {
-      responseType: 'text',
-    });
+    return this.http.post<Competenze>(`${this.apiURL}competenze/add`,data).pipe(
+      tap((response: Competenze) => {this.srvUser.getCompetenzeUser(); this.srvUser.getUserDati()}),)
   }
 
   getEmailConfirmedState(registerForm: Register): Observable<boolean> {
@@ -69,6 +70,7 @@ export class AuthService {
               email: registerForm.email,
               password: registerForm.password,
               rememberMe: false,
+              
             }).subscribe();
           }
         }),
@@ -79,7 +81,7 @@ export class AuthService {
       );
   }
   register(data: Register) {
-    console.log('data: ', data);
+    //console.log('data: ', data);
     return this.http
       .post(`${this.apiURL}auth/register`, data, { responseType: 'text' })
       .pipe(
@@ -99,10 +101,11 @@ export class AuthService {
           localStorage.setItem('user', JSON.stringify(dataResponse));
           this.state.next({
             popupVisible: false, // Hide any popups after login
-            competenze: true, // Assuming user has certain competencies after login
+          //  competenze: true, // Assuming user has certain competencies after login
             id: dataResponse.id // Assigning userId from dataResponse
           });
           
+          this.router.navigate(['/']);
           this.autoLogout(dataResponse);
         }
         this.authSub.next(dataResponse);

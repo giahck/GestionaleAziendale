@@ -2,6 +2,8 @@ package GestionaleAziendale.GesionaleBack.controller.machineController;
 
 import GestionaleAziendale.GesionaleBack.dto.dtoMachine.GenericMachineDto;
 import GestionaleAziendale.GesionaleBack.dto.queryDto.ListMaschinDto;
+import GestionaleAziendale.GesionaleBack.dto.queryDto.MachineGenericStatusDto;
+import GestionaleAziendale.GesionaleBack.dto.tiket.MachineStatusInfo;
 import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
 import GestionaleAziendale.GesionaleBack.entity.machine.genericMachine.MachineGeneric;
 import GestionaleAziendale.GesionaleBack.service.serviceMachine.GenericMachineService;
@@ -12,11 +14,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping("/machine")
-
 public class MachineController {
 
     @Autowired
@@ -43,6 +46,13 @@ public class MachineController {
     public List<ListMaschinDto> getAllMachines() {
         return genericMachineService.getAllMachinesDetails();
     }
+    @GetMapping("/status")
+    @PreAuthorize("hasAnyAuthority('MANAGER','DIPENDENTE')")
+    public List<MachineGenericStatusDto> getMachineStatus(Principal principal) throws IOException {
+        return genericMachineService.getMachineStatus(principal);
+    }
+
+
 
 
 }

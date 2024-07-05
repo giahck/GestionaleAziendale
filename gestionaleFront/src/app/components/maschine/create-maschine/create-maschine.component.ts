@@ -17,6 +17,7 @@ export class CreateMaschineComponent implements OnInit,OnDestroy{
   showAddMachine: boolean = false;
   showPezzi: boolean = false;
   showParti: boolean = false;
+  showCompetenze: boolean = false;
   selectedMachineId: Machine | null = null;
   partSelectedId: Part | null = null;
   constructor(private machineSrv: MachinsService) { }
@@ -64,11 +65,13 @@ export class CreateMaschineComponent implements OnInit,OnDestroy{
     this.showPezzi = !this.showPezzi;
     this.showAddMachine = false;
     this.showParti= false
+    this.showCompetenze = false;
   }
   addPezzi(){
     this.showPezzi = false;
     this.showAddMachine = false;
     this.showParti= !this.showParti
+    this.showCompetenze = false;
   }
  
   addMachine() {
@@ -76,6 +79,13 @@ export class CreateMaschineComponent implements OnInit,OnDestroy{
     this.showAddMachine = !this.showAddMachine;
     this.showPezzi = false;
     this.showParti= false
+    this.showCompetenze = false;
+  }
+  addCompetenze(){
+    this.showPezzi = false;
+    this.showAddMachine = false;
+    this.showParti= false
+    this.showCompetenze = !this.showCompetenze;
   }
   machineSelected(id: Machine | null) {
     this.selectedMachineId = id;

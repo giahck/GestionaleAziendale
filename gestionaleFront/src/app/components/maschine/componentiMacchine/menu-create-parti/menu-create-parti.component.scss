@@ -6,11 +6,25 @@
     pointer-events: none; /* Disabilita gli eventi del mouse sugli elementi sottostanti */
   }
   .page-under-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: absolute;
+   
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Colore scuro con trasparenza */
     z-index: 1040; /* Z-index inferiore rispetto al modal ma superiore agli altri contenuti */
   }
+  .custom-width {
+    width: 100%; /* o qualsiasi altra larghezza desiderata */
+  }
+.container-fluid{
+  background:  #f3dcd4;
+  //   border: 1px solid rgba(0, 0, 0, 0.2); // Bordo sottile
+     border-bottom-left-radius: 0.5rem;
+     border-bottom-right-radius: 0.5rem;
+     padding: 2rem;
+}
+.error-message {
+  height: 20px; /* Altezza fissa per riservare spazio */
+  color: red;
+  display: none; /* Nasconde il messaggio per impostazione predefinita */
+}

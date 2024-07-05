@@ -33,6 +33,7 @@ public class GenericMachineDto {
     private String photo;
     private List<Integer> partsId;
     private int competenzaId;
+    private int usersId;
 
 
 }

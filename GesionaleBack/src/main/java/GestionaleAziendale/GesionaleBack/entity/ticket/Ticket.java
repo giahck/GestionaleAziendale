@@ -1,17 +1,22 @@
 package GestionaleAziendale.GesionaleBack.entity.ticket;
 
+import GestionaleAziendale.GesionaleBack.entity.machine.Machine;
 import GestionaleAziendale.GesionaleBack.entity.machine.Parts;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Users;
 import GestionaleAziendale.GesionaleBack.enums.PriorityTicketEnum;
 import GestionaleAziendale.GesionaleBack.enums.StatoTicketEnum;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
-@Table(name = "tickets")
+@Table(name = "ticket")
+@JsonIgnoreProperties({"user"})
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +33,19 @@ public class Ticket {
     private LocalDateTime dataRisposta;
     private LocalDateTime dataUltimaModifica;
 
-    @ManyToOne
-    @JoinColumn(name = "id_parts")
-    private Parts parts;
+    @ManyToMany
+    @JoinTable(
+            name = "ticket_part",
+            joinColumns = @JoinColumn(name = "ticket_id"),
+            inverseJoinColumns = @JoinColumn(name = "part_id")
+    )
+    @JsonManagedReference
+    private List<Parts> parts;
+
 
     @ManyToOne
     @JoinColumn(name = "id_user")
+    @JsonManagedReference
     private Users user;
 
 }

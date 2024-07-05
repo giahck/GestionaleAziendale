@@ -1,72 +1,78 @@
+import { UsersService } from './../../service/users.service';
 import { MachinaCompetenza } from './../../models/machin/machina-competenza.interface';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
-import { Router } from '@angular/router';
 import { MachinsService } from '../../service/machins.service';
+import { Subscription } from 'rxjs';
+import { UserDati } from '../../models/user-dati.interface';
+import { log } from 'console';
 @Component({
   selector: 'app-competenze',
   templateUrl: './competenze.component.html',
   styleUrl: './competenze.component.scss',
 })
-export class CompetenzeComponent implements OnInit {
+export class CompetenzeComponent implements OnInit,OnDestroy {
   showSuccessAlert = false;
   showErrorAlert = false;
   macchine!: MachinaCompetenza[];
   competenzaForm!: FormGroup;
+  usersSubscription!:Subscription;
+  userDati: UserDati[] = [];
  // usersSubscription!:Subscription;
  // state!: StatoRegister;
   constructor(
     private fb: FormBuilder,
     private authSrv: AuthService,
-    private router: Router,
-    private maschine:MachinsService
+    private maschine:MachinsService,
+    private usersSrv: UsersService,
   ) {}
-  skip(){
-    this.authSrv.setState({
-      competenze: false,
-      popupVisible: false,
-      id: null
-    });
-  }
+ 
   ngOnInit(): void {
     this.maschine.getMachine().subscribe(
       (machines: MachinaCompetenza[]) => {
         this.macchine = machines;
+      //  console.log('Macchine:', this.macchine);
       },
       (error) => {
         this.handleError(error);
       }
     );
-
+      this.usersSubscription=this.usersSrv.getUserDati$().subscribe((userDati:UserDati[]) => {
+      this.userDati = userDati;
+     //   console.log('UserDati:', userDati);
+      }
+    );
     this.competenzaForm = this.fb.group({
       nomeCompetenza: ['', Validators.required],
       descrizione: ['', Validators.required],
-      machineId: ['', Validators.required],
+      machineId: ['',],
       livello: [, Validators.required],
+      userId: [, ],
     });
   }
+  ngOnDestroy():void{
+    this.usersSubscription.unsubscribe();
+  }
   onCompetenzaSubmit(): void {
-    const userString = localStorage.getItem('user');
     console.log('Dati della competenza da inviare:', this.competenzaForm.value);
-    if (this.competenzaForm.valid&&userString) {
-      const userObject = JSON.parse(userString);
-      const userId = userObject.id;
+    if (this.competenzaForm.valid) {
       const formData = { ...this.competenzaForm.value };
-      formData.idRisorsa = Number(formData.idRisorsa);
+      //formData.machineId = Number(formData.machineId);
       formData.livello = Number(formData.livello);
-      formData.usersId = [userId];
+      if (formData.userId)
+      formData.usersId = [Number(formData.userId)];
       console.log('Dati della competenza da inviare:', formData);
 
-      console.log('Dati della competenza da inviare:', formData);
       //this.popupVisible = true;
-      // this.competenzaForm.reset();
+       this.competenzaForm.reset();
       this.authSrv.competenze(formData).subscribe(
         (response) => {
           if (response) {
+         //   console.log('Competenza aggiunta:', response);
             this.competenzaForm.reset();
             this.competenzaForm.patchValue({
-              idRisorsa: '',
+              machineId: '',
               livello: '',
             });
           }
@@ -83,12 +89,13 @@ export class CompetenzeComponent implements OnInit {
         }
       );
     } else {
+      this.showErrorAlert = true;
+      setTimeout(() => (this.showErrorAlert = false), 5000);
       this.competenzaForm.markAllAsTouched();
     }
   }
   handleError(error: any): void {
-    // Qui puoi gestire diversi tipi di errori in modi diversi
-    // Ad esempio, potresti voler mostrare un messaggio all'utente
+ 
     console.error('Si è verificato un errore:', error);
   }
   closeAlert() {

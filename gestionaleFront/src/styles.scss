@@ -10,25 +10,42 @@
     box-sizing: border-box;
 }
 
-body {
+body, html {
     position: relative;
     font-family: "Nunito", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
-  background: #229147;
+    
+
+    background: #39b0b7!important;
+
+ 
 }
 
-$text: #7209d4;
-$background: #681b8b;
-$primary: #96C919;
-$secondary: #A21547;
-$accent: #574f4f;
-$warning: #6d7312;
+$text: #466a8b;
+$background: #43688a;
+$primary: #448692;
+$secondary: #fd0000;
+$accent: #0e8e92;
+$warning: #3a1273;
 $pkmn-red: $accent;
 
+
+$text-colors: (
+  "primary": #ffffff, 
+  "secondary": #000000, 
+  "accent": #000000,
+  "dark": #ffffff,
+  "light": #000000,
+  "danger": #000000,
+  "warning": #ffffff,
+  "success": #000000,
+  "info": #ffffff
+) !default;
+
 $custom-colors: (
-  "primary": $primary,
+  "primary": lighten($primary, 20%),
   "secondary": $secondary,
   "accent": $accent,
   "dark": $background,
@@ -37,6 +54,21 @@ $custom-colors: (
   "warning": lighten($warning, 20%),
   "success": $accent,
   "info": $secondary
-  ) !default;
-  $theme-colors: map-merge($theme-colors, $custom-colors);
+) !default;
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+// Crea un mixin per applicare i colori di sfondo e testo
+@mixin apply-colors($color-name) {
+  $bg-color: map-get($custom-colors, $color-name);
+  $text-color: map-get($text-colors, $color-name);
+  background-color: $bg-color;
+  color: $text-color;
+}
+
+// Esempio di utilizzo del mixin
+.button-primary {
+  @include apply-colors("primary");
+}
   @import "../node_modules/bootstrap/scss/bootstrap";
+  

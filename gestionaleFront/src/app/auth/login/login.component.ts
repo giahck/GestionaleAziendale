@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
 
     this.authSrv.state$.subscribe((state) => {
       this.state = state;
-      console.log('State:', this.state);
+     // console.log('State:', this.state);
     });
     this.checkRememberMe();
   }
@@ -81,9 +81,9 @@ export class LoginComponent implements OnInit {
     }
   }
   onRegisterSubmit(): void {
-    console.log('Register form value:', this.registerForm.value);
+    //console.log('Register form value:', this.registerForm.value);
     if (this.registerForm.valid) {
-      console.log('Register form value: ', this.registerForm.value);
+   //   console.log('Register form value: ', this.registerForm.value);
      // this.popupVisible = true;
      this.errorMessage = 'Esegui la verifica dopo la registrazione clicca qui';
       this.state.popupVisible = true; 
@@ -97,6 +97,8 @@ export class LoginComponent implements OnInit {
        //  this.id = response;
         },
         (error) => {
+          this.registerForm.reset();
+          this.state.popupVisible = false; 
           this.handleError(error);
         }
       );
@@ -118,16 +120,17 @@ export class LoginComponent implements OnInit {
 
   
   checkEmailConfirmedState(): void {
+   // this.colesePP=true;
     this.authSrv.getEmailConfirmedState(this.registerForm.value).subscribe(
       (confirmed) => {
         if(confirmed===true){
           this.validazione=false;
-          this.colesePP=true;
-          this.state.competenze = confirmed;
+         /*  this.state.competenze = confirmed; */
        this.state.popupVisible = false;
-        this.authSrv.setState(this.state);
+      //  this.authSrv.setState(this.state);
+         
       }else{
-          this.state.competenze = confirmed;
+          /* this.state.competenze = confirmed; */
           this.state.popupVisible = true;
         } 
       },
@@ -138,8 +141,6 @@ export class LoginComponent implements OnInit {
     );
   }
   handleError(error: any): void {
-    // Qui puoi gestire diversi tipi di errori in modi diversi
-    // Ad esempio, potresti voler mostrare un messaggio all'utente
     console.error('Si è verificato un errore:', error.message);
     this.errorMessage = error.message; // Salva il messaggio di errore
         

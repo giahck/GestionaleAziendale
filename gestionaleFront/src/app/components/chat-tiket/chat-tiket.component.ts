@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TiketService } from '../../service/tiket.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { log } from 'console';
+import { UsersService } from '../../service/users.service';
 @Component({
   selector: 'app-chat-tiket',
   templateUrl: './chat-tiket.component.html',
@@ -19,15 +20,16 @@ import { log } from 'console';
   
 })
 export class ChatTiketComponent implements OnInit,OnDestroy{
-  activeOpzion: boolean = false;
+  activeOpzion: boolean = true;
   requestMessage: string = '';
   sendeMessage: string = '';
   descrizione: string = '';
+  user:boolean = false;
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
   message:ChatGptResponse[]=[];
   @ViewChild('messageInput') messageInput!: ElementRef;
   @ViewChild('messageTextarea') messageTextarea!: ElementRef<HTMLTextAreaElement>;
-  constructor(private tiketService: TiketService, private cdr: ChangeDetectorRef) {}
+  constructor(private tiketService: TiketService, private cdr: ChangeDetectorRef,private userSrv:UsersService ) {}
 
   ngAfterViewChecked() {
     this.scrollToBottom();
@@ -49,6 +51,10 @@ export class ChatTiketComponent implements OnInit,OnDestroy{
 
   ngOnInit(): void {
     this.tiketService.Connect();
+     const user= this.userSrv.getUserIdFromLocalStorage();
+      if (user.ruoloId[0] === 3 || user.ruoloId[0] === 5) {
+        this.user = true;
+      }
     this.tiketService.getMess$().subscribe((newMessages: ChatGptResponse[]) => {
       this.message = newMessages;
      // this.cdr.detectChanges();
@@ -77,7 +83,7 @@ export class ChatTiketComponent implements OnInit,OnDestroy{
     this.descrizione = nuovaDescrizione;
   }
   sendTextareaMessage(descrizione: string){
-
+    this.activeOpzion = !this.activeOpzion;
       const message = { content: descrizione, from: 'User' };
     this.tiketService.sendMessage(message);
     const userMessage: UserMessage = { content: descrizione };

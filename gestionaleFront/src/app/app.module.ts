@@ -34,7 +34,7 @@ import { BodyComponent } from './components/nav-bar/body/body.component';
     HomeComponent,
     NavBarComponent,
     EmailVerifiedComponent,
-    CompetenzeComponent,
+    /* CompetenzeComponent, */
     SettingComponent,
     SublevelMenuComponent,
     BodyComponent,

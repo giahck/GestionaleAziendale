@@ -1,1 +1,36 @@
-<p>status-maschine works!</p>
+<div class="container-fluid">
+    <div class="row d-flex">
+        <div *ngFor="let status of machineStatus" class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
+            <div class="d-flex">
+                <div class="w-100">
+                    <div class="card mb-3 rounded-2">
+                        <div class="row g-0">
+                            <div class="w-100 text-center">
+                                <p class="m-0" [ngClass]="{
+                                    'stato-attiva': status.statoMaschine === 'ATTIVA',
+                                    'stato-guasta': status.statoMaschine === 'GUASTA',
+                                    'stato-manutenzione': status.statoMaschine === 'MANUTENZIONE',
+                                    'stato-inattiva': status.statoMaschine === 'INATTIVA'
+                                }">{{status.statoMaschine}}</p>
+                            </div>
+                            <div class="col-md-4 d-flex flex-column justify-content-end"> 
+                                <div class="image-container">
+                                    <img src="{{status.photo}}" class="img-fluid machine-image" alt="imgMachine">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body p-1">
+                                    <h5 class="card-title">{{status.nomeMacchina}}</h5>
+                                    <p class="card-text">{{status.description}}</p>
+                                    <p class="card-text"><small class="text-body-secondary">{{status.marca}} {{status.modello}}</small>
+                                        <i class="fas fa-file-pdf pdf-icon" (click)="downloadPdf(status.pdfContent)"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

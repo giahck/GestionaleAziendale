@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import SockJS from 'sockjs-client';
 import { Message, Stomp } from '@stomp/stompjs';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, Subject, tap, throwError } from 'rxjs';
 import {  ChatGptResponse } from '../models/chat-bot-message.interface';
 import { log } from 'console';
+import { Ticket } from '../models/tiket-add.interface';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 
 @Injectable({
@@ -16,7 +18,17 @@ export class TiketService  {
   apiUrl=environment.apiURL;
   private responseSubject = new BehaviorSubject<ChatGptResponse[]>([]);
   Mess$: Observable<ChatGptResponse[]> = this.responseSubject.asObservable();
- 
+  constructor(private http:HttpClient) { }
+  postTiketAdd(parti: FormData): Observable<Ticket[]> {
+    return this.http.post<Ticket[]>(`${this.apiUrl}ticket/add`, parti).pipe(
+      catchError(this.handleError),
+      tap((machine: Ticket[]) => {
+        console.log("Parti aggiunte:", machine);
+       })
+    );
+  }
+
+
   getMess$(): Observable<ChatGptResponse[]> {
     return this.Mess$;
   }
@@ -36,9 +48,9 @@ export class TiketService  {
     this.stompClient = Stomp.over(socket);
 
     this.stompClient.connect({}, (frame:any) => {
-      console.log("Connesso al WebSocket:", frame);
+      //console.log("Connesso al WebSocket:", frame);
       this.stompClient.subscribe(this.topic, (message:any) => {
-        console.log("Messaggio ricevuto:",);
+      //  console.log("Messaggio ricevuto:",);
         if (message.body) {
          // const parsedMessage = JSON.parse(message.body);
           const parsedMessage = JSON.parse(message.body) as ChatGptResponse;
@@ -72,6 +84,23 @@ export class TiketService  {
             console.error("WebSocket connection closed with error:", error);
         });
     }
+}
+private handleError(error: HttpErrorResponse) {
+  let errorMessage = 'Si è verificato un errore sconosciuto!';
+  if (error.error instanceof Error) {
+    // Errore del client-side o di rete
+    console.error('Errore:', error.error.message);
+    errorMessage = `Errore del client-side o di rete: ${error.error.message}`;
+  } else {
+    // Errore dal lato del server
+    console.error(
+      `Codice Errore dal lato server ${error.status}, ` +
+      `messaggio di errore: ${error.message}`
+    );
+    errorMessage = `Errore dal lato server: ${error.status}, messaggio di errore: ${error.message}`;
+  }
+  // Ritorna un observable con un messaggio di errore utile per il consumatore del servizio
+  return throwError(errorMessage);
 }
 }
 

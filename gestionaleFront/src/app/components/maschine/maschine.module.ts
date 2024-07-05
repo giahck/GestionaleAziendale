@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { MenuCreatePezziComponent } from './componentiMacchine/menu-create-pezzi/menu-create-pezzi.component';
 import { MenuCreatePartiComponent } from './componentiMacchine/menu-create-parti/menu-create-parti.component';
+import { CompetenzeComponent } from '../competenze/competenze.component';
 
 
 
@@ -23,6 +24,7 @@ import { MenuCreatePartiComponent } from './componentiMacchine/menu-create-parti
     MacchinaComponent,
     MenuCreatePezziComponent,
     MenuCreatePartiComponent,
+    CompetenzeComponent,
   /*   PartiComponent, */
   
 ],

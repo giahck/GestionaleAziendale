@@ -44,15 +44,10 @@ public class Config {
         httpSecurity.sessionManagement(http -> http.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.cors(Customizer.withDefaults());
 
-        //permette l'accesso a tutti dei servizi con endpoint /api/users e metodi get (naturalmente dopo l'autenticazione)
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/auth/**").permitAll());
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/users/**").permitAll());
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/ruolo/**").permitAll());
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/competenze/**").permitAll());
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/machine/**").permitAll());
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/chat/**").permitAll());
-        //nega l'accesso a qualsiasi servizio che non sia get e path /api/users
-        httpSecurity.authorizeHttpRequests(http -> http.requestMatchers("/**").denyAll());
+        httpSecurity.authorizeHttpRequests(http -> http
+                .requestMatchers("/auth/**", "/users/**", "/ruolo/**", "/competenze/**", "/machine/**", "/chat/**", "/machineStatus/**", "/ticket/**").permitAll()
+                .requestMatchers("/**").denyAll()
+        );
 
         return httpSecurity.build();
     }

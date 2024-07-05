@@ -5,6 +5,14 @@ export interface MachinaCompetenza {
     modello: string;
     description: string;
     competenza?: Competenza | null;
+    
+    utenti?: UserNameDto[];
+}
+
+export interface UserNameDto {
+  id: number;
+  nome: string;
+  cognome: string;
   }
   
   interface Competenza {

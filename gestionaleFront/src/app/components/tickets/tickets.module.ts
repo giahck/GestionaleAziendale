@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TicketsComponent } from './tickets.component';
 import { CreateTicketsComponent } from './create-tickets/create-tickets.component';
 import { TiketsRouterModule } from './tikets-router.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +14,9 @@ import { TiketsRouterModule } from './tikets-router.module';
   ],
   imports: [
     CommonModule,
-    TiketsRouterModule
+    TiketsRouterModule,
+    ReactiveFormsModule,
+    FormsModule
 
   ]
 })

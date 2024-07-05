@@ -1,11 +1,11 @@
-<div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="showSuccessAlert">
+<div class="alert alert-success m-0 rounded-0 alert-dismissible fade show" role="alert" *ngIf="showSuccessAlert">
   Pezzi della macchina aggiunti con successo!
-  <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
+  <button type="button" class="btn-close m-0" aria-label="Close" (click)="closeAlert()"></button>
 </div>
 
-<div class="alert alert-danger alert-dismissible fade show alert-message" role="alert" *ngIf="showErrorAlert">
+<div class="alert m-0 alert-danger rounded-0  alert-dismissible fade show alert-message" role="alert" *ngIf="showErrorAlert">
     {{messageAlert}}
-  <button type="button" class="btn-close" aria-label="Close" (click)="closeAlert()"></button>
+  <button type="button" class="btn-close m-0" aria-label="Close" (click)="closeAlert()"></button>
 </div>
 <div class="container-fluid">
     <h2 class="text-center">INSERISCI LE PARTI DELLA MACCHINA NEL SISTEMA</h2>
@@ -13,15 +13,20 @@
       <!-- <div class="col-12 border mt-2 mb-2"> -->
         <form [formGroup]="addPezziForm" (ngSubmit)="onPezziSubmit()">
           <div class="d-flex justify-content-center align-content-center ">
+            <div class="container">
+              <div class="row justify-content-center">
             <!-- nome macchina -->
-            <div class="d-flex flex-column text-center m-2">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
+              <div class="d-flex flex-column text-center m-2">
                 <label for="nomeParte" class="form-label">Nome Parte della macchina</label>
                 <input type="text" class="form-control" id="nomeParte" formControlName="nomeParte" [ngClass]="{'is-invalid': addPezziForm.get('nomeParte')?.invalid && (addPezziForm.get('nomeParte')?.touched || isFormSubmitted), 'input-invalid': addPezziForm.get('nomeParte')?.invalid && (addPezziForm.get('nomeParte')?.touched || isFormSubmitted)}">
-                <div *ngIf="addPezziForm.get('nomeParte')?.invalid && isFormSubmitted" class="text-danger">
-                    Inserisci il nome del blocco
-                  </div>
+                <div [class]="addPezziForm.get('nomeParte')?.invalid && isFormSubmitted ? 'text-danger' : 'invisible-error'">
+                  Inserisci il nome del blocco
+                </div>
+              </div>
             </div>
             <!-- note -->
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"> 
             <div class="d-flex flex-column text-center m-2">
               <label for="note" class="form-label">Nota della macchina</label>
               <input type="text" class="form-control" id="note" formControlName="note" [ngClass]="{'is-invalid': addPezziForm.get('note')?.invalid && (addPezziForm.get('note')?.touched || isFormSubmitted), 'input-invalid': addPezziForm.get('note')?.invalid && (addPezziForm.get('note')?.touched || isFormSubmitted)}">
@@ -29,23 +34,25 @@
                   Inserisci la note
                 </div>
           </div>
-          <!-- Quantità dei pezzi -->
-            <div class="d-flex flex-column text-center m-2">
-            <label for="quantityParts" class="form-label">Quantità di pezzi</label>
-            <input type="number" min="1" value="1" class="form-control form-control-sm" id="quantityParts" formControlName="quantityParts" style="width: 75px; height: calc(1.5em + .75rem + 2px);" [ngClass]="{'is-invalid': addPezziForm.get('quantityParts')?.invalid && (addPezziForm.get('quantityParts')?.touched || isFormSubmitted), 'input-invalid': addPezziForm.get('quantityParts')?.invalid && (addPezziForm.get('quantityParts')?.touched || isFormSubmitted)}">
-            <div *ngIf="addPezziForm.get('quantityParts')?.invalid && isFormSubmitted" class="text-danger">
-                Inserisci la quantità di pezzi
             </div>
+          <!-- Quantità dei pezzi -->
+          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center align-items-center"> 
+            <div class="d-flex flex-column text-center m-2 ">
+              <label for="quantityParts" class="form-label">Q<sup>N</sup></label>
+              <input type="number" min="1" value="1" class="form-control form-control-sm text-center justify-content-center" id="quantityParts" formControlName="quantityParts" style="width: 75px; height: calc(1.5em + .75rem + 2px);" [ngClass]="{'is-invalid': addPezziForm.get('quantityParts')?.invalid && (addPezziForm.get('quantityParts')?.touched || isFormSubmitted), 'input-invalid': addPezziForm.get('quantityParts')?.invalid && (addPezziForm.get('quantityParts')?.touched || isFormSubmitted)}">
+              <div *ngIf="addPezziForm.get('quantityParts')?.invalid && isFormSubmitted" class="text-danger">
+                Inserisci la quantità di pezzi
+              </div>
             </div>
           </div>
-
+            </div>
           <div class="d-flex justify-content-center">
           <!-- descrizione -->
             <div class="custom-width d-flex flex-column text-center m-2">
                 <label for="descrizione" class="form-label">Descrizione Della macchina</label>
                 <textarea class="form-control  textarea-small-font w-100 " id="descrizione" formControlName="descrizione" placeholder="Inserisci una descrizione della parte" 
                 [ngClass]="{'is-invalid': addPezziForm.get('descrizione')?.invalid && (addPezziForm.get('descrizione')?.touched || isFormSubmitted), 'input-invalid': addPezziForm.get('descrizione')?.invalid && (addPezziForm.get('descrizione')?.touched || isFormSubmitted)}"></textarea>
-                <div *ngIf="addPezziForm.get('descrizione')?.invalid && isFormSubmitted" class="text-danger">
+                <div *ngIf="addPezziForm.get('descrizione')?.invalid && isFormSubmitted" class="text-danger" >
                     Inserisci la descrizione
                 </div>
             </div>
@@ -53,12 +60,13 @@
            
           <div class="d-flex align-items-center">
             <button type="submit" class="btn btn-dark p-1 m-2 btn-size-custom">
-              Aggiungi Pezzo
+              Aggiungi Parte
             </button>
             <button *ngIf="parti.length>0" type="button" (click)="addPartSrv()" class="btn btn-dark p-1 m-2 btn-size-custom">
               Riepilogo Add
             </button>
-            
+          </div>
+          </div>
           </div>
           
         </div>

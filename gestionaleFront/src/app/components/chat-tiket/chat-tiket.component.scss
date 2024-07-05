@@ -1,22 +1,22 @@
 .container-fluid.PrincipalContainer{
-    background: linear-gradient(135deg, blueviolet, orange);
+    background: #f3dcd4;
     padding: 20px;
     border-radius: 15px;
    // box-shadow: 0 4px 6px rgba(0, 150, 0.3, 0.5);
-    box-shadow: 0 4px 10px rgba(139, 0, 0, 0.5);
+    box-shadow: 0 4px 10px rgba(72, 119, 124, 0.5);
 }
 .chat-container {
-    height: 55vh; 
+    height: 65vh; 
     overflow-y: scroll;
     scrollbar-width: none;  
     display: flex;
     flex-direction: column;
 }
 .blocco-input{
-  height: 15vh;
+  height: 13vh;
 }
 .chat-container.active-opzion {
-  height: 65vh; /* Aumenta l'altezza quando activeOpzion è attivo */
+  height: 73vh; /* Aumenta l'altezza quando activeOpzion è attivo */
 }
 .blocco-input.active-opzion {
   height: 5vh; /* Riduci l'altezza quando activeOpzion è attivo */
@@ -28,10 +28,10 @@
   border: 1px solid #ccc;
   border-radius: 20px;
   margin-right: 10px;
-  width: 70%; /* Prende tutta la larghezza disponibile */
-  min-height: 40px; /* Altezza minima per renderlo simile a un textarea */
-  resize: none; /* Impedisce il ridimensionamento */
-  overflow-y: auto; /* Aggiunge lo scorrimento verticale */
+  width: 70%; 
+  min-height: 40px; 
+  resize: none;
+  overflow-y: auto; 
 }
   .message {
     width: 75%;
@@ -86,18 +86,19 @@
   
   .send-button {
     
-    background: linear-gradient(135deg, rgba(137, 43, 226, 0.457), rgba(255, 166, 0, 0.393));
+    background:#466a8b;
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
   }
   
   .send-button:hover {
    // background-color: #0d82d1;
-   box-shadow: 0 4px 10px rgba(139, 0, 0, 0.345);
+   background-color: #548b8b;
+   color: #f8f6f6;
   }
   .input-wrapper {
     display: flex; 

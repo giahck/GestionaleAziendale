@@ -1,3 +1,12 @@
+
+.container-fluid{
+  background:  #f3dcd4;
+ //   border: 1px solid rgba(0, 0, 0, 0.2); // Bordo sottile
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding: 2rem;
+  //  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); // Ombra sottile
+}
 .input-invalid {
     border-color: red; /* o background-color: red; per il colore di sfondo */
     color: red;
@@ -7,7 +16,7 @@
     font-size: 0.8rem; /* Riduce la dimensione del testo */
   }
   .custom-width {
-    width: 30%; /* o qualsiasi altra larghezza desiderata */
+    width: 100%; /* o qualsiasi altra larghezza desiderata */
   }
   .img-thumbnail {
     max-width: 300px;
@@ -21,11 +30,10 @@
     pointer-events: none; /* Disabilita gli eventi del mouse sugli elementi sottostanti */
   }
   .page-under-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: absolute;
+  
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Colore scuro con trasparenza */
-    z-index: 1040; /* Z-index inferiore rispetto al modal ma superiore agli altri contenuti */
+    background-color: rgba(0, 0, 0, 0.5); 
+   // z-index: 1040!important;
   }

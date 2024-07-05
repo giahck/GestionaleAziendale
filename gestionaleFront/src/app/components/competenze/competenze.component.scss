@@ -1,11 +1,23 @@
 form {
-    width: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.2); // Bordo sottile
-    border-radius: 0.5rem; 
+  margin: auto;
+    width: 100%;
+    
+    border-bottom-left-radius: 0.5rem; 
+    border-bottom-right-radius: 0.5rem; 
     padding: 2rem; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); // Ombra sottile
+    background:  #f3dcd4;
+    // Media query per dispositivi medium (md)
+  @media (max-width: 767.98px) {
+    width: 100%; // Aumenta la larghezza per dispositivi più piccoli
+  }
+
+  // Media query per dispositivi small (sm)
+  @media (max-width: 575.98px) {
+    width: 100%; // Usa tutta la larghezza disponibile per dispositivi molto piccoli
+  }
   }
   
   button[type="submit"] {
     cursor: pointer; /* Cambia il cursore quando si passa sopra al pulsante */
   }
+  
