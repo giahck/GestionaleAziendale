@@ -1,0 +1,58 @@
+.container-fluid {
+    overflow-x: hidden; // Impedisce l'overflow orizzontale
+  }
+@keyframes slideRightLeftPause {
+    0%, 55% { /* Mantiene la posizione a 600px fino al 55% */
+      transform: translateX(0);
+    }
+    45%, 75% { /* Inizia a tornare indietro più lentamente dopo il 75% */
+      transform: translateX(600px);
+    }
+    50% {
+      transform: translateX(600px);
+      box-shadow: 0 0 20px 20px #F3DCD4; /* Simula un flash */
+      transform: scale(1.2); /* Leggero ingrandimento per enfasi */
+    }
+    55% {
+      transform: translateX(600px);
+      box-shadow: none; /* Torna allo stato normale dopo il fischio */
+      transform: scale(1);
+    }
+    100% {
+      transform: translateX(0);
+      box-shadow: none; /* Assicura che il box-shadow sia rimosso quando torna indietro */
+    }
+  }
+  
+  .fas.fa-robot {
+    animation: slideRightLeftPause 10s infinite;
+  }
+  .btn-custom-color {
+    background-color: #F3DCD4 !important; /* Usa !important per sovrascrivere le regole esistenti se necessario */
+  }
+
+  .container-fluid {
+    background-image: url('./../../../assets/Progetto senza titolo (3).png');
+    background-size: cover; /* Imposta l'immagine di sfondo per coprire completamente il contenitore */
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 65vh;
+    position: relative;
+}
+
+.container-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Altezza massima del contenitore di contenuti */
+}
+
+.content {
+    background-color: rgba(255, 255, 255, 0.24);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 70%;
+}
+.p-color {
+    color: #074d50;
+}

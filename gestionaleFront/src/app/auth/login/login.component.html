@@ -51,7 +51,7 @@
           <!-- Email input -->
           <div class="mb-0 d-flex flex-column text-center ">
             <label for="loginEmail" class="form-label">Email</label>
-            <input type="email" id="loginEmail" class="form-control w-50 mx-auto" formControlName="email" />
+            <input type="email" id="loginEmail" class="form-control w-50 mx-auto text-center" formControlName="email" />
             <div class="error-placeholder text-secondary">
             <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-secondary">
               Please enter a valid email address.
@@ -62,7 +62,7 @@
           <!-- Password input -->
           <div class="mb-3 d-flex flex-column text-center">
             <label for="loginPassword" class="form-label">Password</label>
-            <input type="password" id="loginPassword" class="form-control w-50 mx-auto" formControlName="password" />
+            <input type="password" id="loginPassword" class="form-control w-50 mx-auto text-center" formControlName="password" />
             <div class="error-placeholder text-secondary">
               <span *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
                 Password must be at least 6 characters long.
@@ -72,15 +72,15 @@
 
           <!-- Checkbox and Forgot password link -->
           <div class="row mb-4">
-            <div class="col-md-6 d-flex justify-content-end">
+            <div class="col-md-12 d-flex justify-content-center">
               <div class="form-check mb-3 mb-md-0">
                 <input class="form-check-input" type="checkbox" id="loginCheck" formControlName="rememberMe" />
                 <label class="form-check-label me-3" for="loginCheck">Remember me</label>
               </div>
             </div>
-            <div class="col-md-6 d-flex justify-content-start">
+           <!--  <div class="col-md-6 d-flex justify-content-start">
               <a href="#!" class="text-decoration-none ms-3">Forgot password?</a>
-            </div>
+            </div> -->
           </div>
 
         

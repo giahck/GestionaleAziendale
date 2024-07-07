@@ -2,14 +2,36 @@
 
 
 .tabs-container {
+  @media (max-width: 579px){
+    margin-right: 0!important;
+    width: 100%!important;
+      @media (max-width: 579px){
+        transform: translateX(-10%);
   
+  }
+  }
   margin: auto;
  margin-right: 70px;
  /*  @media screen and (min-width: 980px) {
     width: 600px;
   } */
   .login-container{
-    width: 70%;
+ //   width: 70%;
+    @media (min-width: 992px) { // Dimensioni grandi (lg)
+      width: 100%;
+    }
+    @media (min-width: 1200px) { // Dimensioni extra-large (xl)
+      width: 70%;
+    }
+    @media (max-width: 767px) { // Dimensioni extra-large (xl)
+   
+      #loginEmail {
+        width: 89%!important;
+      }
+      #loginPassword {
+        width: 89%!important;
+      }
+    }
   }
   form {
     background:  #f3dcd4;

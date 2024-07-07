@@ -1,20 +1,31 @@
 .card-selected {
-    max-width: 20%; /* o qualsiasi altra dimensione preferisci */
-    margin: auto; /* Centra la card nella colonna */
+    max-width: 20%; 
+    margin: auto; 
   }
   
   .d-flex {
     display: flex;
-    flex-direction: row; /* Disposizione orizzontale per default */
+    flex-direction: row; 
   }
   
   @media (max-width: 576px) {
-    /* Sovrascrivi per dispositivi 'sm' o più piccoli */
+   
     .d-flex {
-      flex-direction: column !important; /* Forza la disposizione verticale per tutte le card */
+      flex-direction: column !important; 
     }
     .card-selected {
-      max-width: 100%; /* Mantiene la card selezionata grande allo stesso modo */
+      max-width: 100%; 
+    }
+  }
+  @media (min-width: 577px) {
+    .card-selected {
+      min-width: 35%; 
+      
+    }
+  }
+  @media (min-width: 768px) {
+    .card-selected {
+      min-width: 30%; 
     }
   }
   .order-first {
@@ -26,30 +37,41 @@
   }
   
   .card-selected {
-    border: 2px solid #007bff;
+    margin: 5px;
+    
   }
   .card-small {
-    width: 100%;
-    max-width: 200px; /* Definisci la larghezza massima della card */
-    margin: 0 auto;   /* Centra la card */
+   // width: 100%;
+   // max-width: 200px; 
+    margin: 0 auto;  
   }
   
   .card-img-top-small {
-    max-height: 100px; /* Riduci l'altezza massima dell'immagine */
-    object-fit: cover; /* Mantieni le proporzioni dell'immagine */
+    max-height: 150px; 
+    object-fit: cover; 
   }
   
   .card-body-small {
-    padding: 0.5rem; /* Riduci il padding della card */
+    padding: 0.5rem; 
   }
   
   .card-title-small {
-    font-size: 1rem; /* Riduci la dimensione del font del titolo */
+    font-size: 1rem; 
   }
   
   .card-text-small {
-    font-size: 0.875rem; /* Riduci la dimensione del font del testo */
+    font-size: 0.875rem; 
   }
  .card-selecte{
-    border: 2px solid #007bff;
+  
+    border: 2px solid #39B0B7;
+  }
+  .contenitore-img {
+    max-width: 350px; 
+   // margin: 0 auto; 
+  }
+  .fixed-img{
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 1/1;
   }
