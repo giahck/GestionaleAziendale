@@ -188,20 +188,19 @@
                                         
                                     
                                  </div>
-                                <div class=" col-sm-8 p-2 p2" >
-                                    <div class="d-flex">
-                                        <h4>PARTI DICHIARATE</h4>
-                                            
+                                 <div class=" col-sm-8 p-2 p2" >
+                                     <h4>PARTI DICHIARATE</h4>
+                                    <div class="d-flex align-content-center">
+                                    
                                                 <div *ngFor="let item of selectedParts">
-                                                    <p>{{ item.nomeParte }}</p>
-                                                    <p>{{ item.descrizione }}</p>
-                                                    <p>{{ item.note }}</p>
-                                                    <p>{{ item.quantityParts }}</p>
+                                                    <p class="m-2">{{ item.nomeParte }}</p>
+                                                    <p class="m-2">{{ item.descrizione }}</p>
+                                                    <p class="m-2">{{ item.note }}</p>
+                                                    <p class="m-2">{{ item.quantityParts }}</p>
                                                     
                                                 </div>
                                             
-                                    </div>                                   
-                                </div>                            
+                                    </div>                       
                             </div>
                         </div>
                     </div>
@@ -221,11 +220,14 @@
         <div class="modal-body">
           <input type="text" class="form-control"(ngModelChange)="onStatoChangein($event)"  [(ngModel)]="searchTerm" (input)="search()" placeholder="Cerca...">
           <div *ngIf="!selectedMachine">
-            <ul>
+            <ul class="d-flex justify-content-center text-center">
               <li *ngFor="let userMachine of filteredUserMachines">
                 <ul>
                   <li *ngFor="let machine of userMachine.machines">
-                    <button class="btn btn-link"  (click)="selectMachine(machine)">{{ machine.nomeMacchina }}</button>
+                    <div class="border border-2 border-dark rounded-2 p-0 m-2"  (click)="selectMachine(machine)">
+                       <p class="m-0 bg-dark"> {{ machine.nomeMacchina }}</p>
+                       <p class="m-1"> {{machine.description}}</p>
+                    </div>
                   </li>
                 </ul>
               </li>
@@ -237,35 +239,49 @@
   
           <div *ngIf="selectedMachine" >
               <div class="d-flex m-2">
-                  <span>                      
-                      <h5>{{ selectedMachine.nomeMacchina }}</h5>
-                    <p>Marca: {{ selectedMachine.marca }}</p>
-                    <p>Stato: {{ selectedMachine.statoMacchina }}</p>
-                    <p>Descrizione: {{ selectedMachine.description }}</p>
+                  <span class="border border-2 border-dark rounded-2 p-0 m-2">                      
+                      <h5 class="m-0 p-1 bg-dark">{{ selectedMachine.nomeMacchina }}</h5>
+                    <p class="m-1">Marca: {{ selectedMachine.marca }}</p>
+                    <p class="m-1">Stato: {{ selectedMachine.statoMacchina }}</p>
+                    <p class="m-1">Descrizione: {{ selectedMachine.description }}</p>
                 </span>
                 <img [src]="selectedMachine.photo" alt="{{ selectedMachine.nomeMacchina }}" class="img-fluid modal-img ">
             </div>
-  
-            <h6>Parti</h6>
-            <ul>
-              <li *ngFor="let part of selectedMachine.parts" (click)="selectPart(part)">
-                {{ part.nomeParte }} - {{ part.descrizione }}
-              </li>
-            </ul>
-  
+            <div class="container-fluid">
+                <div class="row m-0 p-0">
+                    <div class="col-md-6 ps-0">
+
+                        <div class="border border-2 border-warning rounded-2 p-0">
+                        
+                        <h6 class="m-0 p-1 bg-warning">Seleziona le Parti</h6>
+                        <ul class="p-0">
+                            <li *ngFor="let part of selectedMachine.parts" (click)="selectPart(part)" class="border border-2 border-warning" [ngClass]="{'parte-selezionata': isSelectedPart(part)}">
+                                <p class="m-0"> {{ part.nomeParte }}</p> 
+                                <p class="m-0"> {{ part.descrizione }}</p>
+                                <p class="m-0"> {{ part.note }}</p>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
             <div *ngIf="selectedPart">
-              <h6>Dettagli Parte: {{ selectedPart.nomeParte }}</h6>
-              <p>Descrizione: {{ selectedPart.descrizione }}</p>
-              <p>Note: {{ selectedPart.note }}</p>
-              <p>Quantità: {{ selectedPart.quantityParts }}</p>
+            <div class="border border-2 border-warning rounded-2 p-0">
+              <h6><Strong>Dettagli Parte:</Strong> {{ selectedPart.nomeParte }}</h6>
+              <p><strong>Descrizione:</strong> {{ selectedPart.descrizione }}</p>
+              <p><strong>Note:</strong> {{ selectedPart.note }}</p>
+              <p><strong>Q*:</strong> {{ selectedPart.quantityParts }}</p>
   
-              <h6>Pezzi</h6>
+              <h6><strong>Pezzi</strong></h6>
               <ul>
                 <li *ngFor="let piece of selectedPart.pieces">
-                  {{ piece.nomePezzo }} - {{ piece.descrizione }} ({{ piece.quantityPiece }})
+                    <p class="m-0 p-1"> {{ piece.nomePezzo }} - {{ piece.descrizione }} ({{ piece.quantityPiece }})</p>
                 </li>
               </ul>
             </div>
+            </div>
+        </div>
+        </div>
+    </div>
           </div>
         </div>
         <div class="modal-footer">

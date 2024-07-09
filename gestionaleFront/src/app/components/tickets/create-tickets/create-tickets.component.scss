@@ -1,3 +1,10 @@
+.tp-wrapper {
+    height: 450px;
+    @media (max-width: 579px){
+        height: 750px;
+    }
+
+}
 .tp-box {
     transform-style: preserve-3d;
     transform: transform 1s;
@@ -70,3 +77,17 @@ h4{
     object-fit: cover;
     aspect-ratio: 1;
   }
+  ul {
+    list-style-type: none; 
+    padding: 0; 
+    margin: 0; 
+  }
+  li {
+    list-style-type: none;
+    padding: 0; 
+    margin: 0; 
+  }
+  .parte-selezionata {
+    background-color: #9bd4dc;
+  }
+  

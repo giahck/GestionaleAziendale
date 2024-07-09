@@ -133,10 +133,10 @@ export class CreateTicketsComponent {
  //console.log('selectedParts', this.selectedParts);
     this.selectedPart = part;
  // console.log('selectedmas', this.selectedMachine);
- 
-
   }
-
+  isSelectedPart(part: PartDto): boolean {
+    return this.selectedParts.some(selectedPart => selectedPart.partId === part.partId);
+  }
   search() {
     if (this.searchTerm.trim()) {
       const searchTermLower = this.searchTerm.toLowerCase();

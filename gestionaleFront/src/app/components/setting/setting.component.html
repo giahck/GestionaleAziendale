@@ -4,16 +4,13 @@
       <hr />
       <div class="row">
         <div class="col-md-3">
-          <h3>MEMBERSHIP & BILLING</h3>
-          <button type="button" class="btn btn-light rounded-0 fs-5">
-            Cancel Membership
-          </button>
+          <span style="font-size: 48px;">👋</span>
         </div>
         <div class="col-md-9 d-flex justify-content-between">
           <div>
-            <h4 class="fw-bolder">epicoder.com</h4>
+            <h4 class="fw-bolder">Email: {{user.email}}</h4>
             <h3 class="fs-6">password:*******</h3>
-            <h3 class="fs-6">Phone:123456789</h3>
+            <h3 class="fs-6">Phone:{{user.telefono}}</h3>
           </div>
           <div>
             <ul class="text-end">
@@ -31,7 +28,7 @@
         </div>
       </div>
       <hr />
-      <div class="container">
+    <!--   <div class="container">
         <div class="row">
           <div class="col-md-9 offset-md-3">
             <span class="d-flex justify-content-between">
@@ -64,18 +61,24 @@
             </span>
           </div>
         </div>
-      </div>
-      <hr />
+      </div> 
+      <hr />-->
       <div class="row">
         <div class="col-md-3">
           <h3>PLAN DETAILS</h3>
         </div>
         <div class="col-md-9 d-flex justify-content-between">
           <div>
-            <span class="d-flex"
-              ><p class="fw-bolder me-1">Standard</p>
-              <i class="bi bi-badge-hd"></i
-            ></span>
+            <span class="d-flex flex-column">
+              <p class="fw-bolder me-1">NOME: {{user.nome}}</p>
+              <p class="fw-bolder me-1">COGNOME: {{user.cognome}}</p>
+              <p class="fw-bolder me-1">COMUNE DI NASCITA: {{user.comuneDiNascita}}</p>
+              <p class="fw-bolder me-1">INDIRIZZO: {{user.indirizzo}}</p>
+              <p class="fw-bolder me-1">PROVINCIA: {{user.provincia}}</p>
+              <p class="fw-bolder me-1">SESSO: {{user.sesso}}</p>
+              <p class="fw-bolder me-1">CODICE FISCALE: {{user.codiceFiscale}}</p>
+            
+            </span>
           </div>
           <div>
             <ul class="text-end">
@@ -86,7 +89,7 @@
           </div>
         </div>
       </div>
-      <hr />
+  <!--     <hr />
       <div class="row">
         <div class="col-12">
           <h3>PLAN DETAILS</h3>
@@ -108,8 +111,8 @@
             </li>
           </ul>
         </div>
-      </div>
-      <hr />
+      </div> -->
+     <!--  <hr />
       <div class="row">
         <div class="col-md-3">
           <h3>MY PROFILE</h3>
@@ -144,6 +147,6 @@
             <li><a href="javascript:void(0)">Ratings</a></li>
           </ul>
         </div>
-      </div>
+      </div> -->
     </div>
   </main>

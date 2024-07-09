@@ -21,6 +21,7 @@ import GestionaleAziendale.GesionaleBack.repository.UserRepository;
 import GestionaleAziendale.GesionaleBack.entity.utenti.Users;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -107,37 +108,71 @@ public class UserService {
         return usersDatiMapper.usersToUsersDatiDto(users);
     }
 
-//metodo template jdbcTemplate
-public boolean isUserConnectedWithCompetenze(int userId) {
-    Users user = userRepository.findById(userId)
-            .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato con id: " + userId));
-    return !user.getCompetenze().isEmpty();
-}
+    private boolean checkIfUserIsManager(int userId) {
+        return userRepository.findById(userId)
+                .map(user -> user.getRuolo().stream()
+                        .anyMatch(ruolo -> ruolo.getNomeRuolo().equals(RuoloEnum.MANAGER)))
+                .orElse(false);
+    }
+    private boolean checkIfUserIsEmployee(int userId) {
+        return userRepository.findById(userId)
+                .map(user -> user.getRuolo().stream()
+                        .anyMatch(ruolo -> ruolo.getNomeRuolo().equals(RuoloEnum.DIPENDENTE)))
+                .orElse(false);
+    }
     public List<UserMachineDto> getUserData(int userId) {
-        System.out.println("userId: " + userId+" "+userRepository.existsById(userId));
-        if (!isUserConnectedWithCompetenze(userId)) {
-            throw new ResourceNotFoundException("Utente non trovato nella tabella delle competenze con id: " + userId);
-        }
-        String sql = "SELECT u.id as user_id,  " +
-                "m.id as machine_id, m.nome_macchina, m.marca, m.stato_macchina, mg.description, mg.photo," +
-                "p.id as part_id, p.nome_parte, p.descrizione, p.note, p.quantity_parts, " +
-                "pc.id as piece_id, pc.nome_pezzo, pc.quantity_piece, pc.descrizione " +
-                "FROM users u " +
-                "JOIN utente_competenza uc ON u.id = uc.utente_id " +
-                "LEFT JOIN competenze c ON uc.competenza_id = c.id_competenza " +
-                "LEFT JOIN machines m ON c.id_machine = m.id " +
-                "LEFT JOIN machines_generic mg ON m.id = mg.id " +
-                "LEFT JOIN parts p ON m.id = p.id_machine " +
-                "LEFT JOIN pieces pc ON p.id = pc.id_parts " +
-                "WHERE u.id = ?";
+        boolean isManager = checkIfUserIsManager(userId);
+        boolean isEmployee = checkIfUserIsEmployee(userId);
+        String sql;
 
-        return jdbcTemplate.query(con -> {
-            PreparedStatement ps = con.prepareStatement(sql,
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
-            ps.setInt(1, userId);
-            return ps;
-        }, this::mapRow);
+        if (isManager) {
+
+
+
+            System.out.println("Errore1");
+            sql = "SELECT " +
+                    "u.id as user_id, " +
+                    "m.id as machine_id, m.nome_macchina, m.marca, m.stato_macchina, mg.description, mg.photo, " +
+                    "p.id as part_id, p.nome_parte, p.descrizione, p.note, p.quantity_parts, " +
+                    "pc.id as piece_id, pc.nome_pezzo, pc.quantity_piece, pc.descrizione " +
+                    "FROM users u " +
+                    "LEFT JOIN utente_competenza uc ON u.id = uc.utente_id " +
+                    "LEFT JOIN competenze c ON uc.competenza_id = c.id_competenza " +
+                    "LEFT JOIN machines m ON c.id_machine = m.id " +
+                    "LEFT JOIN machines_generic mg ON m.id = mg.id " +
+                    "LEFT JOIN parts p ON m.id = p.id_machine " +
+                    "LEFT JOIN pieces pc ON p.id = pc.id_parts " +
+                    "WHERE c.id_competenza IS NOT NULL";
+        } else if (isEmployee)  {
+            System.out.println("Errore");
+            sql = "SELECT u.id as user_id, " +
+                    "m.id as machine_id, m.nome_macchina, m.marca, m.stato_macchina, mg.description, mg.photo, " +
+                    "p.id as part_id, p.nome_parte, p.descrizione, p.note, p.quantity_parts, " +
+                    "pc.id as piece_id, pc.nome_pezzo, pc.quantity_piece, pc.descrizione " +
+                    "FROM users u " +
+                    "JOIN utente_competenza uc ON u.id = uc.utente_id " +
+                    "LEFT JOIN competenze c ON uc.competenza_id = c.id_competenza " +
+                    "LEFT JOIN machines m ON c.id_machine = m.id " +
+                    "LEFT JOIN machines_generic mg ON m.id = mg.id " +
+                    "LEFT JOIN parts p ON m.id = p.id_machine " +
+                    "LEFT JOIN pieces pc ON p.id = pc.id_parts " +
+                    "WHERE u.id = ?";
+        } else {
+            sql = "";
+        }
+
+        try {
+            return jdbcTemplate.query(con -> {
+                PreparedStatement ps = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                if (!isManager && sql.contains("WHERE u.id = ?")) {
+                    ps.setInt(1, userId);
+                }
+                return ps;
+            }, this::mapRow);
+        } catch (BadSqlGrammarException e) {
+            System.err.println("Errore nella sintassi SQL: " + e.getMessage());
+            throw e; // Or handle the exception in another way
+        }
     }
 
     private List<UserMachineDto> mapRow(ResultSet rs) throws SQLException {
