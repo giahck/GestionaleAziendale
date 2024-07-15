@@ -56,10 +56,6 @@ I ticket rappresentano le richieste di assistenza o manutenzione relative alle p
 
 L'operatore avvia una richiesta specificando la macchina o la parte coinvolta nel problema attraverso l'interfaccia utente del sistema.
 
-### Invio della Richiesta all'API
-
-L'API ChatGPT riceve la richiesta dettagliata, ad esempio: "Come posso risolvere il problema sulla macchina con identificatore [ID]?".
-
 ### Elaborazione della Richiesta
 
 L'API elabora la richiesta utilizzando modelli di linguaggio per comprendere il contesto e fornire una risposta pertinente, che potrebbe includere suggerimenti di risoluzione del problema, procedure di manutenzione, possibili cause del guasto, o altro supporto informativo.
