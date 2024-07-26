@@ -62,11 +62,12 @@ Il sistema ha una connessione bidirezionale con le macchine e una sezione dedica
 
 Il sistema è stato scritto in forma sperimentale, utilizzando diverse tecnologie come Hibernate, JPA, query native, template, WebSocket, ecc., per rispondere a diverse domande. Ad esempio:
 
-Come posso aprire una connessione che rimanga attiva?
-Come posso non far vedere le informazioni alle altre persone?
-Come posso sfruttare una determinata classe con PostgreSQL, quindi tramite query?
-Come posso sfruttare al meglio le chiamate HTTP senza farne 3000 inutili?
-Ci sono anche soluzioni di prova, come tirare su tutte le informazioni della macchina partendo dall'utente senza creare ulteriori relazioni tra di loro. Quindi, sì, mi sono complicato la vita la maggior parte delle volte, ma è stato fatto tutto a scopo di apprendimento! Quindi ci sono soluzioni buone ma anche molto pesanti. Ho voluto valutare anche dal lato front-end come potesse reagire in determinati contesti passando tanti dati, come gestire gli osservabili in determinate situazioni. 
+- Come posso aprire una connessione che rimanga attiva?
+- Come posso non far vedere le informazioni alle altre persone?
+- Come posso sfruttare una determinata classe con PostgreSQL, quindi tramite query?
+- Come posso sfruttare al meglio le chiamate HTTP senza farne 3000 inutili?
+
+Ci sono anche soluzioni di prova, come tirare su tutte le informazioni della macchina partendo dall'utente senza creare ulteriori relazioni tra di loro. Quindi, sì, mi sono complicato la vita la maggior parte delle volte, ma è stato fatto tutto a scopo di apprendimento! Quindi ci sono soluzioni buone ma anche molto pesanti. Ho voluto valutare anche dal lato front-end come potesse reagire in determinati contesti passando tanti dati.
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="30" alt="javascript logo"  />
   <img width="12" />
