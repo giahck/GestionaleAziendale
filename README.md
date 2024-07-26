@@ -2,11 +2,13 @@
   <img src="https://github-readme-stats.vercel.app/api?username=giahck&hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=merko&locale=en&hide_border=false" height="150" alt="stats graph"  />
   <img src="https://github-readme-stats.vercel.app/api/top-langs?username=gabscognamiglio&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=merko&hide_border=false" height="150" alt="languages graph"  />
 </div>
-# Sistema di Gestione Aziendale
+# Sistema di Gestione Aziendale 
+  
+#### Capstone Project come conseguimento della fine del corso di Full Stack Development con Epicode - Corso intensivo di 6 mesi
 
 ## Descrizione
 
-Il sistema implementato ha due livelli principali. Il primo livello è un sistema di messaggistica con l'integrazione dell'intelligenza artificiale, con una connessione bidirezionale (WebSocket). Il secondo livello è un sistema di apertura dei ticket, con una sezione dedicata al caricamento delle macchine e al tracciamento bidirezionale dello stato delle macchine. Questo permette di tenere traccia degli stati delle macchine (intese come sistemi industriali). Le macchine sono suddivise in tre sezioni: macchina effettiva, parti e pezzi delle parti. Inoltre, il sistema include un sistema interno per la gestione dei ruoli (dipendenti, operatori, ecc.).
+Il sistema implementato ha due livelli principali. Il primo livello è un sistema di messaggistica con l'integrazione dell'intelligenza artificiale, con una connessione bidirezionale (WebSocket). Il secondo livello è un sistema di apertura dei ticket, con una sezione dedicata al caricamento delle macchine e al tracciamento bidirezionale dello stato delle macchine. Questo permette di tenere traccia degli stati delle macchine (intese come sistemi industriali). Le macchine sono suddivise in tre sezioni: macchina effettiva, parti e pezzi delle parti. Inoltre, il sistema include un sistema interno per la gestione dei ruoli (dipendenti, operatori, ecc.). Il sistema include una sezione completa per l'inserimento delle macchine e delle competenze, mettendo in relazione utenti, macchine e competenze.
 
 ## Entità
 
