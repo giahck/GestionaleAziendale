@@ -6,27 +6,22 @@
 
 ## Descrizione
 
-Questo progetto implementa un sistema di gestione aziendale per gestire gli utenti, i ruoli e le competenze all'interno di un'organizzazione. Utilizza tecnologie moderne per garantire un'esperienza utente efficiente e intuitiva.
+Il sistema implementato ha due livelli principali. Il primo livello è un sistema di messaggistica con l'integrazione dell'intelligenza artificiale, con una connessione bidirezionale (WebSocket). Il secondo livello è un sistema di apertura dei ticket, con una sezione dedicata al caricamento delle macchine e al tracciamento bidirezionale dello stato delle macchine. Questo permette di tenere traccia degli stati delle macchine (intese come sistemi industriali). Le macchine sono suddivise in tre sezioni: macchina effettiva, parti e pezzi delle parti. Inoltre, il sistema include un sistema interno per la gestione dei ruoli (dipendenti, operatori, ecc.).
 
 ## Entità
 
 ### Utenti
 
 Gli utenti sono la colonna portante del sistema. Ogni utente ha un'email, un nome, un cognome, una data di nascita e altre informazioni personali. Possono essere assegnati a uno o più ruoli all'interno dell'organizzazione.
+(e setato che se ti registri per semplicita diventi subito un dipendente ma il sistema e stato scritto per avere flessibilita quindi in generale deve essere un semplice user che non puo vedre nulla)
 
 ### Ruoli
 
-I ruoli definiscono le responsabilità e le competenze all'interno dell'organizzazione. Ogni ruolo ha un nome, una descrizione e un livello di importanza. Sono associati a competenze specifiche che definiscono le abilità necessarie per quel ruolo.
+I ruoli definiscono le responsabilità e le competenze all'interno dell'organizzazione. Ogni ruolo ha un nome, una descrizione e un livello di importanza.
 
 ### Competenze
 
-Le competenze rappresentano le abilità e le conoscenze necessarie per svolgere determinati compiti. Ogni competenza ha un nome, una descrizione e un livello di competenza. Possono essere associate a uno o più ruoli per definire le competenze richieste per quel ruolo.
-
-## Relazioni
-
-- **Utente <-> Ruolo**: Gli utenti possono essere assegnati a uno o più ruoli all'interno dell'organizzazione. Questa relazione consente di definire le responsabilità di ciascun utente.
-
-- **Competenze <-> Utente**: le competenze sono associati a utenti specifiche che definiscono le abilità necessarie per quel ruolo. Questa relazione consente di definire le competenze richieste per svolgere determinate responsabilità.
+Le competenze rappresentano le abilità e le conoscenze necessarie per svolgere determinati compiti. Ogni competenza ha un nome, una descrizione e un livello di competenza. Le competenze fanno da collegamento tra le machine e gli utenti
 
 ### Macchine
 
@@ -44,17 +39,11 @@ I pezzi sono parti specifiche identificate da un numero di serie e caratterizzat
 
 I ticket rappresentano le richieste di assistenza o manutenzione relative alle parti o alle macchine. Ogni ticket ha un ID univoco, una descrizione del problema e uno stato corrente (aperto, in corso, chiuso, ecc.).
 
-## Relazioni
-
-- **Macchine <-> Parti**: Ogni macchina può avere molte parti, gestite tramite una relazione uno-a-molti.
-- **Parti <-> Pezzi**: Ogni parte può essere composta da molti pezzi, stabilita tramite una relazione uno-a-molti.
-- **Parti <-> Ticket**: Ogni parte può essere associata a molti ticket, gestita tramite una relazione uno-a-molti.
-
 ## Integrazione con API ChatGPT per Gestione dei Ticket
 
 ### Interazione dell'Operatore
 
-L'operatore avvia una richiesta specificando la macchina o la parte coinvolta nel problema attraverso l'interfaccia utente del sistema.
+L'operatore avvia una richiesta specificando la macchina o la parte coinvolta nel problema attraverso l'interfaccia utente del sistema, un sistema di messaggistica che permette di auto-compilare il form per ottenere una risposta il più precisa possibile dall'API.
 
 ### Elaborazione della Richiesta
 
@@ -62,12 +51,19 @@ L'API elabora la richiesta utilizzando modelli di linguaggio per comprendere il 
 
 ### Risposta dell'API
 
-La risposta dell'API ChatGPT viene integrata direttamente nel sistema di gestione dei ticket, associandola al ticket corrispondente. Questo processo permette di tenere traccia delle interazioni e di garantire una risoluzione efficace e tempestiva dei problemi segnalati.
+La risposta dell'API ChatGPT viene integrata direttamente nel sistema di gestione. Questo processo permette di tenere traccia delle interazioni e di garantire una risoluzione efficace e tempestiva dei problemi segnalati.
 
+### Funzionalità di Tracciamento delle Macchine
+Il sistema ha una connessione bidirezionale con le macchine e una sezione dedicata che aggiorna lo stato delle macchine ad ogni cambiamento. Alla creazione di un ticket, il sistema genera un PDF per tutte le macchine e lo ritorna all'utente. Il sistema visualizza solo le macchine assegnate all'utente specifico (se sei un dipendente vedi solo le macchine su cui lavori, se sei un amministratore le vedi tutte). il sistema é reattivo quindi a ogni cambiamento cambia a tutti(molto pesante ma troppo bello da non farlo)
 ## Note
 
-- Il sistema è progettato per gestire in modo flessibile le risorse hardware dell'organizzazione, facilitando la manutenzione e l'assistenza attraverso l'integrazione avanzata con l'API ChatGPT.
-- L'interfaccia utente moderna e user-friendly permette una gestione intuitiva delle macchine, delle parti e dei ticket, migliorando l'efficienza operativa complessiva dell'organizzazione. 
+Il sistema è stato scritto in forma sperimentale, utilizzando diverse tecnologie come Hibernate, JPA, query native, template, WebSocket, ecc., per rispondere a diverse domande. Ad esempio:
+
+Come posso aprire una connessione che rimanga attiva?
+Come posso non far vedere le informazioni alle altre persone?
+Come posso sfruttare una determinata classe con PostgreSQL, quindi tramite query?
+Come posso sfruttare al meglio le chiamate HTTP senza farne 3000 inutili?
+Ci sono anche soluzioni di prova, come tirare su tutte le informazioni della macchina partendo dall'utente senza creare ulteriori relazioni tra di loro. Quindi, sì, mi sono complicato la vita la maggior parte delle volte, ma è stato fatto tutto a scopo di apprendimento! Quindi ci sono soluzioni buone ma anche molto pesanti. Ho voluto valutare anche dal lato front-end come potesse reagire in determinati contesti passando tanti dati, come gestire gli osservabili in determinate situazioni. 
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="30" alt="javascript logo"  />
   <img width="12" />
